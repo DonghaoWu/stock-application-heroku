@@ -55,7 +55,7 @@ router.post('/', [
         //After above, a new user with id is created, but not saved yet.
         //console.log('=====>', user);
         await user.save();
-        //console.log('=====>', user);
+        console.log('=====>', user);
         //Return jsonwebtiken
         const payload = {
             user: {
@@ -63,7 +63,7 @@ router.post('/', [
             }
         }
 
-        jwt.sign(payload, config.get('jwtToken'),
+        jwt.sign(payload, config.get('jwtSecret'),
             {
                 expiresIn: 360000
             },
