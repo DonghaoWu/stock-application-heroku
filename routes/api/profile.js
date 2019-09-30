@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const auth = require('../../middleware/auth');
 const Profile = require('../../models/Profile');
-const User = require('../../models/Users');
+const User = require('../../models/User');
 const { check, validationResult } = require('express-validator')
 
 
@@ -10,7 +10,6 @@ const { check, validationResult } = require('express-validator')
 // @desc   Get current users pofile
 // @access Private
 router.get('/me', auth, async (req, res) => {
-    console.log('hi')
     try {
         const profile = await Profile.findOne({ user: req.user.id }).populate('user', ['name', 'avatar', 'balance']);
         if (!profile) {
@@ -63,8 +62,21 @@ router.post('/', [auth, [
     }
 )
 
-// @route  Get api/profile
-// @desc   
+// @route  DELETE api/profile
+// @desc   Delete profile, user & posts
 // @access Private
+
+router.delete('/', auth, async (req, res) => {
+    try {
+        //Remove profile
+        await Profile.findOneAndRemove({ user: req.user.id });
+        //Remove user
+        await User.findOneAndRemove({ _id: req.user.id })
+        res.json({ msg: "User and profile deleted" })
+    } catch (error) {
+        console.error(error.message);
+        res.status(500).send('Server Error');
+    }
+})
 
 module.exports = router;

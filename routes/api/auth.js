@@ -6,7 +6,7 @@ const { check, validationResult } = require('express-validator')
 
 const router = express.Router();
 const auth = require('../../middleware/auth');
-const User = require('../../models/Users');
+const User = require('../../models/User');
 
 // @route  GET api/auth
 // @desc   Test route
@@ -75,6 +75,8 @@ router.post('/', [
         res.status(500).send('Server error');
     }
 });
+
+
 
 
 module.exports = router;
