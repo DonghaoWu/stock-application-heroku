@@ -50,12 +50,12 @@ router.post('/', [
             name: name,
             email: email,
             password: encryptedPassword,
-            avatar: avatar
+            avatar: avatar,
         })
         //After above, a new user with id is created, but not saved yet.
         //console.log('=====>', user);
         await user.save();
-        console.log('=====>', user);
+        //console.log('=====>', user);
         //Return jsonwebtiken
         const payload = {
             user: {

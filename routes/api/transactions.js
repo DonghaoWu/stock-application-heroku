@@ -26,6 +26,16 @@ router.post('/', [auth,
         const { action, name, quantity, price } = req.body;
 
         try {
+            let user = await User.findById(req.user.id).select('-password');
+            let newBalance = user.balance - price * quantity;
+
+            if(newBalance < 0){
+                return res.status(400).json({ msg: "Not enough cash!" })
+            }
+
+            user = await User.findOneAndUpdate({ _id: req.user.id }, { $set: { balance: newBalance } }, { new: true });
+            console.log(user);
+
             let transaction = new Transaction({
                 user: req.user.id,
                 action: action,
