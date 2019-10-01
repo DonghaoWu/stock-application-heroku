@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 const TransactionSchema = new Schema({
     user: {
         type: Schema.Types.ObjectId,
-        ref: 'users',
+        ref: 'user',
     },
     action: {
         type: String,
@@ -14,13 +14,17 @@ const TransactionSchema = new Schema({
         type: String,
         required: true,
     },
-    quantitu: {
+    quantity: {
         type: Number,
         required: true,
     },
     price: {
         type: Number,
         required: true,
+    },
+    date: {
+        type: Date,
+        default: Date.now,
     }
 })
 
