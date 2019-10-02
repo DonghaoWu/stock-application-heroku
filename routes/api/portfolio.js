@@ -10,13 +10,12 @@ const { check, validationResult } = require('express-validator')
 // @access Private
 router.get('/me', auth, async (req, res) => {
     try {
-        const user = await User.findById(req.user.id);
-        const { shareholding } = user;
-        res.json(shareholding);
+        const user = await User.findById(req.user.id).select('-password');
+        res.json(user);
     } catch (error) {
-        console.error(error.message);
+        console.log(error.message);
         res.status(500).send('Server Error');
     }
-})
+});
 
 module.exports = router;

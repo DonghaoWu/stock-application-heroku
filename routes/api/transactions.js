@@ -36,7 +36,7 @@ router.post('/', [auth,
             if (newBalance < 0) {
                 return res.status(400).json({ msg: "Not enough cash!" })
             }
-            if (!user.shareholding.length) {
+            if (user.shareholding.length === 0) {
                 user.shareholding.push(newTra);
             }
             else {
@@ -63,7 +63,7 @@ router.post('/', [auth,
             })
 
             await transaction.save();
-            res.json(transaction);
+            res.json(user);
 
         } catch (error) {
             console.error(error.message);
