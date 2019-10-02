@@ -5,7 +5,6 @@ const auth = require('../../middleware/auth');
 
 const Transaction = require('../../models/Transaction');
 const User = require('../../models/User');
-const Porfolio = require('../../models/Portfolio')
 
 // @route  POST api/transactions
 // @desc   Create a transaction
@@ -37,25 +36,23 @@ router.post('/', [auth,
             if (newBalance < 0) {
                 return res.status(400).json({ msg: "Not enough cash!" })
             }
-            let portfolio = await Porfolio.findOne({ user: req.user.id })
-            if(!portfolio.shareholding.length) {
-                portfolio.shareholding.push(newTra);
+            if (!user.shareholding.length) {
+                user.shareholding.push(newTra);
             }
-            else{
-                let arr = portfolio.shareholding;
+            else {
+                let arr = user.shareholding;
                 let hasOne = false;
-                for(let i = 0; i < arr.length; i++){
-                    if(arr[i].name === newTra.name){
+                for (let i = 0; i < arr.length; i++) {
+                    if (arr[i].name === newTra.name) {
                         hasOne = true;
                         arr[i].quantity += newTra.quantity;
                         break;
                     }
                 }
-                if(!hasOne) portfolio.shareholding.push(newTra);
+                if (!hasOne) user.shareholding.push(newTra);
             }
-            await portfolio.save();
-
-            user = await User.findOneAndUpdate({ _id: req.user.id }, { $set: { balance: newBalance } }, { new: true });
+            user.balance = newBalance;
+            await user.save();
 
             let transaction = new Transaction({
                 user: req.user.id,
@@ -67,6 +64,7 @@ router.post('/', [auth,
 
             await transaction.save();
             res.json(transaction);
+
         } catch (error) {
             console.error(error.message);
             res.status(500).send('Server Error');

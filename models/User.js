@@ -22,7 +22,19 @@ const UserSchema = new mongoose.Schema({
     date: {
         type: Date,
         default: Date.now,
-    }
+    },
+    shareholding: [
+        {
+            name: {
+                type: String,
+                required: true,
+            },
+            quantity: {
+                type: Number,
+                required: true,
+            }
+        }
+    ]
 });
 
 module.exports = User = mongoose.model('user', UserSchema);
