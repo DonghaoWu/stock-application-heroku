@@ -1,5 +1,5 @@
 import React, { Fragment, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { setAlert } from '../../actions/alert';
 import { register } from '../../actions/auth';
@@ -30,6 +30,10 @@ const Register = props => {
         }
     }
 
+    if (props.isAuthenticated) {
+        return <Redirect to='/portfolio' />
+    }
+
     return (
         <Fragment>
             <h1 className="large text-primary">Sign Up</h1>
@@ -42,6 +46,7 @@ const Register = props => {
                         name="name"
                         value={name}
                         onChange={e => handleChange(e)}
+                        required
                     />
                 </div>
                 <div className="form-group">
@@ -51,6 +56,7 @@ const Register = props => {
                         value={email}
                         name="email"
                         onChange={e => handleChange(e)}
+                        required
                     />
                 </div>
                 <div className="form-group">
@@ -61,7 +67,7 @@ const Register = props => {
                         minLength="6"
                         value={password}
                         onChange={e => handleChange(e)}
-
+                        required
                     />
                 </div>
                 <div className="form-group">
@@ -72,7 +78,7 @@ const Register = props => {
                         minLength="6"
                         value={password2}
                         onChange={e => handleChange(e)}
-
+                        required
                     />
                 </div>
                 <input type="submit" className="btn btn-primary" value="Register" />
@@ -87,6 +93,11 @@ const Register = props => {
 Register.propTypes = {
     setAlert: PropTypes.func.isRequired,
     register: PropTypes.func.isRequired,
+    isAuthenticated: PropTypes.bool,
 }
 
-export default connect(null, { setAlert, register })(Register);
+const mapStateToProps = state => ({
+    isAuthenticated: state.auth.isAuthenticated
+})
+
+export default connect(mapStateToProps, { setAlert, register })(Register);
