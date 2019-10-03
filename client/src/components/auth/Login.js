@@ -22,7 +22,7 @@ const Login = props => {
         props.login(email, password);
     }
     if (props.isAuthenticated) {
-        return <Redirect to='/portfolio' />
+        return <Redirect to='/' />
     }
 
     return (

@@ -31,7 +31,7 @@ const Register = props => {
     }
 
     if (props.isAuthenticated) {
-        return <Redirect to='/portfolio' />
+        return <Redirect to='/' />
     }
 
     return (

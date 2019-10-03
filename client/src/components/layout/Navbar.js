@@ -6,13 +6,13 @@ import { logout } from '../../actions/auth'
 
 const Navbar = props => {
     const { logout, auth } = props;
-    console.log(auth)
     const authLinks = (
         <ul>
+            {auth.user ? <li>Welcom, {auth.user.name}</li> : null}
             <li><Link to="#">Portfolio</Link></li>
             <li><Link to="#">Transaction</Link></li>
             <li>
-                <a onClick={logout} href='#!'>Logout</a>
+                <a onClick={logout} href='/'>Logout</a>
             </li>
         </ul>
     );
@@ -29,11 +29,12 @@ const Navbar = props => {
             <h1>
                 <Link to="/"> Stock-app</Link>
             </h1>
-            {(<Fragment>
-                {
-                    auth.isAuthenticated ? authLinks : guestLinks
-                }
-            </Fragment>)
+            {
+                !auth.loading && (<Fragment>
+                    {
+                        auth.isAuthenticated ? authLinks : guestLinks
+                    }
+                </Fragment>)
             }
         </nav>
     )
