@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 
 const Alert = (props) => props.alerts !== null && props.alerts.length > 0 && props.alerts.map(alert => (
     <div key={alert.id} className={`alert alert-${alert.alertType}`}>
-        {alert.msg};
+        {alert.msg}
     </div>
 ))
 

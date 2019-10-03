@@ -2,6 +2,7 @@ import React, { Fragment, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { setAlert } from '../../actions/alert';
+import { register } from '../../actions/auth';
 import PropTypes from 'prop-types';
 
 const Register = props => {
@@ -25,7 +26,7 @@ const Register = props => {
             props.setAlert('Passwords do not match', 'danger');
         }
         else {
-
+            props.register(({ name: name, email: email, password: password }));
         }
     }
 
@@ -41,7 +42,7 @@ const Register = props => {
                         name="name"
                         value={name}
                         onChange={e => handleChange(e)}
-                        required />
+                    />
                 </div>
                 <div className="form-group">
                     <input
@@ -50,7 +51,7 @@ const Register = props => {
                         value={email}
                         name="email"
                         onChange={e => handleChange(e)}
-                        required />
+                    />
                 </div>
                 <div className="form-group">
                     <input
@@ -60,7 +61,7 @@ const Register = props => {
                         minLength="6"
                         value={password}
                         onChange={e => handleChange(e)}
-                        required
+
                     />
                 </div>
                 <div className="form-group">
@@ -71,7 +72,7 @@ const Register = props => {
                         minLength="6"
                         value={password2}
                         onChange={e => handleChange(e)}
-                        required
+
                     />
                 </div>
                 <input type="submit" className="btn btn-primary" value="Register" />
@@ -85,6 +86,7 @@ const Register = props => {
 
 Register.propTypes = {
     setAlert: PropTypes.func.isRequired,
+    register: PropTypes.func.isRequired,
 }
 
-export default connect(null, { setAlert })(Register);
+export default connect(null, { setAlert, register })(Register);
