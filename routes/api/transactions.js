@@ -26,7 +26,7 @@ router.post('/', [auth,
         const { action, name, quantity, price } = req.body;
         const newTra = {
             name: name,
-            quantity: quantity,
+            quantity: Number(quantity),
         }
 
         try {

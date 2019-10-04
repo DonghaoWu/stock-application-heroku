@@ -5,8 +5,7 @@ import PropTypes from 'prop-types';
 import { logout } from '../../actions/auth'
 
 const Landing = props => {
-    const { logout, auth ,state} = props;
-    console.log(state);
+    const { logout, auth } = props;
     const authLinks = (
         <div className="buttons">
             <a onClick={logout} className="btn btn-danger" href='/'>Logout</a>
@@ -46,7 +45,6 @@ Landing.propTypes = {
 }
 
 const mapStateToProps = state => ({
-    state:state,
     auth: state.auth
 })
 

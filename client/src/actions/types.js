@@ -15,3 +15,5 @@ export const LOGOUT = 'LOGOUT';
 //for transactions
 export const TRANSACTION_SUCCESS = 'TRANSACTION_SUCCESS';
 export const CLEAR_TRANSACTIONS = 'CLEAR_TRANSACTIONS';
+//for buy stock
+export const BUY_STOCK_SUCCESS = 'BUY_STOCK_SUCCESS';

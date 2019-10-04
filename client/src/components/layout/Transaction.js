@@ -2,10 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux';
 
-
 const Transaction = props => {
     const { transactions } = props;
-    console.log(props);
+    console.log(transactions);
     return (
         <div>
             <p className = 'tran_header'>TRANSACTIONS</p>

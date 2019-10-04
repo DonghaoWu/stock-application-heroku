@@ -6,7 +6,7 @@ export default function (state = initialState, action) {
     const { type, payload } = action;
     switch (type) {
         case TRANSACTION_SUCCESS:
-            return [...state, ...payload];
+            return [...payload];
         case CLEAR_TRANSACTIONS:
             return []
         default:
