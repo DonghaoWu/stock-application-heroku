@@ -26,15 +26,34 @@ const Portfolio = props => {
         if (auth.user.balance < quantity * price) {
             props.setAlert('Not enough cash!', 'danger');
         }
+        let availableShare = 1000000000;
+        let currentPrice = 0;
+        for (let i = 0; i < auth.user.shareholding.length; i++) {
+            if (auth.user.shareholding[i].name === name && auth.user.shareholding[i].apiData) {
+                availableShare = auth.user.shareholding[i].apiData['06. volume'];
+                currentPrice = auth.user.shareholding[i].apiData['05. price']
+                break;
+            }
+        }
+        console.log(currentPrice, price);
+        if (quantity > Math.floor(availableShare / 1000)) {
+            props.setAlert('Not enough shares!', 'danger');
+            return;
+        }
+        if (Number(price) < currentPrice) {
+            props.setAlert('Price is lower than current price!', 'danger');
+            return;
+        }
         props.buyStock(({ action: 'BUY', name: name, quantity: quantity, price: price }));
     }
+
     return (
         <div>
             {
                 (auth.user) ?
                     <div className='portfolio_container'>
                         <div className='holding_stocks'>
-                            <p className='tran_header'>PORTFOLIO($ Current value)</p>
+                            <p className='tran_header'>PORTFOLIO($ {auth.user.balance})</p>
                             <table className='tran_table'>
                                 <thead>
                                     <tr>
@@ -53,10 +72,10 @@ const Portfolio = props => {
                                                 <tr key={index}>
                                                     <td>{el.name}</td>
                                                     <td>{el.quantity} shares</td>
-                                                    <td>open</td>
-                                                    <td>curr</td>
-                                                    <td>total</td>
-                                                    <td>total</td>
+                                                    <td>{el.apiData ? el.apiData['02. open'] : null}</td>
+                                                    <td>{el.apiData ? el.apiData['05. price'] : null}</td>
+                                                    <td>{el.apiData ? Math.floor(el.apiData['05. price'] * el.quantity) : null}</td>
+                                                    <td>{el.apiData ? Math.floor(el.apiData['06. volume'] / 1000) : null}</td>
                                                 </tr>
                                             )
                                         })
@@ -68,7 +87,7 @@ const Portfolio = props => {
                             <p className='tran_header'>CASH($ {auth.user.balance})</p>
                             <form className="form" action="buy-stocks" onSubmit={e => handleSubmit(e)}>
                                 <div className="form-group">
-                                    <label for="ticker">Ticker</label>
+                                    <label>Ticker</label>
                                     <input
                                         type="text"
                                         placeholder="Ticker"
@@ -79,7 +98,7 @@ const Portfolio = props => {
                                     />
                                 </div>
                                 <div className="form-group">
-                                    <label for="Qty">Qty</label>
+                                    <label>Qty</label>
                                     <input
                                         type="text"
                                         placeholder="Quantity"
@@ -90,7 +109,7 @@ const Portfolio = props => {
                                     />
                                 </div>
                                 <div className="form-group">
-                                    <label for="price">Price</label>
+                                    <label>Price</label>
                                     <input
                                         type="text"
                                         placeholder="Price"

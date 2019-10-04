@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { REGISTER_SUCCESS, REGISTER_FAIL, USER_LOADED, AUTH_ERROR, LOGIN_SUCCESS, LOGIN_FAIL, LOGOUT ,CLEAR_TRANSACTIONS} from './types';
+import { REGISTER_SUCCESS, REGISTER_FAIL, USER_LOADED, AUTH_ERROR, LOGIN_SUCCESS, LOGIN_FAIL, LOGOUT, CLEAR_TRANSACTIONS } from './types';
 import { setAlert } from './alert';
 import setAuthToken from '../utils/setAuthToken';
 import { loadTransaction } from './transaction'
@@ -11,6 +11,14 @@ export const loadUser = () => async dispatch => {
     }
     try {
         const res = await axios.get('/api/auth');
+        delete axios.defaults.headers.common['x-auth-token'];
+
+        let shareholding = res.data.shareholding;
+        for (let i = 0; i < shareholding.length; i++) {
+            let apiRes = await axios.get(`https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${shareholding[i].name}&apikey=5F53S1QWA484BWTH`);
+            if (apiRes.data) shareholding[i].apiData = apiRes.data['Global Quote'];
+        }
+        setAuthToken(localStorage.token);
         dispatch({
             type: USER_LOADED,
             payload: res.data,
@@ -100,7 +108,7 @@ export const logout = () => dispatch => {
         type: LOGOUT,
     })
     dispatch({
-        type:CLEAR_TRANSACTIONS
+        type: CLEAR_TRANSACTIONS
     })
 }
 

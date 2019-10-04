@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 
 const Transaction = props => {
     const { transactions } = props;
-    console.log(transactions);
     return (
         <div>
             <p className = 'tran_header'>TRANSACTIONS</p>
