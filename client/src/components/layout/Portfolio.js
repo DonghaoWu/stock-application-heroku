@@ -67,8 +67,13 @@ const Portfolio = props => {
                                 <tbody>
                                     {
                                         auth.user.shareholding.map((el, index) => {
+                                            let colorClass = 'grey';
+                                            if(el.apiData){
+                                                colorClass = (el.apiData['05. price'] > el.apiData['02. open']) ? 'green' : 'red';
+                                                if(el.apiData['05. price'] === el.apiData['02. open']) colorClass = 'grey';
+                                            }
                                             return (
-                                                <tr key={index}>
+                                                <tr key={index} className = {`${colorClass}`}>
                                                     <td>{el.name}</td>
                                                     <td>{el.quantity} shares</td>
                                                     <td>{el.apiData ? el.apiData['02. open'] : null}</td>

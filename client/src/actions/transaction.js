@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { TRANSACTION_SUCCESS, BUY_STOCK_SUCCESS } from './types';
+import {loadUser} from './auth';
 
 export const loadTransaction = () => async dispatch => {
     try {
@@ -33,7 +34,7 @@ export const buyStock = ({ action, name, quantity, price }) => async dispatch =>
             type: BUY_STOCK_SUCCESS,
             payload: res.data,
         })
-        dispatch(loadTransaction());
+        dispatch(loadUser());
     } catch (error) {
         console.error(error);
     }
