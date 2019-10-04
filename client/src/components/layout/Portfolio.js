@@ -35,7 +35,6 @@ const Portfolio = props => {
                 break;
             }
         }
-        console.log(currentPrice, price);
         if (quantity > Math.floor(availableShare / 1000)) {
             props.setAlert('Not enough shares!', 'danger');
             return;
@@ -124,7 +123,7 @@ const Portfolio = props => {
                         </div>
                     </div>
                     :
-                    <p>Please login or sign up.</p>
+                    <p>Loading...</p>
             }
         </div>
     )
