@@ -77,7 +77,7 @@ router.post('/', [auth,
 // @access Private
 router.get('/', auth, async (req, res) => {
     try {
-        const transactions = await Transaction.find().sort({ date: -1 });
+        const transactions = await Transaction.find({ user: req.user.id }).sort({ date: -1 });
         res.json(transactions);
     } catch (error) {
         console.error(error.message);

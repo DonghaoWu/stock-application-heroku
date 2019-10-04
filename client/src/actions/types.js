@@ -12,3 +12,6 @@ export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_FAIL = 'LOGIN_FAIL';
 //for log out
 export const LOGOUT = 'LOGOUT';
+//for transactions
+export const TRANSACTION_SUCCESS = 'TRANSACTION_SUCCESS';
+export const CLEAR_TRANSACTIONS = 'CLEAR_TRANSACTIONS';

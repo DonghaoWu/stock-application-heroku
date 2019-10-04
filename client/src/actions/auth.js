@@ -1,7 +1,8 @@
 import axios from 'axios';
-import { REGISTER_SUCCESS, REGISTER_FAIL, USER_LOADED, AUTH_ERROR, LOGIN_SUCCESS, LOGIN_FAIL, LOGOUT } from './types';
+import { REGISTER_SUCCESS, REGISTER_FAIL, USER_LOADED, AUTH_ERROR, LOGIN_SUCCESS, LOGIN_FAIL, LOGOUT ,CLEAR_TRANSACTIONS} from './types';
 import { setAlert } from './alert';
-import setAuthToken from '../utils/setAuthToken'
+import setAuthToken from '../utils/setAuthToken';
+import { loadTransaction } from './transaction'
 
 //Load user
 export const loadUser = () => async dispatch => {
@@ -14,6 +15,7 @@ export const loadUser = () => async dispatch => {
             type: USER_LOADED,
             payload: res.data,
         })
+        dispatch(loadTransaction());
     } catch (error) {
         dispatch({
             type: AUTH_ERROR
@@ -41,6 +43,7 @@ export const register = ({ name, email, password }) => async dispatch => {
             payload: res.data,
         })
         dispatch(loadUser());
+        dispatch(loadTransaction());
         //loadUser();
     } catch (error) {
         //---./routes/users.js line 23
@@ -75,7 +78,7 @@ export const login = (email, password) => async dispatch => {
             type: LOGIN_SUCCESS,
             payload: res.data,
         })
-        dispatch(loadUser())
+        dispatch(loadUser());
     } catch (error) {
         //---./routes/users.js line 23
         const errors = error.response.data.errors;
@@ -95,6 +98,9 @@ export const login = (email, password) => async dispatch => {
 export const logout = () => dispatch => {
     dispatch({
         type: LOGOUT,
+    })
+    dispatch({
+        type:CLEAR_TRANSACTIONS
     })
 }
 

@@ -6,6 +6,8 @@ import Landing from './components/layout/Landing';
 import Login from './components/auth/Login';
 import Register from './components/auth/Register';
 import Alert from './components/layout/Alert';
+import Transation from './components/layout/Transaction';
+import Portfolio from './components/layout/Portfolio'
 //Redux & files
 import { Provider } from 'react-redux';
 import store from './store';
@@ -30,12 +32,14 @@ const App = () => {
       <Router>
         <Fragment>
           <Navbar />;
-      <Route exact path='/' component={Landing} />
+          <Route exact path='/' component={Landing} />
           <section className='container'>
             <Alert />
             <Switch>
               <Route exact path='/login' component={Login} />
               <Route exact path='/register' component={Register} />
+              <Route exact path='/portfolio' component={Portfolio} />
+              <Route exact path='/transaction' component={Transation} />
             </Switch>
           </section>
         </Fragment>

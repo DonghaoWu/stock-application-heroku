@@ -9,8 +9,8 @@ const Navbar = props => {
     const authLinks = (
         <ul>
             {auth.user ? <li>Welcom, {auth.user.name}</li> : null}
-            <li><Link to="#">Portfolio</Link></li>
-            <li><Link to="#">Transaction</Link></li>
+            <li><Link to="/portfolio">Portfolio</Link></li>
+            <li><Link to="/transaction">Transaction</Link></li>
             <li>
                 <a onClick={logout} href='/'>Logout</a>
             </li>
