@@ -26,7 +26,7 @@ const Portfolio = props => {
         if (auth.user.balance < quantity * price) {
             props.setAlert('Not enough cash!', 'danger');
         }
-        let availableShare = 1000000000;
+        let availableShare = 100000000;
         let currentPrice = 0;
         for (let i = 0; i < auth.user.shareholding.length; i++) {
             if (auth.user.shareholding[i].name === name && auth.user.shareholding[i].apiData) {
