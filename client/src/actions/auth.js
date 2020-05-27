@@ -13,11 +13,17 @@ export const loadUser = () => async dispatch => {
         const res = await axios.get('/api/auth');
         delete axios.defaults.headers.common['x-auth-token'];
 
-        let shareholding = res.data.shareholding;
-        for (let i = 0; i < shareholding.length; i++) {
-            let apiRes = await axios.get(`https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${shareholding[i].name}&apikey=5F53S1QWA484BWTH`);
-            if (apiRes.data) shareholding[i].apiData = apiRes.data['Global Quote'];
+        res.data.stock = 0;
+
+        for (let i = 0; i < res.data.shareholding.length; i++) {
+            let apiRes = await axios.get(`https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${res.data.shareholding[i].name}&apikey=5F53S1QWA484BWTH`);
+            console.log(apiRes);
+            if (apiRes.data){
+                res.data.shareholding[i].apiData = apiRes.data['Global Quote'];
+                res.data.stock += Number(apiRes.data['Global Quote']['05. price'] * res.data.shareholding[i].quantity);
+            } 
         }
+        console.log(res.data.stock,'=====>')
         setAuthToken(localStorage.token);
         dispatch({
             type: USER_LOADED,
@@ -51,7 +57,7 @@ export const register = ({ name, email, password }) => async dispatch => {
             payload: res.data,
         })
         dispatch(loadUser());
-        dispatch(loadTransaction());
+        //dispatch(loadTransaction());
         //loadUser();
     } catch (error) {
         //---./routes/users.js line 23

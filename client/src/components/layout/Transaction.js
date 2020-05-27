@@ -43,7 +43,7 @@ const Transaction = props => {
 }
 
 Transaction.propTypes = {
-    transactions: PropTypes.object.isRequired,
+    transactions: PropTypes.array.isRequired,
 }
 
 const mapStateToProps = state => ({
