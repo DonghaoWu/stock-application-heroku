@@ -1,7 +1,6 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-// import Operation from './Operation';
 import { useRouteMatch } from "react-router-dom";
 import Stock from './Stock';
 import Operation from './Operation';
@@ -12,17 +11,17 @@ const Portfolio = (props, { match }) => {
     let { path, url } = useRouteMatch();
 
     return (
-        <div>
+        <Fragment>
             {
                 (auth.user) ?
-                    <Fragment>
+                    <div className='portfolio_container'>
                         <Stock />
                         <Operation url={url} path={path} />
-                    </Fragment>
+                    </div>
                     :
                     <p>Loading...</p>
             }
-        </div>
+        </Fragment>
     )
 }
 

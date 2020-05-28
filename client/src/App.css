@@ -604,10 +604,6 @@ th, td {
   display: block;
 }
 
-.tran_table{
-
-}
-
 .green{
   color:green;
 }
@@ -626,7 +622,7 @@ th, td {
     font-size: 19px;
     color: white;
   
-    background-color: #4CAF50;
+    background-color:#4CAF50;
     border-radius: 20px;
     margin: 0 10px 0 10px;
     padding: 10px 20px 10px 20px;
@@ -641,10 +637,40 @@ th, td {
     font-size: 19px;
     color: white;
   
-    background-color: #f44336;
+    background-color:#f44336;
     border-radius: 20px;
     margin: 0 10px 0 10px;
     padding: 10px 20px 10px 20px;
     opacity: 0.8;
     width: 100px;
+}
+
+.disable_tag{
+  font-family: "Source Sans Pro", "Arial", sans-serif;
+  text-decoration: none;
+  text-align: center;
+  font-size: 19px;
+  color: white;
+
+  background-color: #cac9c9;
+  border-radius: 20px;
+  margin: 0 10px 0 10px;
+  padding: 10px 20px 10px 20px;
+  opacity: 0.8;
+  width: 100px;
+}
+
+.normal_tag{
+  font-family: "Source Sans Pro", "Arial", sans-serif;
+  text-decoration: none;
+  text-align: center;
+  font-size: 19px;
+  color: white;
+
+  background-color: #2e2d2d;
+  border-radius: 20px;
+  margin: 0 10px 0 10px;
+  padding: 10px 20px 10px 20px;
+  opacity: 0.8;
+  width: 100px;
 }

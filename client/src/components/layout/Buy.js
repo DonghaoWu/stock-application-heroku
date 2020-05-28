@@ -46,43 +46,43 @@ const Buy = props => {
     }
     return (
         <div className='buy_stocks'>
-        <form className="form" action="buy-stocks" onSubmit={e => handleSubmit(e)}>
-            <div className="form-group">
-                <label>Ticker</label>
-                <input
-                    type="text"
-                    placeholder="Ticker"
-                    name="name"
-                    value={name}
-                    onChange={e => handleChange(e)}
-                    required
-                />
-            </div>
-            <div className="form-group">
-                <label>Qty</label>
-                <input
-                    type="text"
-                    placeholder="Quantity"
-                    value={quantity}
-                    name="quantity"
-                    onChange={e => handleChange(e)}
-                    required
-                />
-            </div>
-            <div className="form-group">
-                <label>Price</label>
-                <input
-                    type="text"
-                    placeholder="Price"
-                    name="price"
-                    value={price}
-                    onChange={e => handleChange(e)}
-                    required
-                />
-            </div>
-            <input type="submit" className="btn btn-primary" value="Buy" />
-        </form>
-    </div>
+            <form className="form" action="buy-stocks" onSubmit={e => handleSubmit(e)}>
+                <div className="form-group">
+                    <label>Ticker</label>
+                    <input
+                        type="text"
+                        placeholder="Ticker"
+                        name="name"
+                        value={name}
+                        onChange={e => handleChange(e)}
+                        required
+                    />
+                </div>
+                <div className="form-group">
+                    <label>Qty</label>
+                    <input
+                        type="text"
+                        placeholder="Quantity"
+                        value={quantity}
+                        name="quantity"
+                        onChange={e => handleChange(e)}
+                        required
+                    />
+                </div>
+                <div className="form-group">
+                    <label>Price</label>
+                    <input
+                        type="text"
+                        placeholder="Price"
+                        name="price"
+                        value={price}
+                        onChange={e => handleChange(e)}
+                        required
+                    />
+                </div>
+                <input type="submit" className="btn btn-success" value="Buy" />
+            </form>
+        </div>
     )
 }
 

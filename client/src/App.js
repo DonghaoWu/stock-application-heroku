@@ -36,9 +36,9 @@ const App = () => {
           <section className='container'>
             <Alert />
             <Switch>
+              <Route path='/portfolio' component={Portfolio} />
               <Route exact path='/login' component={Login} />
               <Route exact path='/register' component={Register} />
-              <Route exact path='/portfolio' component={Portfolio} />
               <Route exact path='/transaction' component={Transation} />
             </Switch>
           </section>
