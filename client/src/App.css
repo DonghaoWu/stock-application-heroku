@@ -585,7 +585,7 @@ th, td {
 .tran_header{
   font-size: 2rem;
   color: #0077b5;
-  margin: 2rem auto;
+  margin: 1rem;
 }
 
 .stock_value{
@@ -660,6 +660,11 @@ th, td {
   width: 100px;
 }
 
+.disable_tag:hover{
+  color: white;
+  background-color: #008CBA;
+}
+
 .normal_tag{
   font-family: "Source Sans Pro", "Arial", sans-serif;
   text-decoration: none;
@@ -673,4 +678,59 @@ th, td {
   padding: 10px 20px 10px 20px;
   opacity: 0.8;
   width: 100px;
+}
+
+
+/* refresh button */
+.total_and_refresh{
+  display:flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items:center;
+}
+
+.refresh_tag{
+  font-family: "Source Sans Pro", "Arial", sans-serif;
+  text-decoration: none;
+  text-align: center;
+  font-size: 19px;
+  color: white;
+
+  background-color: #2e2d2d;
+  border-radius: 20px;
+  margin: 0 10px 0 10px;
+  padding: 10px 20px 10px 20px;
+  opacity: 0.8;
+  width: 100px;
+}
+
+.refresh_tag:hover{
+  color: white;
+  background-color: #008CBA;
+}
+
+
+/* refresh spinner */
+#spinner:not([hidden]) {
+  display: flex;
+}
+
+#spinner::after {
+  content: "";
+  width: 30px;
+  height: 30px;
+  border: 8px solid #f3f3f3;
+  border-top: 8px solid #f25a41;
+  border-radius: 100%;
+  will-change: transform;
+  animation: spin 1s infinite linear
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }

@@ -1,11 +1,14 @@
 import React from 'react'
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+
+import store from '../../store';
+import { refreshStockData } from '../../actions/stockData';
 
 const Stock = props => {
 
-    const { auth } = props;
-
+    const { auth, stockData } = props;
     const setColor = (priceOne, priceTwo) => {
         if (priceOne > priceTwo) return 'green';
         else if (priceOne < priceTwo) return 'red';
@@ -15,8 +18,12 @@ const Stock = props => {
     return (
         <div className='holding_stocks'>
             <p className='tran_header'>PORTFOLIO</p>
-            <p className='tran_header'>Total($ {auth.user.stock + auth.user.balance})</p>
-            <p className='tran_header'>Stock value($ {auth.user.stock})</p>
+            <div className='total_and_refresh'>
+                <p className='tran_header'>Total ($ {Math.floor(stockData.value + auth.user.balance)} )</p>
+                <Link to='#' onClick={() => store.dispatch(refreshStockData())} className={`refresh_tag`}>Refresh</Link>
+                <div hidden id="spinner"></div>
+            </div>
+            <p className='tran_header'>Stock value ($ {Math.floor(stockData.value)} )</p>
             <table className='tran_table'>
                 <thead>
                     <tr>
@@ -35,41 +42,56 @@ const Stock = props => {
                 </thead>
                 <tbody>
                     {
-                        auth.user.shareholding.map((el, index) => {
-                            if (el.apiData) {
-                                // temp = temp + Math.floor(el.apiData['05. price'] * el.quantity);
-                                return (
-                                    <tr key={index}>
-                                        <td>{el.name}</td>
-                                        <td>{el.quantity} shares</td>
-                                        <td className={setColor(el.apiData['05. price'], el.apiData['08. previous close'])} > {el.apiData['05. price']}</td>
-                                        <td className={'grey'} > {el.apiData['08. previous close']}</td>
-                                        <td className={el.apiData['09. change'] > 0 ? `green` : `red`} > {el.apiData['09. change']}</td>
-                                        <td className={el.apiData['09. change'] > 0 ? `green` : `red`} > {el.apiData['10. change percent']}</td>
-                                        <td className={setColor(el.apiData['02. open'], el.apiData['08. previous close'])} > {el.apiData['02. open']}</td>
-                                        <td className={setColor(el.apiData['03. high'], el.apiData['08. previous close'])}> {el.apiData['03. high']}</td>
-                                        <td className={setColor(el.apiData['04. low'], el.apiData['08. previous close'])}> {el.apiData['04. low']}</td>
-                                        <td>{el.apiData ? Math.floor(el.apiData['05. price'] * el.quantity) : null}</td>
-                                        <td>{el.apiData ? Math.floor(el.apiData['06. volume'] / 10000) : null}</td>
-                                    </tr>
-                                )
-                            }
-                            else return null
-                        })
+                        (Object.keys(stockData).length) ?
+                            (
+                                stockData.stock.map((el, index) => {
+                                    return (
+                                        <tr key={index}>
+                                            <td>{el[1]['01. symbol']}</td>
+                                            <td>{el[0]} shares</td>
+                                            <td className={setColor(el[1]['05. price'], el[1]['08. previous close'])} > {el[1]['05. price']}</td>
+                                            <td className={'grey'} > {el[1]['08. previous close']}</td>
+                                            <td className={el[1]['09. change'] > 0 ? `green` : `red`} > {el[1]['09. change']}</td>
+                                            <td className={el[1]['09. change'] > 0 ? `green` : `red`} > {el[1]['10. change percent']}</td>
+                                            <td className={setColor(el[1]['02. open'], el[1]['08. previous close'])} > {el[1]['02. open']}</td>
+                                            <td className={setColor(el[1]['03. high'], el[1]['08. previous close'])}> {el[1]['03. high']}</td>
+                                            <td className={setColor(el[1]['04. low'], el[1]['08. previous close'])}> {el[1]['04. low']}</td>
+                                            <td>{Math.floor(el[0] * el[1]['05. price'])}</td>
+                                            <td>{el[1] ? Math.floor(el[1]['06. volume'] / 10000) : null}</td>
+                                        </tr>
+                                    )
+                                })
+                            )
+                            :
+                            <tr>
+                                <td>Null</td>
+                                <td>Null</td>
+                                <td>Null</td>
+                                <td>Null</td>
+                                <td>Null</td>
+                                <td>Null</td>
+                                <td>Null</td>
+                                <td>Null</td>
+                                <td>Null</td>
+                                <td>Null</td>
+                                <td>Null</td>
+                            </tr>
                     }
                 </tbody>
             </table>
-            <p className='tran_header'>CASH($ {auth.user.balance})</p>
+            <p className='tran_header'>CASH ($ {auth.user.balance} )</p>
         </div>
     )
 }
 
 Stock.propTypes = {
     auth: PropTypes.object.isRequired,
+    stockData: PropTypes.object.isRequired,
 }
 
 const mapStateToProps = state => ({
-    auth: state.auth
+    auth: state.auth,
+    stockData: state.stockData
 })
 
 export default connect(mapStateToProps)(Stock)

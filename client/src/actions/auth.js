@@ -2,7 +2,8 @@ import axios from 'axios';
 import { REGISTER_SUCCESS, REGISTER_FAIL, USER_LOADED, AUTH_ERROR, LOGIN_SUCCESS, LOGIN_FAIL, LOGOUT, CLEAR_TRANSACTIONS } from './types';
 import { setAlert } from './alert';
 import setAuthToken from '../utils/setAuthToken';
-import { loadTransaction } from './transaction'
+import { loadTransaction } from './transaction';
+import {loadStockData} from './stockData';
 
 //Load user
 export const loadUser = () => async dispatch => {
@@ -11,24 +12,12 @@ export const loadUser = () => async dispatch => {
     }
     try {
         const res = await axios.get('/api/auth');
-        delete axios.defaults.headers.common['x-auth-token'];
 
-        res.data.stock = 0;
-
-        for (let i = 0; i < res.data.shareholding.length; i++) {
-            let apiRes = await axios.get(`https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${res.data.shareholding[i].name}&apikey=5F53S1QWA484BWTH`);
-            console.log(apiRes);
-            if (apiRes.data){
-                res.data.shareholding[i].apiData = apiRes.data['Global Quote'];
-                res.data.stock += Number(apiRes.data['Global Quote']['05. price'] * res.data.shareholding[i].quantity);
-            } 
-        }
-        console.log(res.data.stock,'=====>')
-        setAuthToken(localStorage.token);
         dispatch({
             type: USER_LOADED,
             payload: res.data,
         })
+        dispatch(loadStockData());
         dispatch(loadTransaction());
     } catch (error) {
         dispatch({

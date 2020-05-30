@@ -13,7 +13,7 @@ const Operation = props => {
             <NavbarSub url={url} />
             <Switch>
                 <Route exact path={`${path}/sell`} component={Sell} />
-                <Route exact path={`${path}/buy`} component={Buy} />
+                <Route exact path={`${path}`} component={Buy} />
             </Switch>
         </Fragment>
     )

@@ -17,3 +17,6 @@ export const TRANSACTION_SUCCESS = 'TRANSACTION_SUCCESS';
 export const CLEAR_TRANSACTIONS = 'CLEAR_TRANSACTIONS';
 //for buy stock
 export const BUY_STOCK_SUCCESS = 'BUY_STOCK_SUCCESS';
+//for get stock data
+export const GET_STOCK_SUCCESS = 'GET_STOCK_SUCCESS';
+export const GET_STOCK_FAIL = 'GET_STOCK_FAIL';

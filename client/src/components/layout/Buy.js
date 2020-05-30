@@ -25,23 +25,23 @@ const Buy = props => {
         if (auth.user.balance < quantity * price) {
             props.setAlert('Not enough cash!', 'danger');
         }
-        let availableShare = 100000000;
-        let currentPrice = 0;
-        for (let i = 0; i < auth.user.shareholding.length; i++) {
-            if (auth.user.shareholding[i].name === name && auth.user.shareholding[i].apiData) {
-                availableShare = auth.user.shareholding[i].apiData['06. volume'];
-                currentPrice = auth.user.shareholding[i].apiData['05. price']
-                break;
-            }
-        }
-        if (quantity > Math.floor(availableShare / 1000)) {
-            props.setAlert('Not enough shares!', 'danger');
-            return;
-        }
-        if (Number(price) < currentPrice) {
-            props.setAlert('Price is lower than current price!', 'danger');
-            return;
-        }
+        // let availableShare = 100000000;
+        // let currentPrice = 0;
+        // for (let i = 0; i < auth.user.shareholding.length; i++) {
+        //     if (auth.user.shareholding[i].name === name && auth.user.shareholding[i].apiData) {
+        //         availableShare = auth.user.shareholding[i].apiData['06. volume'];
+        //         currentPrice = auth.user.shareholding[i].apiData['05. price']
+        //         break;
+        //     }
+        // }
+        // if (quantity > Math.floor(availableShare / 1000)) {
+        //     props.setAlert('Not enough shares!', 'danger');
+        //     return;
+        // }
+        // if (Number(price) < currentPrice) {
+        //     props.setAlert('Price is lower than current price!', 'danger');
+        //     return;
+        // }
         props.buyStock(({ action: 'BUY', name: name, quantity: quantity, price: price }));
     }
     return (
