@@ -20,3 +20,6 @@ export const BUY_STOCK_SUCCESS = 'BUY_STOCK_SUCCESS';
 //for get stock data
 export const GET_STOCK_SUCCESS = 'GET_STOCK_SUCCESS';
 export const GET_STOCK_FAIL = 'GET_STOCK_FAIL';
+//for get single stock data
+export const GET_SINGLE_STOCK_SUCCESS = 'GET_SINGLE_STOCK_SUCCESS';
+export const GET_SINGLE_STOCK_FAIL = 'GET_SINGLE_STOCK_FAIL';

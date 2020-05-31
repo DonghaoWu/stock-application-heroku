@@ -30,6 +30,20 @@ router.get('/', auth, async (req, res) => {
         console.error(error.message);
         res.status(500).send('Server Error');
     }
-})
+});
+
+// @route  GET api/stock/:symbol
+// @desc   Get single stock data
+// @access Private
+router.get('/:symbol', async (req, res) => {
+    try {
+        const symbol = req.params.symbol;
+        let apiData = await axios.get(`https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${symbol}&apikey=5F53S1QWA484BWTH`);
+        res.json(apiData.data['Global Quote']);
+    } catch (error) {
+        console.error(error.message);
+        res.status(500).send('Server Error');
+    }
+});
 
 module.exports = router;

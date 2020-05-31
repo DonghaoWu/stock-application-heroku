@@ -18,10 +18,10 @@ const Stock = props => {
     return (
         <div className='holding_stocks'>
             <p className='tran_header'>PORTFOLIO</p>
-            <div className='total_and_refresh'>
+            <div className='total_container'>
                 <p className='tran_header'>Total ($ {Math.floor(stockData.value + auth.user.balance)} )</p>
-                <Link to='#' onClick={() => store.dispatch(refreshStockData())} className={`refresh_tag`}>Refresh</Link>
-                <div hidden id="spinner"></div>
+                <Link to='#' id='refresh_button' onClick={() => store.dispatch(refreshStockData())}>Refresh</Link>
+                <div hidden id="refreshing_spinner"></div>
             </div>
             <p className='tran_header'>Stock value ($ {Math.floor(stockData.value)} )</p>
             <table className='tran_table'>

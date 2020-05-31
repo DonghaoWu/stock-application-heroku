@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react';
-import Buy from './Buy';
+// import Buy from './Buy';
+import Buy1 from './Buy1';
 import Sell from './Sell';
 import NavbarSub from './NavbarSub';
 import { Switch, Route } from "react-router-dom";
@@ -13,7 +14,7 @@ const Operation = props => {
             <NavbarSub url={url} />
             <Switch>
                 <Route exact path={`${path}/sell`} component={Sell} />
-                <Route exact path={`${path}`} component={Buy} />
+                <Route exact path={`${path}`} component={Buy1} />
             </Switch>
         </Fragment>
     )
