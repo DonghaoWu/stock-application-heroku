@@ -34,15 +34,6 @@ img {
   width: 100%;
 }
 
-/* Utilities */
-.container {
-  max-width: 1100px;
-  margin: auto;
-  padding: 0 2rem;
-  margin-top: 6rem;
-  margin-bottom: 3rem;
-}
-
 /* Text Styles*/
 .x-large {
   font-size: 4rem;
@@ -140,26 +131,48 @@ img {
   outline: none;
 }
 
-.badge {
-  font-size: 0.8rem;
-  padding: 0.1rem;
-  text-align: center;
-  margin: 0.3rem;
-  background: var(--light-color);
-  color: #333;
+.navbar-logout-button{
+  color:var(--light-color);
+  background-color: var(--dark-color);
+  font-size: 1rem;
+  padding: 0 0.45rem;
+  border: none;
+  cursor: pointer;
+  margin: 0,0.25rem;
+}
+
+.navbar-logout-button:hover{
+  color: var(--primary-color);
+}
+
+/* Utilities */
+.container {
+  max-width: 100%;
+  padding: 0 1rem;
+  margin-top: 4.5rem;
+  margin-bottom: 3rem;
+}
+
+.alert-container{
+  height:100px;
+  display: flex;
+  justify-content: flex-end;
 }
 
 .alert {
-  padding: 0.8rem;
-  margin: 1rem 0;
+  min-width: 10rem;
+  text-align: center;
+  padding: 0.5rem 4rem;
+  margin: 0;
   opacity: 0.9;
   background: var(--light-color);
   color: #333;
+  position: absolute;
+  z-index: 1;
 }
 
 .btn-primary,
 .bg-primary,
-.badge-primary,
 .alert-primary {
   background: var(--primary-color);
   color: #fff;
@@ -167,7 +180,6 @@ img {
 
 .btn-light,
 .bg-light,
-.badge-light,
 .alert-light {
   background: var(--light-color);
   color: #333;
@@ -175,7 +187,6 @@ img {
 
 .btn-dark,
 .bg-dark,
-.badge-dark,
 .alert-dark {
   background: var(--dark-color);
   color: #fff;
@@ -183,7 +194,6 @@ img {
 
 .btn-danger,
 .bg-danger,
-.badge-danger,
 .alert-danger {
   background: var(--danger-color);
   color: #fff;
@@ -191,7 +201,6 @@ img {
 
 .btn-success,
 .bg-success,
-.badge-success,
 .alert-success {
   background: var(--success-color);
   color: #fff;
@@ -199,7 +208,6 @@ img {
 
 .btn-white,
 .bg-white,
-.badge-white,
 .alert-white {
   background: #fff;
   color: #333;
@@ -210,8 +218,7 @@ img {
   opacity: 0.8;
 }
 
-.bg-light,
-.badge-light {
+.bg-light{
   border: #ccc solid 1px;
 }
 
@@ -219,25 +226,11 @@ img {
   border-radius: 50%;
 }
 
-.line {
-  height: 1px;
-  background: #ccc;
-  margin: 1.5rem 0;
-}
-
-/* Overlay */
-.dark-overlay {
-  background-color: rgba(0, 0, 0, 0.7);
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-}
-
 /* --------------------------------------------------------- */
 /* For Form component */
 .form .form-group {
+  width:40%;
+  min-width: 500px;
   margin: 1.2rem 0;
 }
 
@@ -264,6 +257,8 @@ img {
 button {
   font: inherit;
 }
+
+
 
 /* --------------------------------------------------------- */
 /* For Navbar component */
@@ -301,9 +296,21 @@ button {
 /* --------------------------------------------------------- */
 /* For Landing component */
 .landing {
-  position: relative;
   background: url('./img/stock.jpg') no-repeat center center/cover;
-  height: 100vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.dark-landing-overlay {
+  background-color: rgba(0, 0, 0, 0.7);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 }
 
 .landing-inner {
@@ -317,6 +324,8 @@ button {
   justify-content: center;
   text-align: center;
 }
+
+
 
 /* Mobile Styles */
 @media (max-width: 700px) {
@@ -381,14 +390,14 @@ th, td {
     font-size: 1rem;
 }
 
-/* --------------------------------------------------------- */
+/* <NEW>--------------------------------------------------------- */
 /* For Portfolio component */
 .portfolio_container{
   display: block;
   width: 50%
 }
 
-/* --------------------------------------------------------- */
+/* <NEW>--------------------------------------------------------- */
 /* For NavSub component */
 .buy_tag{
     font-family: "Source Sans Pro", "Arial", sans-serif;
@@ -455,7 +464,7 @@ th, td {
   width: 100px;
 }
 
-/* --------------------------------------------------------- */
+/* <NEW>--------------------------------------------------------- */
 /* for Stock component */
 .holding_stocks{
   display: block;
@@ -532,7 +541,7 @@ th, td {
   color:grey
 }
 
-/* --------------------------------------------------------- */
+/* <NEW>--------------------------------------------------------- */
 /* For Buy component */
 /* Buy and sell operation */
 .operation_container{

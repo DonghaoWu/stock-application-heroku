@@ -1,17 +1,25 @@
 import axios from 'axios';
-import { TRANSACTION_SUCCESS, BUY_STOCK_SUCCESS } from './types';
-import {loadUser} from './auth';
+import { LOAD_TRANSACTION_SUCCESS, LOAD_TRANSACTION_FAILURE, BUY_STOCK_SUCCESS } from './types';
+import { loadUser } from './auth';
+import { setAlert } from './alert';
 
 export const loadTransaction = () => async dispatch => {
     try {
         const res = await axios.get('/api/transactions');
 
         dispatch({
-            type: TRANSACTION_SUCCESS,
+            type: LOAD_TRANSACTION_SUCCESS,
             payload: res.data
         })
     } catch (error) {
         console.error(error)
+        dispatch({
+            type: LOAD_TRANSACTION_FAILURE,
+        })
+        dispatch(setAlert({
+            msg: 'Load transaction failure',
+            alertType: 'danger'
+        }))
     }
 }
 

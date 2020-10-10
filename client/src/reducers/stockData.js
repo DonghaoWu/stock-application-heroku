@@ -1,13 +1,13 @@
-import { GET_STOCK_SUCCESS, GET_STOCK_FAIL } from '../actions/types';
+import { LOAD_STOCK_SUCCESS, LOAD_STOCK_FAILURE } from '../actions/types';
 
 const initialState = {};
 
 export default function (state = initialState, action) {
     const { type, payload } = action;
     switch (type) {
-        case GET_STOCK_SUCCESS:
+        case LOAD_STOCK_SUCCESS:
             return { ...payload };
-        case GET_STOCK_FAIL:
+        case LOAD_STOCK_FAILURE:
             return {}
         default:
             return state;

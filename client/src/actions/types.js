@@ -13,13 +13,17 @@ export const LOGIN_FAIL = 'LOGIN_FAIL';
 //for log out
 export const LOGOUT = 'LOGOUT';
 //for transactions
-export const TRANSACTION_SUCCESS = 'TRANSACTION_SUCCESS';
+export const LOAD_TRANSACTION_SUCCESS = 'LOAD_TRANSACTION_SUCCESS';
+export const LOAD_TRANSACTION_FAILURE = 'LOAD_TRANSACTION_FAILURE';
 export const CLEAR_TRANSACTIONS = 'CLEAR_TRANSACTIONS';
 //for buy stock
 export const BUY_STOCK_SUCCESS = 'BUY_STOCK_SUCCESS';
 //for get stock data
-export const GET_STOCK_SUCCESS = 'GET_STOCK_SUCCESS';
-export const GET_STOCK_FAIL = 'GET_STOCK_FAIL';
+export const LOAD_STOCK_SUCCESS = 'LOAD_STOCK_SUCCESS';
+export const LOAD_STOCK_FAILURE = 'LOAD_STOCK_FAILURE';
 //for get single stock data
 export const GET_SINGLE_STOCK_SUCCESS = 'GET_SINGLE_STOCK_SUCCESS';
 export const GET_SINGLE_STOCK_FAIL = 'GET_SINGLE_STOCK_FAIL';
+
+//Clear current user info when no token
+export const NO_TOKEN = 'NO_TOKEN';

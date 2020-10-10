@@ -5,7 +5,7 @@ import { setAlert } from '../../actions/alert';
 import { register } from '../../actions/auth';
 import PropTypes from 'prop-types';
 
-const Register = props => {
+const Register = ({ setAlert, register, isAuthenticated }) => {
     const [formData, setFormData] = useState({
         name: '',
         email: '',
@@ -23,14 +23,17 @@ const Register = props => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (password !== password2) {
-            props.setAlert('Passwords do not match', 'danger');
+            setAlert({
+                msg: 'Passwords do not match',
+                alertType: 'danger'
+            });
         }
         else {
-            props.register(({ name: name, email: email, password: password }));
+            register(({ name: name, email: email, password: password }));
         }
     }
 
-    if (props.isAuthenticated) {
+    if (isAuthenticated) {
         return <Redirect to='/' />
     }
 
@@ -98,6 +101,11 @@ Register.propTypes = {
 
 const mapStateToProps = state => ({
     isAuthenticated: state.auth.isAuthenticated
+});
+
+const mapDispatchToProps = dispatch => ({
+    setAlert: (info) => dispatch(setAlert(info)),
+    register: (userCredentials) => dispatch(register(userCredentials))
 })
 
-export default connect(mapStateToProps, { setAlert, register })(Register);
+export default connect(mapStateToProps, mapDispatchToProps)(Register);

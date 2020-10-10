@@ -1,15 +1,69 @@
 import axios from 'axios';
-import { REGISTER_SUCCESS, REGISTER_FAIL, USER_LOADED, AUTH_ERROR, LOGIN_SUCCESS, LOGIN_FAIL, LOGOUT, CLEAR_TRANSACTIONS } from './types';
+
 import { setAlert } from './alert';
 import setAuthToken from '../utils/setAuthToken';
 import { loadTransaction } from './transaction';
-import {loadStockData} from './stockData';
+import { loadStockData } from './stockData';
+
+import {
+    REGISTER_SUCCESS,
+    REGISTER_FAIL,
+    USER_LOADED,
+    AUTH_ERROR,
+    LOGIN_SUCCESS,
+    LOGIN_FAIL,
+    LOGOUT,
+    CLEAR_TRANSACTIONS,
+    NO_TOKEN
+} from './types';
 
 //Load user
 export const loadUser = () => async dispatch => {
-    if (localStorage.token) {
-        setAuthToken(localStorage.token);
+    if (!localStorage.token) {
+        dispatch({
+            type: NO_TOKEN
+        });
+        return;
     }
+
+    else {
+        setAuthToken(localStorage.token);
+        try {
+            const res = await axios.get('/api/auth');
+
+            dispatch({
+                type: USER_LOADED,
+                payload: res.data,
+            })
+
+            dispatch(setAlert({
+                msg: 'Sign in success',
+                alertType: 'success'
+            }))
+
+            dispatch(loadStockData());
+            dispatch(loadTransaction());
+        } catch (error) {
+            dispatch({
+                type: AUTH_ERROR
+            })
+            dispatch(setAlert({
+                msg: 'Sign in failure',
+                alertType: 'danger'
+            }))
+        }
+    }
+}
+
+export const loadUserAfterSignUp = () => async dispatch => {
+    if (!localStorage.token) {
+        dispatch({
+            type: NO_TOKEN
+        });
+        return;
+    }
+
+    setAuthToken(localStorage.token);
     try {
         const res = await axios.get('/api/auth');
 
@@ -17,12 +71,20 @@ export const loadUser = () => async dispatch => {
             type: USER_LOADED,
             payload: res.data,
         })
-        dispatch(loadStockData());
-        dispatch(loadTransaction());
+
+        dispatch(setAlert({
+            msg: 'Sign up success',
+            alertType: 'success'
+        }))
+
     } catch (error) {
         dispatch({
             type: AUTH_ERROR
         })
+        dispatch(setAlert({
+            msg: 'Sign in failure',
+            alertType: 'danger'
+        }))
     }
 }
 
@@ -45,16 +107,16 @@ export const register = ({ name, email, password }) => async dispatch => {
             type: REGISTER_SUCCESS,
             payload: res.data,
         })
-        dispatch(loadUser());
-        //dispatch(loadTransaction());
-        //loadUser();
+        dispatch(loadUserAfterSignUp());
     } catch (error) {
-        //---./routes/users.js line 23
         const errors = error.response.data.errors;
 
         if (errors) {
             errors.forEach(error => dispatch(
-                setAlert(error.msg, 'danger')
+                setAlert({
+                    msg: error.msg,
+                    alertType: 'danger'
+                })
             ))
         }
         dispatch({
@@ -64,7 +126,7 @@ export const register = ({ name, email, password }) => async dispatch => {
 }
 
 //Login user
-export const login = (email, password) => async dispatch => {
+export const login = ({ email, password }) => async dispatch => {
     const config = {
         headers: {
             'Content-Type': 'application/json',
@@ -83,12 +145,14 @@ export const login = (email, password) => async dispatch => {
         })
         dispatch(loadUser());
     } catch (error) {
-        //---./routes/users.js line 23
         const errors = error.response.data.errors;
 
         if (errors) {
             errors.forEach(error => dispatch(
-                setAlert(error.msg, 'danger')
+                setAlert({
+                    msg: error.msg,
+                    alertType: 'danger'
+                })
             ))
         }
         dispatch({
@@ -105,5 +169,9 @@ export const logout = () => dispatch => {
     dispatch({
         type: CLEAR_TRANSACTIONS
     })
+    dispatch(setAlert({
+        msg: 'Sign out success',
+        alertType: 'success'
+    }))
 }
 

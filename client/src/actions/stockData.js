@@ -1,18 +1,23 @@
 import axios from 'axios';
-import { GET_STOCK_SUCCESS, GET_STOCK_FAIL, GET_SINGLE_STOCK_SUCCESS, GET_SINGLE_STOCK_FAIL } from './types';
+import { LOAD_STOCK_SUCCESS, LOAD_STOCK_FAILURE, GET_SINGLE_STOCK_SUCCESS, GET_SINGLE_STOCK_FAIL } from './types';
+import { setAlert } from './alert';
 
 export const loadStockData = () => async dispatch => {
     try {
         const res = await axios.get('/api/stock');
         dispatch({
-            type: GET_STOCK_SUCCESS,
+            type: LOAD_STOCK_SUCCESS,
             payload: res.data
         })
     } catch (error) {
         console.error(error);
         dispatch({
-            type: GET_STOCK_FAIL,
+            type: LOAD_STOCK_FAILURE,
         })
+        dispatch(setAlert({
+            msg: 'Load stock data failure',
+            alertType: 'danger'
+        }))
     }
 }
 
@@ -42,7 +47,7 @@ export const refreshStockData = () => async dispatch => {
         document.getElementById("refresh_button").innerHTML = `Refresh`;
 
         dispatch({
-            type: GET_STOCK_SUCCESS,
+            type: LOAD_STOCK_SUCCESS,
             payload: res.data
         })
 
@@ -51,7 +56,7 @@ export const refreshStockData = () => async dispatch => {
         document.getElementById("refreshing_spinner").replaceWith(refreshAgainText);
         document.getElementById("refresh_button").innerHTML = `Refresh`;
         dispatch({
-            type: GET_STOCK_FAIL,
+            type: LOAD_STOCK_FAILURE,
         })
     }
 }

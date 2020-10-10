@@ -2,13 +2,12 @@ import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { logout } from '../../actions/auth'
+import { logout } from '../../actions/auth';
 
-const Landing = props => {
-    const { logout, auth } = props;
+const Landing = ({ logout, auth, history }) => {
     const authLinks = (
         <div className="buttons">
-            <a onClick={logout} className="btn btn-danger" href='/'>Logout</a>
+            <button onClick={logout} className="btn btn-danger" href='/'>Logout</button>
         </div>
     );
 
@@ -20,7 +19,7 @@ const Landing = props => {
     );
     return (
         <section className="landing">
-            <div className="dark-overlay">
+            <div className="dark-landing-overlay">
                 <div className="landing-inner">
                     <h1 className="x-large">Fullstack Stock App</h1>
                     <p className="lead">
@@ -48,4 +47,8 @@ const mapStateToProps = state => ({
     auth: state.auth
 })
 
-export default connect(mapStateToProps, { logout })(Landing);
+const mapDispatchToProps = dispatch => ({
+    logout: () => dispatch(logout())
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Landing);

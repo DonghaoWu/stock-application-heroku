@@ -4,15 +4,14 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { logout } from '../../actions/auth'
 
-const Navbar = props => {
-    const { logout, auth } = props;
+const Navbar = ({ auth, logout }) => {
     const authLinks = (
         <ul>
             {auth.user ? <li>Welcome, {auth.user.name}</li> : null}
             <li><Link to="/portfolio">Portfolio</Link></li>
             <li><Link to="/transaction">Transaction</Link></li>
             <li>
-                <a onClick={logout} href='/'>Logout</a>
+                <button className="navbar-logout-button" onClick={logout} href='/'>Logout</button>
             </li>
         </ul>
     );
@@ -49,4 +48,8 @@ const mapStateToProps = state => ({
     auth: state.auth
 })
 
-export default connect(mapStateToProps, { logout })(Navbar);
+const mapDispatchToProps = dispatch => ({
+    logout: () => dispatch(logout())
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Navbar);
