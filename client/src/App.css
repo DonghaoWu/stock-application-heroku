@@ -154,7 +154,6 @@ img {
 }
 
 .alert-container{
-  height:100px;
   display: flex;
   justify-content: flex-end;
 }
@@ -392,9 +391,15 @@ th, td {
 
 /* <NEW>--------------------------------------------------------- */
 /* For Portfolio component */
-.portfolio_container{
+
+
+.transaction_container{
+  display: flex;
+  justify-content: center;
+}
+
+.transaction_content{
   display: block;
-  width: 50%
 }
 
 /* <NEW>--------------------------------------------------------- */
@@ -465,7 +470,12 @@ th, td {
 }
 
 /* <NEW>--------------------------------------------------------- */
-/* for Stock component */
+/* for Portfolio page component */
+.portfolio_container{
+  display: flex;
+  justify-content: center;
+}
+
 .holding_stocks{
   display: block;
 }
@@ -546,22 +556,29 @@ th, td {
 /* Buy and sell operation */
 .operation_container{
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: space-between;
   align-items:flex-start;
   flex-wrap: nowrap;
 }
 
+.input_and_check{
+  display: flex;
+  margin-bottom: 5px;
+}
+
 /* for buy operation */
 #buyForm{
   margin-left: 15px;
-  min-width:400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
 }
 
 /* check-price button and spinner */
 #check_price_container{
-  display: flex;
-  align-items: center;
+  margin: 1.2rem 0.5rem 0;
+  padding: 1.35rem 1.35rem 0 1.35rem;
 }
 
 #check_price_button{

@@ -33,20 +33,22 @@ const Buy1 = props => {
     return (
         <div className='operation_container'>
             <form id='buyForm' className="form" action="buy-stocks" onSubmit={e => handleSubmit(e)}>
-                <div className="form-group">
-                    <label>Ticker</label>
-                    <input
-                        type="text"
-                        placeholder="Ticker"
-                        name="name"
-                        value={name}
-                        onChange={e => handleChange(e)}
-                        required
-                    />
-                </div>
-                <div id='check_price_container'>
-                    <button id='check_price_button' onClick={() => store.dispatch(checkPrice(formData.name))}>Check price</button>
-                    <div id="checking_spinner" hidden></div>
+                <div className='input_and_check'>
+                    <div className="form-group">
+                        <label>Ticker</label>
+                        <input
+                            type="text"
+                            placeholder="Ticker"
+                            name="name"
+                            value={name}
+                            onChange={e => handleChange(e)}
+                            required
+                        />
+                    </div>
+                    <div id='check_price_container'>
+                        <button id='check_price_button' onClick={() => store.dispatch(checkPrice(formData.name))}>Check price</button>
+                        <div id="checking_spinner" hidden></div>
+                    </div>
                 </div>
                 <div className="form-group">
                     <label>Qty</label>

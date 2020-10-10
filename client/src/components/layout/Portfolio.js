@@ -1,22 +1,28 @@
 import React, { Fragment } from 'react';
+import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { useRouteMatch } from "react-router-dom";
 import Stock from './Stock';
 import Operation from './Operation';
 
-
 const Portfolio = (props, { match }) => {
     const { auth } = props;
     let { path, url } = useRouteMatch();
+
+    if (!auth.isAuthenticated) {
+        return <Redirect to='/' />
+    }
 
     return (
         <Fragment>
             {
                 (auth.user) ?
                     <div className='portfolio_container'>
-                        <Stock />
-                        <Operation url={url} path={path} />
+                        <div className='portfolio_content'>
+                            <Stock />
+                            <Operation url={url} path={path} />
+                        </div>
                     </div>
                     :
                     <p>Loading...</p>
