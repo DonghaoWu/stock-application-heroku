@@ -28,13 +28,15 @@ const NavbarSub = props => {
         })
     }
 
-    const Default = (
-        <Fragment>
-            <Link to={`${url}`} className={`buy_tag`} onClick={handleBuy}>Buy</Link>
-            <Link to={`${url}/sell`} className={`disable_tag sell`} onClick={handleSell}>Sell</Link>
-            <Link to={`${url}/collapse`} className={`disable_tag`} onClick={handleCollapse}>Collapse</Link>
-        </Fragment >
-    );
+    const Default = () => {
+        return (
+            <div>
+                <Link to={`${url}`} className={`buy_tag`} onClick={handleBuy}>Buy</Link>
+                <Link to={`${url}/sell`} className={`disable_tag sell`} onClick={handleSell}>Sell</Link>
+                <Link to={`${url}/collapse`} className={`disable_tag`} onClick={handleCollapse}>Collapse</Link>
+            </div >
+        )
+    };
 
     const SellEnable = (
         <Fragment>

@@ -18,11 +18,9 @@ const Portfolio = (props, { match }) => {
         <Fragment>
             {
                 (auth.user) ?
-                    <div className='portfolio_container'>
-                        <div className='portfolio_content'>
-                            <Stock />
-                            <Operation url={url} path={path} />
-                        </div>
+                    <div className='portfolio-container'>
+                        <Stock />
+                        <Operation url={url} path={path} />
                     </div>
                     :
                     <p>Loading...</p>

@@ -39,7 +39,7 @@ const Login = ({ login, setAlert, isAuthenticated }) => {
         <div className='auth-container'>
             <h1 className="auth-header large text-primary">Sign In</h1>
             <p className="lead"><i className="fas fa-user"></i> Sign In Your Account</p>
-            <form className="form" action="create-profile.html" onSubmit={e => handleSubmit(e)}>
+            <form className="form" onSubmit={e => handleSubmit(e)}>
                 <div className="form-group">
                     <input
                         type="email"
@@ -60,9 +60,11 @@ const Login = ({ login, setAlert, isAuthenticated }) => {
                         required
                     />
                 </div>
-                <input type="submit" className="btn btn-primary" value="Login" />
+                <div className='auth-button'>
+                    <input type="submit" className="auth-button btn btn-primary" value="Login" />
+                </div>
             </form>
-            <p className="my-1">
+            <p className="auth-notice my-1">
                 Don't have an account? <Link to="/register">Register </Link>here
                 </p>
         </div>

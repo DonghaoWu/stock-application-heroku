@@ -41,7 +41,7 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
         <div className='auth-container'>
             <h1 className="auth-header large text-primary">Sign Up</h1>
             <p className="lead"><i className="fas fa-user"></i> Create Your Account</p>
-            <form className="form" action="create-profile.html" onSubmit={e => handleSubmit(e)}>
+            <form className="form" onSubmit={e => handleSubmit(e)}>
                 <div className="form-group">
                     <input
                         type="text"
@@ -84,9 +84,11 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
                         required
                     />
                 </div>
-                <input type="submit" className="btn btn-primary" value="Register" />
+                <div className='auth-button'>
+                    <input type="submit" className="btn btn-primary" value="Sign up" />
+                </div>
             </form>
-            <p className="my-1">
+            <p className="auth-notice my-1">
                 Already have an account? <Link to="/login">Login </Link>here
             </p>
         </div>

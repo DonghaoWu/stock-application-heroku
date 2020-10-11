@@ -34,10 +34,10 @@ const App = ({ loadUser }) => {
       <Fragment>
         <Navbar />
         <Route exact path='/' component={Landing} />
+        <div className='alert-container'>
+          <Alert />
+        </div>
         <section className='container'>
-          <div className='alert-container'>
-            <Alert />
-          </div>
           <Switch>
             <Route path='/portfolio' component={Portfolio} />
             <Route exact path='/login' component={Login} />

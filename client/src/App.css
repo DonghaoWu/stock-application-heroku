@@ -132,57 +132,6 @@ img {
   outline: none;
 }
 
-.navbar-logout-button{
-  color:var(--light-color);
-  background-color: var(--dark-color);
-  font-size: 1rem;
-  padding: 0 0.45rem;
-  border: none;
-  cursor: pointer;
-  margin: 0,0.25rem;
-}
-
-.navbar-logout-button:hover{
-  color: var(--primary-color);
-}
-
-/* --------------------------------------------------------- */
-/* For all pages container */
-.container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 0 1rem;
-  margin-top: 4.5rem;
-  margin-bottom: 3rem;
-}
-
-.auth-container{
-  padding-top: 5rem;
-}
-
-.auth-header{
-  width: 100%;
-  text-align: center;
-}
-
-.alert-container{
-  display: flex;
-  justify-content: flex-end;
-}
-
-.alert {
-  min-width: 10rem;
-  text-align: center;
-  padding: 0.5rem 4rem;
-  margin: 0;
-  opacity: 0.9;
-  background: var(--light-color);
-  color: #333;
-  position: absolute;
-  z-index: 1;
-}
-
 .btn-primary,
 .bg-primary,
 .alert-primary {
@@ -239,40 +188,6 @@ img {
 }
 
 /* --------------------------------------------------------- */
-/* For Form component */
-.form .form-group {
-  width:40%;
-  min-width: 500px;
-  margin: 1.2rem 0;
-}
-
-.form .form-text {
-  display: block;
-  margin-top: 0.3rem;
-  color: #888;
-}
-
-.form input[type='text'],
-.form input[type='email'],
-.form input[type='password'],
-.form input[type='date'],
-.form select,
-.form textarea {
-  display: block;
-  width: 100%;
-  padding: 0.4rem;
-  font-size: 1.2rem;
-  border: 1px solid #ccc;
-}
-
-.form input[type='submit'],
-button {
-  font: inherit;
-}
-
-
-
-/* --------------------------------------------------------- */
 /* For Navbar component */
 .navbar {
   display: flex;
@@ -303,6 +218,23 @@ button {
 
 .navbar .welcome span {
   margin-right: 0.6rem;
+}
+
+/* --------------------------------------------------------- */
+/* For navbar button <logout> */
+
+.navbar-logout-button{
+  color:var(--light-color);
+  background-color: var(--dark-color);
+  font-size: 1rem;
+  padding: 0 0.45rem;
+  border: none;
+  cursor: pointer;
+  margin: 0,0.25rem;
+}
+
+.navbar-logout-button:hover{
+  color: var(--primary-color);
 }
 
 /* --------------------------------------------------------- */
@@ -337,6 +269,85 @@ button {
   text-align: center;
 }
 
+/* --------------------------------------------------------- */
+/* For alert */
+.alert-container{
+  margin:4rem 1rem 1rem 1rem;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.alert {
+  min-width: 10rem;
+  text-align: center;
+  padding: 0.5rem 4rem;
+  margin: 0.5rem 0.5rem;
+  opacity: 0.9;
+  z-index: 1;
+}
+
+/* --------------------------------------------------------- */
+/* For all pages container */
+.container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 1rem;
+  margin-top: 4.5rem;
+  margin-bottom: 3rem;
+}
+
+/* --------------------------------------------------------- */
+/* For auth pages */
+.auth-container{
+  margin:1rem;
+  padding: 2rem 2rem 2rem 2rem;
+}
+
+.auth-header{
+  min-width: 550px;
+  text-align: center;
+}
+
+/* --------------------------------------------------------- */
+/* For Form component */
+.form .form-group {
+  min-width: 550px;
+  margin: 1.2rem 0;
+}
+
+.form .form-text {
+  display: block;
+  margin-top: 0.3rem;
+  color: #888;
+}
+
+.form input[type='text'],
+.form input[type='email'],
+.form input[type='password'],
+.form input[type='date'],
+.form select,
+.form textarea {
+  display: block;
+  width: 100%;
+  padding: 0.4rem;
+  font-size: 1.2rem;
+  border: 1px solid #ccc;
+}
+
+.form input[type='submit'],
+button {
+  font: inherit;
+}
+
+.auth-button{
+  text-align: center
+}
+
+.auth-notice{
+  text-align: center
+}
 
 
 /* Mobile Styles */
@@ -380,39 +391,6 @@ button {
   .navbar .welcome {
     display: none;
   }
-}
-
-/* --------------------------------------------------------- */
-/* For general table */
-
-.table th,
-.table td {
-  padding: 1rem;
-  text-align: left;
-}
-
-.table th {
-  background: var(--light-color);
-}
-
-th, td {
-    border: 1px solid black;
-    padding: 10px;
-    text-align: center;
-    font-size: 1rem;
-}
-
-/* <NEW>--------------------------------------------------------- */
-/* For Portfolio component */
-
-
-.transaction_container{
-  display: flex;
-  justify-content: center;
-}
-
-.transaction_content{
-  display: block;
 }
 
 /* <NEW>--------------------------------------------------------- */
@@ -484,19 +462,16 @@ th, td {
 
 /* <NEW>--------------------------------------------------------- */
 /* for Portfolio page component */
-.portfolio_container{
+.portfolio-container{
+  width:85%;
   display: flex;
+  flex-direction: column;
   justify-content: center;
 }
 
 .holding_stocks{
-  display: block;
-}
-
-.tran_header{
-  font-size: 2rem;
-  color: #0077b5;
-  margin: 1rem;
+  display: flex;
+  flex-direction: column;
 }
 
 .total_container{
@@ -506,18 +481,48 @@ th, td {
   align-items:center;
 }
 
+.tran_header{
+  font-size: 2rem;
+  color: #0077b5;
+  margin: 0.5rem;
+  border-bottom: 1px solid
+}
+
+.tran_sub_header{
+  font-size: 1.5rem;
+  color: #0077b5;
+  margin: 0.5rem;
+}
+
+.tran_table{
+  margin:0.5rem;
+  border-collapse: collapse;
+  width:100%;
+  font-size: 5%;
+}
+
+.table th {
+  background: var(--light-color);
+}
+
+th, td {
+    border: 1px solid black;
+    text-align: center;
+    padding:2px;
+}
+
 /* refresh button */
 #refresh_button{
   font-family: "Source Sans Pro", "Arial", sans-serif;
   text-decoration: none;
   text-align: center;
-  font-size: 16px;
+  font-size: 12px;
   color: white;
 
   background-color: #2e2d2d;
   border-radius: 20px;
   margin: 0 10px 0 10px;
-  padding: 10px 20px 10px 20px;
+  padding: 5px 10px 5px 10px;
   opacity: 0.8;
   width: 100px;
 }
@@ -636,5 +641,16 @@ th, td {
   border-radius: 100%;
   will-change: transform;
   animation: spin 1s infinite linear
+}
+
+/* <NEW>--------------------------------------------------------- */
+/* For Transaction component */
+.transaction_container{
+  display: flex;
+  justify-content: center;
+}
+
+.transaction_content{
+  display: block;
 }
 
