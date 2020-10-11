@@ -36,9 +36,9 @@ const Login = ({ login, setAlert, isAuthenticated }) => {
     }
 
     return (
-        <Fragment>
-            <h1 className="large text-primary">Sign In</h1>
-            <p className="lead"><i className="fas fa-user"></i> Sign Into Your Account</p>
+        <div className='auth-container'>
+            <h1 className="auth-header large text-primary">Sign In</h1>
+            <p className="lead"><i className="fas fa-user"></i> Sign In Your Account</p>
             <form className="form" action="create-profile.html" onSubmit={e => handleSubmit(e)}>
                 <div className="form-group">
                     <input
@@ -65,7 +65,7 @@ const Login = ({ login, setAlert, isAuthenticated }) => {
             <p className="my-1">
                 Don't have an account? <Link to="/register">Register </Link>here
                 </p>
-        </Fragment>
+        </div>
     )
 }
 
