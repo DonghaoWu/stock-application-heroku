@@ -5,12 +5,11 @@ import { connect } from 'react-redux';
 const Transaction = props => {
     const { transactions } = props;
     return (
-        <div className='transaction_container'>
-            <div className='transaction_content'>
-                <p className='tran_header'>TRANSACTIONS</p>
+        <div className='record-container'>
+                <p className='record-header'>TRANSACTIONS</p>
                 {
                     (transactions.length) ?
-                        <table className='tran_table'>
+                        <table className='record-table'>
                             <thead>
                                 <tr>
                                     <th>Action</th>
@@ -40,7 +39,6 @@ const Transaction = props => {
                         <h3>No transaction yet.</h3>
                 }
             </div>
-        </div>
     )
 }
 

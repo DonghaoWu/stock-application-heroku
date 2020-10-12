@@ -31,10 +31,6 @@ ul {
   list-style: none;
 }
 
-img {
-  width: 100%;
-}
-
 /* Additional Text Styles */
 .x-large {
   font-size: 4rem;
@@ -54,56 +50,18 @@ img {
   padding: 0.2rem;
 }
 
-.text-center {
-  text-align: center;
-}
-
 .text-primary {
   color: var(--primary-color);
-}
-
-.text-dark {
-  color: var(--dark-color);
 }
 
 /* Padding */
 .p {
   padding: 0.5rem;
 }
-.p-1 {
-  padding: 1rem;
-}
-.p-2 {
-  padding: 2rem;
-}
-.p-3 {
-  padding: 3rem;
-}
-.py {
-  padding: 0.5rem 0;
-}
-.py-1 {
-  padding: 1rem 0;
-}
-.py-2 {
-  padding: 2rem 0;
-}
-.py-3 {
-  padding: 3rem 0;
-}
 
 /* Margin */
 .m {
   margin: 0.5rem;
-}
-.m-1 {
-  margin: 1rem;
-}
-.m-2 {
-  margin: 2rem;
-}
-.m-3 {
-  margin: 3rem;
 }
 .my {
   margin: 0.5rem 0;
@@ -111,26 +69,23 @@ img {
 .my-1 {
   margin: 1rem 0;
 }
-.my-2 {
-  margin: 2rem 0;
-}
-.my-3 {
-  margin: 3rem 0;
-}
 
 /* --------------------------------------------------------- */
 /* For buttons */
 .btn {
-  display: inline-block;
   background: var(--light-color);
   color: #333;
-  padding: 0.4rem 1.3rem;
-  font-size: 1rem;
-  border: none;
-  cursor: pointer;
-  margin-right: 0.5rem;
-  transition: opacity 0.2s ease-in;
+  text-align: center;
+
   outline: none;
+  cursor: pointer;
+  transition: opacity 0.2s ease-in;
+
+  width:7.5rem;
+  margin: 0.6rem;
+  border: 1px solid black;
+  padding: 0.6rem;
+  font-size: 1.2rem;
 }
 
 .btn-primary,
@@ -189,7 +144,7 @@ img {
 }
 
 /* --------------------------------------------------------- */
-/* For Navbar component */
+/* For Navbar component <A class>  */
 .navbar {
   display: flex;
   justify-content: space-between;
@@ -221,9 +176,6 @@ img {
   margin-right: 0.6rem;
 }
 
-/* --------------------------------------------------------- */
-/* For navbar button <logout> */
-
 .navbar-logout-button{
   color:var(--light-color);
   background-color: var(--dark-color);
@@ -239,7 +191,7 @@ img {
 }
 
 /* --------------------------------------------------------- */
-/* For Landing component */
+/* For Landing component <A class>  */
 .landing {
   background: url('./img/stock.jpg') no-repeat center center/cover;
   position: absolute;
@@ -267,11 +219,15 @@ img {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  text-align: center;
+}
+
+.landing-buttons{
+  margin:1rem;
+  display:flex;
 }
 
 /* --------------------------------------------------------- */
-/* For alert */
+/* For alert component <A class>  */
 .alert-container{
   margin:4rem 1rem 1rem 1rem;
   display: flex;
@@ -291,23 +247,20 @@ img {
 }
 
 /* --------------------------------------------------------- */
-/* For all pages container */
+/* For all pages container <A class>  */
 .container {
-  width: 100%;
   display: flex;
   justify-content: center;
-  align-items: center;
-  padding: 0 1rem;
-  margin-top: 4.5rem;
-  margin-bottom: 3rem;
+  padding: 1rem 1rem;
+  margin: 4.5rem 1rem 1rem 1rem;
 }
 
 /* --------------------------------------------------------- */
-/* For auth pages */
+/* For auth pages <B container class>  */
 .auth-container{
-  width: 100%;
-  margin:1rem;
-  padding: 2rem 2rem 2rem 2rem;
+  width: 90%;
+  margin: 1rem;
+  padding: 1rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -318,10 +271,52 @@ img {
   text-align: center;
 }
 
+.auth-form{
+  width:60%;
+  padding:5px;
+  margin:5px;
+  min-width: 400px;
+  max-width: 550px;
+}
+
+.auth-form-group {
+  margin: 1.2rem 0;
+}
+
+.auth-form-group .form-text {
+  display: block;
+  margin-top: 0.3rem;
+  color: #888;
+}
+
+.auth-form-group input[type='text'],
+.auth-form-group input[type='email'],
+.auth-form-group input[type='password'],
+.auth-form-group textarea {
+  display: block;
+  width: 100%;
+  padding: 0.4rem;
+  font-size: 1.2rem;
+  border: 1px solid #ccc;
+}
+
+.auth-form-group input[type='submit'],
+button {
+  font: inherit;
+}
+
+.auth-button{
+  text-align: center
+}
+
+.auth-notice{
+  text-align: center
+}
+
 /* --------------------------------------------------------- */
 /* For Form component */
 
-.form {
+/* .form {
   width:60%;
   padding:5px;
   min-width: 400px;
@@ -354,62 +349,70 @@ img {
 .form input[type='submit'],
 button {
   font: inherit;
-}
+} */
 
-.auth-button{
-  text-align: center
-}
-
-.auth-notice{
-  text-align: center
-}
-
-
-/* <NEW>--------------------------------------------------------- */
-/* for Portfolio page component */
-.portfolio-container{
+/* <NEW> --------------------------------------------------------- */
+/* <B container class>  */
+/* <Share> for Portfolio & Transaction pages component */
+.record-container{
   width:90%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
 }
 
-.holding_stocks{
+.record-header{
+  font-size: 2rem;
+  color: #0077b5;
+  margin: 0.5rem 0.5rem 1rem 0.5rem;
+  border-bottom: 1px solid
+}
+
+.record-table{
+  margin:0.4rem;
+  border-collapse: collapse;
+  width:98%;
+  font-size: 1rem;
+}
+
+.record-table th, td {
+  border: 1px solid black;
+  text-align: center;
+  padding:5px;
+}
+
+/* table font color */
+.green{
+  color:#28a745;
+}
+
+.red{
+  color:#dc3545;
+}
+.grey{
+  color:grey
+}
+
+/* <NEW>--------------------------------------------------------- */
+/* for Portfolio page component <B container class>*/
+.stocks-container{
+  margin:2px;
+  padding:2px;
   display: flex;
   flex-direction: column;
 }
 
-.total_container{
+.total-container{
   display:flex;
   justify-content: flex-start;
   align-items:center;
+  padding: 0.1rem;
 }
 
-.tran_header{
-  font-size: 2rem;
-  color: #0077b5;
-  margin: 0.5rem;
-  border-bottom: 1px solid
-}
-
-.tran_sub_header{
+.tran-sub-header{
   font-size: 1.3rem;
   color: #0077b5;
-  margin: 0.5rem;
-}
-
-.tran_table{
-  margin:0.5rem;
-  border-collapse: collapse;
-  width:100%;
-  font-size: 1rem;
-  /* overflow-x: auto; */
-}
-
-th, td {
-    border: 1px solid black;
-    text-align: center;
-    padding:5px;
+  padding: 0.6rem;
 }
 
 /* refresh button */
@@ -417,22 +420,21 @@ th, td {
   font-family: "Source Sans Pro", "Arial", sans-serif;
   text-decoration: none;
   text-align: center;
-  font-size: 12px;
+  background-color: #2e2d2d;
   color: white;
 
-  background-color: #2e2d2d;
+  width: 100px;
   border-radius: 20px;
   margin: 0 10px 0 10px;
-  padding: 5px 10px 5px 10px;
+  padding: 4px 10px 4px 10px;
+  font-size: 1rem;
   opacity: 0.8;
-  width: 100px;
 }
 
 #refresh_button:hover{
   color: white;
   background-color: #008CBA;
 }
-
 
 /* refreshing spinner */
 #refreshing_spinner:not([hidden]) {
@@ -459,142 +461,93 @@ th, td {
   }
 }
 
-.green{
-  color:green;
-}
-
-.red{
-  color:red;
-}
-.grey{
-  color:grey
-}
-
 /* <NEW>--------------------------------------------------------- */
 /* For NavSub component */
-.buy_tag{
-  font-family: "Source Sans Pro", "Arial", sans-serif;
-  text-decoration: none;
-  text-align: center;
-  font-size: 19px;
-  color: white;
-
-  background-color:#4CAF50;
-  border-radius: 20px;
-  margin: 0 10px 0 10px;
-  padding: 10px 20px 10px 20px;
-  opacity: 0.8;
-  width: 100px;
+.operations-nav-buttons{
+  display: flex;
+  justify-content: flex-start;
 }
 
-.sell_tag{
+.operation-nav-tag{
   font-family: "Source Sans Pro", "Arial", sans-serif;
   text-decoration: none;
   text-align: center;
-  font-size: 19px;
-  color: white;
-
-  background-color:#f44336;
-  border-radius: 20px;
-  margin: 0 10px 0 10px;
-  padding: 10px 20px 10px 20px;
   opacity: 0.8;
-  width: 100px;
-}
-
-.disable_tag{
-  font-family: "Source Sans Pro", "Arial", sans-serif;
-  text-decoration: none;
-  text-align: center;
-  font-size: 19px;
-  color: white;
-
   background-color: #cac9c9;
+  color: white;
   border-radius: 20px;
-  margin: 0 10px 0 10px;
-  padding: 10px 20px 10px 20px;
-  opacity: 0.8;
-  width: 100px;
+
+  margin:0.2rem 0.5rem;
+  padding:0.1rem;
+  font-size: 1rem;
+  width: 120px;
 }
 
-.disable_tag:hover{
+.operation-nav-tag:hover{
   color: white;
   background-color: #008CBA;
 }
 
-.normal_tag{
-  font-family: "Source Sans Pro", "Arial", sans-serif;
-  text-decoration: none;
-  text-align: center;
-  font-size: 19px;
-  color: white;
+.buy-tag{
+  background-color:#4CAF50;
+}
 
-  background-color: #2e2d2d;
-  border-radius: 20px;
-  margin: 0 10px 0 10px;
-  padding: 10px 20px 10px 20px;
-  opacity: 0.8;
-  width: 100px;
+.sell-tag{
+  background-color:#f44336;
+}
+
+.check-tag{
+  margin:0.1rem;
+  background-color:rgba(231, 12, 103, 0.719);
 }
 
 /* <NEW>--------------------------------------------------------- */
-/* For Buy component */
+/* For operation component */
 /* Buy and sell operation */
-.operation_container{
+.operations-content{
+  margin-top:0.4rem;
+  padding: 2px;
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items:flex-start;
+  justify-content: flex-start;
   flex-wrap: nowrap;
 }
 
-.input_and_check{
-  display: flex;
-  margin-bottom: 5px;
-}
-
-/* for buy operation */
-#buyForm{
-  margin-left: 15px;
+.oper-form-container{
+  width:30%;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  width:100px;
+
+  margin: 0.5rem 0.5rem;
+}
+
+.oper-form{
+  width:100%;
+}
+
+.oper-form input[type='text'],
+.oper-form label
+.oper-form textarea {
+  display: block;
+  width: 100%;
+  padding: 0.1rem;
+  border: 1px solid #ccc;
+
+  font-size: 1.2rem;
+  margin: 0.5rem 0.1rem;
+}
+
+.place-btn{
+  width:35%;
+  margin:1rem 0;
+  padding:0.3rem;
+  font-size: 1rem;
 }
 
 /* check-price button and spinner */
-#check_price_container{
-  margin: 1.2rem 0.5rem 0;
-  padding: 1.35rem 1.35rem 0 1.35rem;
+.check-price-container{
+  margin: 0.7rem 0.7rem;
 }
-
-#check_price_button{
-  background-color: #cac9c9; 
-  border: none;
-  color: white;
-  padding: 7px 8px 7px 8px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  border-radius: 20px;
-  margin-right: 10px;
-}
-
-#check_price_button:hover{
-  background-color: #008CBA;
-}
-
-/* for query table */
-/* #query_table{
-  margin-top: 20px;
-  margin-left: 100px;
-  border-spacing: 0px;
-}
-
-.query_table_th{
-  padding:5px 80px 5px 80px
-} */
 
 /* check price button */
 #checking_spinner:not([hidden]) {
@@ -612,23 +565,13 @@ th, td {
   animation: spin 1s infinite linear
 }
 
+
+
 /* <NEW>--------------------------------------------------------- */
-/* For Transaction component */
-.transaction_container{
-  display: flex;
-  justify-content: center;
-}
-
-.transaction_content{
-  display: block;
-}
-
-
-/* //-------------------------------- */
-/* //-------------------------------- */
-/* //-------------------------------- */
+/* <NEW>--------------------------------------------------------- */
+/* <NEW>--------------------------------------------------------- */
 /* Mobile Styles */
-@media (max-width: 920px) {
+@media (max-width: 900px) {
   .container {
     margin-top: 6.8rem;
   }
@@ -645,13 +588,16 @@ th, td {
     font-size: 0.8rem;
   }
 
-  .hide-sm {
-    display: none;
+  .btn {
+    width:5rem;
+    margin: 0.3rem;
+    padding: 0.4rem;
+    font-size: .8rem;
   }
 
   /* Text Styles */
   .x-large {
-    font-size: 3rem;
+    font-size: 2.5rem;
   }
 
   .large {
@@ -681,147 +627,77 @@ th, td {
     display: none;
   }
 
-  .holding_stocks{
-    margin:2px;
-    padding:2px;
-  }
-
-  .tran_table{
-    margin:0.2rem 0.2rem 1.2rem 0.2rem;
-    border-collapse: collapse;
-    width:100%;
-    font-size: 0.2rem;
-    overflow-x: auto;
-  }
-
-  .tran_header{
+  /* <Share> for Portfolio & Transaction pages component */
+  .record-header{
     font-size: 1.5rem;
-    color: #0077b5;
     margin: 0.2rem;
-    border-bottom: 1px solid
   }
-  
-  .tran_sub_header{
+
+  .record-table{
+    margin:0.2rem 0.2rem 0.5rem 0.2rem;
+    width:98%;
+    font-size: 0.6rem;
+  }
+
+  .record-table th, td {
+    padding:3px;
+  }
+
+  /* for Portfolio page component < 900px  >*/
+  .tran-sub-header{
     font-size: 0.7rem;
-    color: #0077b5;
-    margin: 0.1rem;
-  }
-  
-  th, td {
-      padding:1px;
+    padding: 0.2rem;
   }
 
   #refresh_button{
-    font-size: 8px;
-    border-radius: 20px;
+    width: 50px;
     margin: 0 5px 0 5px;
     padding: 3px 5px 2px 5px;
-    opacity: 0.8;
-    width: 45px;
+    font-size: 0.5rem;
   }
 
   #refreshing_spinner::after {
-    content: "";
     width: 12px;
     height: 12px;
     border: 4px solid #f3f3f3;
     border-top: 4px solid #f25a41;
-    border-radius: 100%;
-    will-change: transform;
-    animation: spin 1s infinite linear
   }
 
   #refresh_again_text{
     font-size: 0.6rem;
   }
 
-  .buy_tag{
-    font-size: 8px;
-    border-radius: 20px;
-    margin: 0 5px 0 5px;
-    padding: 5px 8px 5px 8px;
-    opacity: 0.8;
-    width: 45px;
-  }
-  
-  .sell_tag{
-    font-size: 8px;
-    border-radius: 20px;
-    margin: 0 5px 0 5px;
-    padding: 5px 8px 5px 8px;
-    opacity: 0.8;
-    width: 45px;
-  }
-  
-  .disable_tag{
-    font-size: 8px;
-    border-radius: 20px;
-    margin: 0 5px 0 5px;
-    padding: 5px 8px 5px 8px;
-    opacity: 0.8;
-    width: 45px;
+  /* For NavSub component < 900px  > */
+  .operation-nav-tag{
+    margin:0.1rem 0.4rem;
+    font-size: 0.5rem;
+    width: 55px;
   }
 
-  .operation_container{
-    margin:2px;
-    padding: 2px;
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
+  /* For operation component < 900px > */
+  /* Buy and sell operation */
+
+  .oper-form-container{
+    margin: 0.1rem 0.3rem;
   }
 
-  #buyForm{
-    margin:2px;
-    padding:2px;
-    width:30%;
-  }
-
-  .operate-form-group{
-    width:100%;
-  }
-
-  .operate-form-group input[type='text'],
-  .operate-form-group label
-  .operate-form-group textarea {
-    display: block;
-    width: 100%;
-    padding: 0.4rem;
+  .oper-form input[type='text'],
+  .oper-form label
+  .oper-form textarea {
     font-size: 0.6rem;
-    border: 1px solid #ccc;
-    margin: 0.2rem 0;
+    margin: 0.2rem 0.1rem;
   }
 
-  .operate-btn{
-    margin: 10px 2px 0 2px;
-    padding: 3px 3px 3px 3px;
-    width:30%;
+  .place-btn{
+    width:35%;
+    margin:0.5rem 0;
+    padding:0.1rem;
+    font-size: 0.5rem;
   }
 
-  #buyForm input[type='submit'],
-    button {
-      font-size: 0.6rem;
-    }
-
-  #check_price_container{
-    margin: 0.2rem 0.3rem;
-    padding: 0.2rem 0.2rem;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    width:40%;
-  }
-  
-  #check_price_button{
-    background-color: #cac9c9; 
-    border: none;
-    color: white;
-    padding: 7px 8px 7px 8px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 8px;
-    border-radius: 20px;
-    margin-right: 10px;
+  /* check-price button and spinner */
+  .check-price-container{
+    margin: 0.2rem 0.2rem;
   }
 
   #check_price_button_spinner{
@@ -841,19 +717,6 @@ th, td {
     border-radius: 100%;
     will-change: transform;
     animation: spin 1s infinite linear
-  }
-
-  .operate_table{
-    margin:0.2rem 0.2rem 1.2rem 0.2rem;
-    border-collapse: collapse;
-    font-size: 0.2rem;
-    overflow-x: auto;
-    width:30%;
-  }
-
-  .operate_table th{
-    padding:2px;
-    width:1px;
   }
 }
 

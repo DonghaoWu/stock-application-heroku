@@ -39,8 +39,8 @@ const Login = ({ login, setAlert, isAuthenticated }) => {
         <div className='auth-container'>
             <h1 className="auth-header large text-primary">Sign In</h1>
             <p className="lead"><i className="fas fa-user"></i> Sign In Your Account</p>
-            <form className="form" onSubmit={e => handleSubmit(e)}>
-                <div className="form-group">
+            <form className="auth-form" onSubmit={e => handleSubmit(e)}>
+                <div className="auth-form-group">
                     <input
                         type="email"
                         placeholder="Email Address"
@@ -49,7 +49,7 @@ const Login = ({ login, setAlert, isAuthenticated }) => {
                         onChange={e => handleChange(e)}
                         required />
                 </div>
-                <div className="form-group">
+                <div className="auth-form-group">
                     <input
                         type="password"
                         placeholder="Password"

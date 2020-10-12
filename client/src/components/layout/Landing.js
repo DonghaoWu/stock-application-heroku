@@ -6,13 +6,13 @@ import { logout } from '../../actions/auth';
 
 const Landing = ({ logout, auth, history }) => {
     const authLinks = (
-        <div className="buttons">
+        <div className='landing-buttons'>
             <button onClick={logout} className="btn btn-danger" href='/'>Logout</button>
         </div>
     );
 
     const guestLinks = (
-        <div className="buttons">
+        <div className='landing-buttons'>
             <Link to="/register" className="btn btn-primary">Sign Up</Link>
             <Link to="/login" className="btn btn-light">Login</Link>
         </div>

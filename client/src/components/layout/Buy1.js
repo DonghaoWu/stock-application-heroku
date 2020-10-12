@@ -8,7 +8,7 @@ import store from '../../store';
 import { checkPrice } from '../../actions/stockData';
 
 const Buy1 = props => {
-    const { auth, singleData } = props;
+    const { auth } = props;
     const [formData, setFormData] = useState({
         action: '',
         name: '',
@@ -31,9 +31,9 @@ const Buy1 = props => {
         props.buyStock(({ action: 'BUY', name: name, quantity: quantity, price: price }));
     }
     return (
-        <div className='operation_container'>
-            <form id='buyForm' action="buy-stocks" onSubmit={e => handleSubmit(e)}>
-                <div className="operate-form-group">
+        <div className='operations-content'>
+            <form className='oper-form-container' onSubmit={e => handleSubmit(e)}>
+                <div className="oper-form">
                     <input
                         type="text"
                         placeholder="Ticker"
@@ -43,7 +43,7 @@ const Buy1 = props => {
                         required
                     />
                 </div>
-                <div className="operate-form-group">
+                <div className="oper-form">
                     <input
                         type="text"
                         placeholder="Quantity"
@@ -53,42 +53,25 @@ const Buy1 = props => {
                         required
                     />
                 </div>
-                <div className="operate-form-group">
+                <div className="oper-form">
                     <input
                         type="text"
-                        placeholder="Price"
+                        placeholder="Buy Price"
                         name="price"
                         value={price}
                         onChange={e => handleChange(e)}
                         required
                     />
                 </div>
-                <input type="submit" className="btn btn-success operate-btn" value="Place" />
+                <input type="submit" className="operate-nav-tag place-btn" value="BUY" />
             </form>
 
-            <div id='check_price_container'>
+            <div className='check-price-container'>
                 <div id='check_price_button_spinner'>
-                    <button id='check_price_button' onClick={() => store.dispatch(checkPrice(formData.name))}>Check price</button>
+                    <div id='check-price-button' className='operation-nav-tag check-tag' onClick={() => store.dispatch(checkPrice(formData.name))}>Check price</div>
                     <div id="checking_spinner" hidden></div>
                 </div>
             </div>
-
-            <table className='operate_table' id='query_table'>
-                <thead>
-                    <tr>
-                        <th>Symbol</th>
-                        <th>Current price</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {
-                        <tr>
-                            <td >{singleData['01. symbol']}</td>
-                            <td >{singleData['05. price']}</td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
         </div>
     )
 }
@@ -106,4 +89,3 @@ const mapStateToProps = state => ({
 })
 
 export default connect(mapStateToProps, { buyStock, setAlert })(Buy1)
-

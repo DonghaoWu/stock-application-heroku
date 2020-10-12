@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 // import Buy from './Buy';
 import Buy1 from './Buy1';
 import Sell1 from './Sell1';
@@ -10,13 +10,13 @@ const Operation = props => {
     const { url, path } = props;
 
     return (
-        <Fragment>
+        <div className='operations-container'>
             <NavbarSub url={url} />
             <Switch>
                 <Route exact path={`${path}/sell`} component={Sell1} />
                 <Route exact path={`${path}`} component={Buy1} />
             </Switch>
-        </Fragment>
+        </div>
     )
 }
 
