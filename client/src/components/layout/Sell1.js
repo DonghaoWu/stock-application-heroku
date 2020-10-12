@@ -63,7 +63,7 @@ const Buy1 = props => {
                         required
                     />
                 </div>
-                <input type="submit" className="btn btn-success operate-btn" value="Place" />
+                <input type="submit" className="btn btn-danger operate-btn" value="Place" />
             </form>
 
             <div id='check_price_container'>
@@ -92,7 +92,6 @@ const Buy1 = props => {
         </div>
     )
 }
-
 
 Buy1.propTypes = {
     auth: PropTypes.object.isRequired,

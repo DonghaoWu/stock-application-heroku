@@ -1,70 +1,61 @@
-import React, { Fragment, useState } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 const NavbarSub = props => {
     const { url } = props;
 
     const [clickData, setClickData] = useState({
-        action: 'buy'
+        buy: true,
+        sell: false,
+        collapse: false
     });
-
-    const { action } = clickData;
 
     const handleBuy = () => {
         setClickData({
-            ...clickData, action: 'buy'
+            ...clickData, buy: true, sell: false, collapse: false
         })
     }
 
     const handleSell = () => {
         setClickData({
-            ...clickData, action: 'sell'
+            ...clickData, buy: false, sell: true, collapse: false
         })
     }
 
     const handleCollapse = () => {
         setClickData({
-            ...clickData, action: 'collapse'
+            ...clickData, buy: false, sell: false, collapse: true
         })
     }
 
-    const Default = () => {
+    const { buy, sell, collapse } = clickData;
+    if (buy) {
         return (
             <div>
                 <Link to={`${url}`} className={`buy_tag`} onClick={handleBuy}>Buy</Link>
                 <Link to={`${url}/sell`} className={`disable_tag sell`} onClick={handleSell}>Sell</Link>
                 <Link to={`${url}/collapse`} className={`disable_tag`} onClick={handleCollapse}>Collapse</Link>
-            </div >
+            </div>
         )
-    };
-
-    const SellEnable = (
-        <Fragment>
-            <Link to={`${url}`} className={"disable_tag buy"} onClick={handleBuy}>Buy</Link>
-            <Link to={`${url}/sell`} className={`sell_tag`} onClick={handleSell}>Sell</Link>
-            <Link to={`${url}/collapse`} className={`disable_tag`} onClick={handleCollapse}>Collapse</Link>
-        </Fragment>
-    );
-
-    const CollapseEnable = (
-        <Fragment>
-            <Link to={`${url}`} className={"disable_tag buy"} onClick={handleBuy}>Buy</Link>
-            <Link to={`${url}/sell`} className={`disable_tag sell`} onClick={handleSell}>Sell</Link>
-            <Link to={`${url}/collapse`} className={`normal_tag`} onClick={handleCollapse}>Collapse</Link>
-        </Fragment>
-    );
-
-    return (
-        <Fragment>
-            {
-                (action === 'buy') ?
-                    Default :
-                    (action === 'sell') ?
-                        SellEnable :
-                        CollapseEnable
-            }
-        </Fragment>
-    )
+    }
+    else if (sell) {
+        return (
+            <div>
+                <Link to={`${url}`} className={"disable_tag buy"} onClick={handleBuy}>Buy</Link>
+                <Link to={`${url}/sell`} className={`sell_tag`} onClick={handleSell}>Sell</Link>
+                <Link to={`${url}/collapse`} className={`disable_tag`} onClick={handleCollapse}>Collapse</Link>
+            </div>
+        )
+    }
+    else if (collapse) {
+        return (
+            <div>
+                <Link to={`${url}`} className={"disable_tag buy"} onClick={handleBuy}>Buy</Link>
+                <Link to={`${url}/sell`} className={"disable_tag buy"} onClick={handleSell}>Sell</Link>
+                <Link to={`${url}/collapse`} className={`disable_tag`} onClick={handleCollapse}>Collapse</Link>
+            </div>
+        )
+    }
 }
 
 export default NavbarSub;

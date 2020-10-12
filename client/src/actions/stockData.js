@@ -65,14 +65,14 @@ export const checkPrice = (symbol) => async dispatch => {
 
     let checkAgainText = document.createElement("span");
     checkAgainText.innerHTML = "Please try later!";
-    checkAgainText.setAttribute("id", "check_again_text");
+    checkAgainText.setAttribute("id", "check_symbol_again_text");
 
     let checkingSpinner = document.createElement("div");
     checkingSpinner.setAttribute("id", "checking_spinner");
 
     let emptyWarningText = document.createElement("span");
     emptyWarningText.innerHTML = "Please input query symbol!";
-    emptyWarningText.setAttribute("id", "check_again_text");
+    emptyWarningText.setAttribute("id", "check_symbol_again_text");
 
     try {
         document.getElementById("check_price_button").innerHTML = `Loading......`;
@@ -82,25 +82,25 @@ export const checkPrice = (symbol) => async dispatch => {
                 document.getElementById("check_price_button").innerHTML = `Check price`;
                 return document.getElementById("checking_spinner").replaceWith(emptyWarningText);
             }
-            else if (document.getElementById("check_again_text")) {
+            else if (document.getElementById("check_symbol_again_text")) {
                 document.getElementById("check_price_button").innerHTML = `Check price`;
-                return document.getElementById("check_again_text").replaceWith(emptyWarningText);
+                return document.getElementById("check_symbol_again_text").replaceWith(emptyWarningText);
             }
         }
 
-        if (document.getElementById("check_again_text")) {
-            document.getElementById("check_again_text").replaceWith(checkingSpinner);
+        if (document.getElementById("check_symbol_again_text")) {
+            document.getElementById("check_symbol_again_text").replaceWith(checkingSpinner);
         }
 
         document.getElementById("checking_spinner").removeAttribute('hidden');
         const res = await axios.get(`/api/stock/${symbol}`);
 
         if (res.data['01. symbol'] !== undefined) {
-            document.getElementById("query_table").removeAttribute('hidden');
+            // document.getElementById("query_table").removeAttribute('hidden');
             document.getElementById("checking_spinner").setAttribute('hidden', '');
         }
         else {
-            document.getElementById("query_table").setAttribute('hidden', '');
+            // document.getElementById("query_table").setAttribute('hidden', '');
             document.getElementById("checking_spinner").replaceWith(checkAgainText);
         }
 
