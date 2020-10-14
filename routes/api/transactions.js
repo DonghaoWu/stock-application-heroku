@@ -12,7 +12,7 @@ const User = require('../../models/User');
 router.post('/', [auth,
     [
         check('action', 'Action is required').not().isEmpty(),
-        check('name', 'Name is required').not().isEmpty(),
+        check('symbol', 'symbol is required').not().isEmpty(),
         check('quantity', 'Quantity is required').not().isEmpty(),
         check('price', 'Price is required').not().isEmpty(),
     ]
@@ -23,50 +23,44 @@ router.post('/', [auth,
             return res.status(400).json({ errors: errors.array() })
         }
 
-        const { action, name, quantity, price } = req.body;
-        const newTra = {
-            name: name,
+        const { action, symbol, quantity, price } = req.body;
+        const newTransaction = {
+            symbol: symbol,
             quantity: Number(quantity),
         }
 
         try {
             let user = await User.findById(req.user.id).select('-password');
-            let newBalance = user.balance - price * quantity;
-
+            let newBalance = user.balance - Number(price) * quantity;
             if (newBalance < 0) {
                 return res.status(400).json({ msg: "Not enough cash!" })
             }
-            if (user.shareholding.length === 0) {
-                user.shareholding.push(newTra);
-            }
-            else {
-                let arr = user.shareholding;
-                let hasOne = false;
-                for (let i = 0; i < arr.length; i++) {
-                    if (arr[i].name === newTra.name) {
-                        hasOne = true;
-                        arr[i].quantity += newTra.quantity;
-                        break;
-                    }
+
+            let hasOne = false;
+            for (let i = 0; i < user.shareholding.length; i++) {
+                if (user.shareholding[i].symbol === newTransaction.symbol) {
+                    user.shareholding[i].quantity += newTransaction.quantity;
+                    hasOne = true;
+                    break;
                 }
-                if (!hasOne) user.shareholding.push(newTra);
             }
+            if (!hasOne) user.shareholding.push(newTransaction);
             user.balance = newBalance;
+
             await user.save();
 
             let transaction = new Transaction({
                 user: req.user.id,
                 action: action,
-                name: name,
+                symbol: symbol,
                 quantity: quantity,
                 price: price
             })
 
             await transaction.save();
             res.json(user);
-
         } catch (error) {
-            console.error(error.message);
+            console.error(error);
             res.status(500).send('Server Error');
         }
     }

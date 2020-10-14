@@ -25,7 +25,7 @@ const UserSchema = new mongoose.Schema({
     },
     shareholding: [
         {
-            name: {
+            symbol: {
                 type: String,
                 required: true,
             },

@@ -10,7 +10,7 @@ const TransactionSchema = new Schema({
         type: String,
         required: true,
     },
-    name: {
+    symbol: {
         type: String,
         required: true,
     },

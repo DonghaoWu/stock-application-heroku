@@ -18,7 +18,7 @@ router.get('/', auth, async (req, res) => {
             stock: [],
         };
         for (let i = 0; i < user.shareholding.length; i++) {
-            let apiIndivitual = await axios.get(`https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${user.shareholding[i].name}&apikey=5F53S1QWA484BWTH`);
+            let apiIndivitual = await axios.get(`https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${user.shareholding[i].symbol}&apikey=5F53S1QWA484BWTH`);
             if (apiIndivitual.data['Global Quote']) {
                 data.stock.push([user.shareholding[i].quantity, apiIndivitual.data['Global Quote']]);
                 data.value += Number(apiIndivitual.data['Global Quote']['05. price'] * user.shareholding[i].quantity);

@@ -558,7 +558,7 @@ button {
 
 /* check-price button and spinner */
 .check-price-container{
-  margin: 0.5rem 0.7rem;
+  margin: 0.6rem 0.7rem;
   display: flex;
   flex-direction: column;
 }

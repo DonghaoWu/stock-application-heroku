@@ -1,19 +1,18 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
+import axios from 'axios';
 import { connect } from 'react-redux';
-import { buyStock } from '../../actions/transaction';
+
+import { checkPrice } from '../../actions/stockData';
+import { sellStock } from '../../actions/transaction';
 import { setAlert } from '../../actions/alert';
 
-const Sell = props => {
-    const { auth } = props;
+const Buy = ({ auth, checkPrice, setAlert, sellStock, checkPriceResult }) => {
     const [formData, setFormData] = useState({
-        action: '',
-        name: '',
+        symbol: '',
         quantity: '',
-        price: '',
     });
 
-    const { name, quantity, price } = formData;
+    const { symbol, quantity } = formData;
     const handleChange = (e) => {
         setFormData({
             ...formData, [e.target.name]: e.target.value
@@ -22,80 +21,67 @@ const Sell = props => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if (auth.user.balance < quantity * price) {
-            props.setAlert('Not enough cash!', 'danger');
-        }
-        let availableShare = 100000000;
-        let currentPrice = 0;
-        for (let i = 0; i < auth.user.shareholding.length; i++) {
-            if (auth.user.shareholding[i].name === name && auth.user.shareholding[i].apiData) {
-                availableShare = auth.user.shareholding[i].apiData['06. volume'];
-                currentPrice = auth.user.shareholding[i].apiData['05. price']
-                break;
-            }
-        }
-        if (quantity > Math.floor(availableShare / 1000)) {
-            props.setAlert('Not enough shares!', 'danger');
-            return;
-        }
-        if (Number(price) < currentPrice) {
-            props.setAlert('Price is lower than current price!', 'danger');
-            return;
-        }
-        props.buyStock(({ action: 'BUY', name: name, quantity: quantity, price: price }));
+        const stockData = await axios.get(`/api/stock/${symbol}`);
+        const price = stockData.data['05. price'];
+
+        sellStock({ action: 'SELL', symbol: symbol, quantity: quantity, price: price });
     }
+
     return (
-        <div className='buy_stocks'>
-        <form className="form" action="buy-stocks" onSubmit={e => handleSubmit(e)}>
-            <div className="form-group">
-                <label>Ticker</label>
-                <input
-                    type="text"
-                    placeholder="Ticker"
-                    name="name"
-                    value={name}
-                    onChange={e => handleChange(e)}
-                    required
-                />
+        <div className='operations-content'>
+            <form className='oper-form-container' onSubmit={e => handleSubmit(e)}>
+                <div className="oper-form">
+                    <input
+                        type="text"
+                        placeholder="Ticker"
+                        name="symbol"
+                        value={symbol}
+                        onChange={e => handleChange(e)}
+                        required
+                    />
+                </div>
+                <div className="oper-form">
+                    <input
+                        type="text"
+                        placeholder="Quantity"
+                        value={quantity}
+                        name="quantity"
+                        onChange={e => handleChange(e)}
+                        required
+                    />
+                </div>
+                <input type="submit" className="operate-nav-tag place-btn" value="SELL" />
+            </form>
+            <div className='check-price-container'>
+                <div className='button-spinner-container'>
+                    <div id='check-price-button' className='operation-nav-tag check-tag' onClick={() => checkPrice(symbol)}>Check price</div>
+                    <div id="checking-spinner" hidden></div>
+                </div>
+                {
+                    checkPriceResult.data['05. price']
+                        ?
+                        <div className='price-data-container'>
+                            <div>Symbol: {checkPriceResult.data['01. symbol']}</div>
+                            <div>CurrentPrice: {checkPriceResult.data['05. price']}</div>
+                            <div>Updated at: {checkPriceResult.updateTime.toLocaleTimeString()}</div>
+                        </div>
+                        :
+                        null
+                }
             </div>
-            <div className="form-group">
-                <label>Qty</label>
-                <input
-                    type="text"
-                    placeholder="Quantity"
-                    value={quantity}
-                    name="quantity"
-                    onChange={e => handleChange(e)}
-                    required
-                />
-            </div>
-            <div className="form-group">
-                <label>Price</label>
-                <input
-                    type="text"
-                    placeholder="Price"
-                    name="price"
-                    value={price}
-                    onChange={e => handleChange(e)}
-                    required
-                />
-            </div>
-            <input type="submit" className="btn btn-danger" value="Sell" />
-        </form>
-    </div>
+        </div>
     )
 }
 
-
-Sell.propTypes = {
-    auth: PropTypes.object.isRequired,
-    buyStock: PropTypes.func.isRequired,
-    setAlert: PropTypes.func.isRequired,
-}
-
 const mapStateToProps = state => ({
-    auth: state.auth
+    auth: state.auth,
+    checkPriceResult: state.price
 })
 
-export default connect(mapStateToProps, { buyStock, setAlert })(Sell)
+const mapDispatchToProps = dispatch => ({
+    checkPrice: (symbol) => dispatch(checkPrice(symbol)),
+    setAlert: (info) => dispatch(setAlert(info)),
+    sellStock: (stockInfo) => dispatch(sellStock(stockInfo))
+})
 
+export default connect(mapStateToProps, mapDispatchToProps)(Buy)

@@ -25,7 +25,7 @@ const Transaction = props => {
                                         return (
                                             <tr key={index}>
                                                 <td>{el.action}</td>
-                                                <td>{el.name}</td>
+                                                <td>{el.symbol}</td>
                                                 <td>{el.quantity} shares</td>
                                                 <td>{el.price}</td>
                                                 <td>{el.date.slice(0, -5)}</td>

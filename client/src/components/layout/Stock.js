@@ -22,7 +22,7 @@ const Stock = props => {
         let time = new Date().toLocaleTimeString();
         setCurrentTime(time);
     }
-
+    
     return (
         <div className='stocks-container'>
             <p className='record-header'>PORTFOLIO</p>
@@ -90,7 +90,7 @@ const Stock = props => {
                     }
                 </tbody>
             </table>
-            <p className='tran-sub-header'>CASH ($ {auth.user.balance} )</p>
+            <p className='tran-sub-header'>CASH ($ {Math.floor(auth.user.balance)} )</p>
         </div>
     )
 }

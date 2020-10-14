@@ -77,6 +77,8 @@ export const loadUserAfterSignUp = () => async dispatch => {
             alertType: 'success'
         }))
 
+        dispatch(loadStockData());
+        dispatch(loadTransaction());
     } catch (error) {
         dispatch({
             type: AUTH_ERROR
@@ -85,6 +87,30 @@ export const loadUserAfterSignUp = () => async dispatch => {
             msg: 'Sign in failure',
             alertType: 'danger'
         }))
+    }
+}
+
+export const loadUserAfterOperations = () => async dispatch => {
+    if (!localStorage.token) {
+        dispatch({
+            type: NO_TOKEN
+        });
+        return;
+    }
+
+    setAuthToken(localStorage.token);
+    try {
+        const res = await axios.get('/api/auth');
+
+        dispatch({
+            type: USER_LOADED,
+            payload: res.data,
+        })
+
+        dispatch(loadStockData());
+        dispatch(loadTransaction());
+    } catch (error) {
+        console.error(error);
     }
 }
 
