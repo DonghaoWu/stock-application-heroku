@@ -38,7 +38,7 @@ export const refreshStockData = () => async dispatch => {
 
     let refreshAgain = createDivWhenCheckPrice({
         tagName: 'div',
-        innerHTML: 'Please try later!',
+        innerHTML: 'Please try later, API call frequency is 5 calls per minute.',
         id: 'refresh-again-text'
     })
 
@@ -99,7 +99,7 @@ export const checkPrice = (symbol) => async dispatch => {
 
     let tryAgain = createDivWhenCheckPrice({
         tagName: 'div',
-        innerHTML: 'Please try later!',
+        innerHTML: 'Please try later, API call frequency is 5 calls per minute.',
         id: 'try-again-text'
     })
 
