@@ -1,5 +1,10 @@
 import axios from 'axios';
-import { LOAD_STOCK_SUCCESS, LOAD_STOCK_FAILURE, GET_SINGLE_STOCK_SUCCESS, GET_SINGLE_STOCK_FAIL } from './types';
+import {
+    LOAD_STOCK_SUCCESS,
+    LOAD_STOCK_FAILURE,
+    CHECK_PRICE_SUCCESS,
+    REFRESH_SUCCESS,
+} from './types';
 import { setAlert } from './alert';
 
 export const loadStockData = () => async dispatch => {
@@ -23,99 +28,121 @@ export const loadStockData = () => async dispatch => {
 
 export const refreshStockData = () => async dispatch => {
 
-    let refreshSpinner = document.createElement("div");
-    refreshSpinner.setAttribute("id", "refreshing_spinner");
+    const createDivWhenCheckPrice = ({ tagName, innerHTML, id }) => {
+        let tag = document.createElement(tagName);
+        tag.innerHTML = innerHTML;
+        tag.setAttribute('id', id);
 
-    let refreshAgainText = document.createElement("span");
-    refreshAgainText.innerHTML = "Please try later!";
-    refreshAgainText.setAttribute("id", "refresh_again_text");
+        return tag;
+    }
+
+    let refreshAgain = createDivWhenCheckPrice({
+        tagName: 'div',
+        innerHTML: 'Please try later!',
+        id: 'refresh-again-text'
+    })
+
+    let refreshingSpinner = createDivWhenCheckPrice({
+        tagName: 'div',
+        innerHTML: '',
+        id: 'refreshing-spinner'
+    })
 
     try {
-        let res = {};
-        document.getElementById("refresh_button").innerHTML = `Loading...`;
+        document.getElementById("refreshing-button").innerHTML = `Loading...`;
 
-        if (document.getElementById("refresh_again_text")) {
-            document.getElementById("refresh_again_text").replaceWith(refreshSpinner);
-            res = await axios.get('/api/stock');
-            document.getElementById("refreshing_spinner").setAttribute('hidden', '');
+        if (document.getElementById("refresh-again-text")) {
+            document.getElementById("refresh-again-text").replaceWith(refreshingSpinner);
         }
-        else if (document.getElementById("refreshing_spinner")) {
-            document.getElementById("refreshing_spinner").removeAttribute('hidden');
-            res = await axios.get('/api/stock');
-            document.getElementById("refreshing_spinner").setAttribute('hidden', '');
-        }
-        document.getElementById("refresh_button").innerHTML = `Refresh`;
+        document.getElementById("refreshing-spinner").removeAttribute('hidden');
+        let res = await axios.get('/api/stock');
 
-        dispatch({
-            type: LOAD_STOCK_SUCCESS,
-            payload: res.data
-        })
+        document.getElementById("refreshing-spinner").setAttribute('hidden', '');
+        document.getElementById("refreshing-button").innerHTML = `Refresh`;
+
+        if (res.data.stock) {
+            document.getElementById("refreshing-spinner").setAttribute('hidden', '');
+            dispatch(setAlert({ msg: 'Refresh sucess', alertType: 'success' }))
+            dispatch({
+                type: REFRESH_SUCCESS,
+                payload: res.data
+            })
+        }
+        else {
+            dispatch(setAlert({ msg: 'Refresh failure', alertType: 'danger' }));
+            document.getElementById("refreshing-spinner").replaceWith(refreshAgain);
+        }
 
     } catch (error) {
+        dispatch(setAlert({ msg: 'Refresh failure', alertType: 'danger' }));
         console.error(error);
-        document.getElementById("refreshing_spinner").replaceWith(refreshAgainText);
-        document.getElementById("refresh_button").innerHTML = `Refresh`;
-        dispatch({
-            type: LOAD_STOCK_FAILURE,
-        })
+        document.getElementById("refreshing-spinner").replaceWith(refreshAgain);
+        document.getElementById("refreshing-button").innerHTML = `Refresh`;
     }
 }
 
 export const checkPrice = (symbol) => async dispatch => {
 
-    let checkAgainText = document.createElement("span");
-    checkAgainText.innerHTML = "Please try later!";
-    checkAgainText.setAttribute("id", "check_symbol_again_text");
+    const createDivWhenCheckPrice = ({ tagName, innerHTML, id }) => {
+        let tag = document.createElement(tagName);
+        tag.innerHTML = innerHTML;
+        tag.setAttribute('id', id);
 
-    let checkingSpinner = document.createElement("div");
-    checkingSpinner.setAttribute("id", "checking_spinner");
+        return tag;
+    }
 
-    let emptyWarningText = document.createElement("span");
-    emptyWarningText.innerHTML = "Please input query symbol!";
-    emptyWarningText.setAttribute("id", "check_symbol_again_text");
+    let emptyWarning = createDivWhenCheckPrice({
+        tagName: 'div',
+        innerHTML: 'Please input query symbol.',
+        id: 'empty-symbol-text'
+    })
+
+    let tryAgain = createDivWhenCheckPrice({
+        tagName: 'div',
+        innerHTML: 'Please try later!',
+        id: 'try-again-text'
+    })
+
+    let checkingSpinner = createDivWhenCheckPrice({
+        tagName: 'div',
+        innerHTML: '',
+        id: 'checking-spinner'
+    })
 
     try {
-        document.getElementById("check_price_button").innerHTML = `Loading......`;
+        document.getElementById("check-price-button").innerHTML = `Loading......`;
 
         if (!symbol) {
-            if (document.getElementById("checking_spinner")) {
-                document.getElementById("check_price_button").innerHTML = `Check price`;
-                return document.getElementById("checking_spinner").replaceWith(emptyWarningText);
-            }
-            else if (document.getElementById("check_symbol_again_text")) {
-                document.getElementById("check_price_button").innerHTML = `Check price`;
-                return document.getElementById("check_symbol_again_text").replaceWith(emptyWarningText);
-            }
+            document.getElementById("check-price-button").innerHTML = `Check price`;
+            let target = document.getElementById("checking-spinner") || document.getElementById("try-again-text") || document.getElementById("empty-symbol-text");
+            return target.replaceWith(emptyWarning);
         }
 
-        if (document.getElementById("check_symbol_again_text")) {
-            document.getElementById("check_symbol_again_text").replaceWith(checkingSpinner);
+        if (document.getElementById("try-again-text") || document.getElementById("empty-symbol-text")) {
+            let target = document.getElementById("try-again-text") || document.getElementById("empty-symbol-text");
+            target.replaceWith(checkingSpinner);
         }
 
-        document.getElementById("checking_spinner").removeAttribute('hidden');
+        document.getElementById("checking-spinner").removeAttribute('hidden');
         const res = await axios.get(`/api/stock/${symbol}`);
 
-        if (res.data['01. symbol'] !== undefined) {
-            // document.getElementById("query_table").removeAttribute('hidden');
-            document.getElementById("checking_spinner").setAttribute('hidden', '');
+        if (res.data['01. symbol']) {
+            document.getElementById("checking-spinner").setAttribute('hidden', '');
+            dispatch(setAlert({ msg: 'Check price sucess', alertType: 'success' }))
+            dispatch({
+                type: CHECK_PRICE_SUCCESS,
+                payload: res.data
+            })
         }
         else {
-            // document.getElementById("query_table").setAttribute('hidden', '');
-            document.getElementById("checking_spinner").replaceWith(checkAgainText);
+            dispatch(setAlert({ msg: 'Check price failure', alertType: 'danger' }));
+            document.getElementById("checking-spinner").replaceWith(tryAgain);
         }
 
-        document.getElementById("check_price_button").innerHTML = `Check price`;
-
-        dispatch({
-            type: GET_SINGLE_STOCK_SUCCESS,
-            payload: res.data
-        })
+        document.getElementById("check-price-button").innerHTML = `Check price`;
 
     } catch (error) {
         console.error(error);
-        document.getElementById("check_price_button").innerHTML = `Check price`;
-        dispatch({
-            type: GET_SINGLE_STOCK_FAIL,
-        })
+        document.getElementById("check-price-button").innerHTML = `Check price`;
     }
 }

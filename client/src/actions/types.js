@@ -21,9 +21,12 @@ export const BUY_STOCK_SUCCESS = 'BUY_STOCK_SUCCESS';
 //for get stock data
 export const LOAD_STOCK_SUCCESS = 'LOAD_STOCK_SUCCESS';
 export const LOAD_STOCK_FAILURE = 'LOAD_STOCK_FAILURE';
-//for get single stock data
-export const GET_SINGLE_STOCK_SUCCESS = 'GET_SINGLE_STOCK_SUCCESS';
-export const GET_SINGLE_STOCK_FAIL = 'GET_SINGLE_STOCK_FAIL';
+//for check stock price
+export const CHECK_PRICE_SUCCESS = 'CHECK_PRICE_SUCCESS';
+export const CHECK_PRICE_FAILURE = 'CHECK_PRICE_FAILURE';
+//for refresh stock price
+export const REFRESH_SUCCESS = 'REFRESH_SUCCESS';
+export const REFRESH_FAILURE = 'REFRESH_FAILURE';
 
 //Clear current user info when no token
 export const NO_TOKEN = 'NO_TOKEN';

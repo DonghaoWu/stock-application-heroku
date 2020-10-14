@@ -7,8 +7,7 @@ import { setAlert } from '../../actions/alert';
 import store from '../../store';
 import { checkPrice } from '../../actions/stockData';
 
-const Buy1 = props => {
-    const { auth } = props;
+const Buy1 = ({ auth, checkPrice, setAlert }) => {
     const [formData, setFormData] = useState({
         action: '',
         name: '',
@@ -26,9 +25,12 @@ const Buy1 = props => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (auth.user.balance < quantity * price) {
-            props.setAlert('Not enough cash!', 'danger');
+            setAlert({
+                msg: 'Not enough cash!',
+                alertType: 'danger'
+            });
         }
-        props.buyStock(({ action: 'BUY', name: name, quantity: quantity, price: price }));
+        buyStock(({ action: 'BUY', name: name, quantity: quantity, price: price }));
     }
     return (
         <div className='operations-content'>
@@ -67,10 +69,8 @@ const Buy1 = props => {
             </form>
 
             <div className='check-price-container'>
-                <div id='check_price_button_spinner'>
-                    <div id='check-price-button' className='operation-nav-tag check-tag' onClick={() => store.dispatch(checkPrice(formData.name))}>Check price</div>
-                    <div id="checking_spinner" hidden></div>
-                </div>
+                <div id='check-price-button' className='operation-nav-tag check-tag' onClick={() => store.dispatch(checkPrice(formData.name))}>Check price</div>
+                <div id="checking-spinner" hidden></div>
             </div>
         </div>
     )
@@ -88,4 +88,9 @@ const mapStateToProps = state => ({
     singleData: state.singleData
 })
 
-export default connect(mapStateToProps, { buyStock, setAlert })(Buy1)
+const mapDispatchToProps = dispatch => ({
+    checkPrice: () => dispatch(checkPrice()),
+    setAlert: () => dispatch(setAlert())
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Buy1)

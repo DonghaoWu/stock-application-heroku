@@ -1,14 +1,11 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+
+import { checkPrice } from '../../actions/stockData';
 import { buyStock } from '../../actions/transaction';
 import { setAlert } from '../../actions/alert';
 
-import store from '../../store';
-import { checkPrice } from '../../actions/stockData';
-
-const Buy1 = props => {
-    const { auth } = props;
+const Buy1 = ({ auth, checkPrice, setAlert, buyStock, checkPriceResult }) => {
     const [formData, setFormData] = useState({
         action: '',
         name: '',
@@ -26,10 +23,15 @@ const Buy1 = props => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (auth.user.balance < quantity * price) {
-            props.setAlert('Not enough cash!', 'danger');
+            setAlert({
+                msg: 'Not enough cash!',
+                alertType: 'danger'
+            });
         }
-        props.buyStock(({ action: 'BUY', name: name, quantity: quantity, price: price }));
+        buyStock({ action: 'BUY', name: name, quantity: quantity, price: price });
     }
+
+    if (checkPriceResult.updateTime) console.log(checkPriceResult);
     return (
         <div className='operations-content'>
             <form className='oper-form-container' onSubmit={e => handleSubmit(e)}>
@@ -56,7 +58,7 @@ const Buy1 = props => {
                 <div className="oper-form">
                     <input
                         type="text"
-                        placeholder="Buy Price"
+                        placeholder="Sell Price"
                         name="price"
                         value={price}
                         onChange={e => handleChange(e)}
@@ -65,27 +67,36 @@ const Buy1 = props => {
                 </div>
                 <input type="submit" className="operate-nav-tag place-btn" value="BUY" />
             </form>
-
             <div className='check-price-container'>
-                <div id='check_price_button_spinner'>
-                    <div id='check-price-button' className='operation-nav-tag check-tag' onClick={() => store.dispatch(checkPrice(formData.name))}>Check price</div>
-                    <div id="checking_spinner" hidden></div>
+                <div className='button-spinner-container'>
+                    <div id='check-price-button' className='operation-nav-tag check-tag' onClick={() => checkPrice(formData.name)}>Check price</div>
+                    <div id="checking-spinner" hidden></div>
                 </div>
+                {
+                    checkPriceResult.data['05. price']
+                        ?
+                        <div className='price-data-container'>
+                            <div>Symbol: {checkPriceResult.data['01. symbol']}</div>
+                            <div>CurrentPrice: {checkPriceResult.data['05. price']}</div>
+                            <div>Updated at: {checkPriceResult.updateTime.toLocaleTimeString()}</div>
+                        </div>
+                        :
+                        null
+                }
             </div>
         </div>
     )
 }
 
-
-Buy1.propTypes = {
-    auth: PropTypes.object.isRequired,
-    buyStock: PropTypes.func.isRequired,
-    setAlert: PropTypes.func.isRequired,
-}
-
 const mapStateToProps = state => ({
     auth: state.auth,
-    singleData: state.singleData
+    checkPriceResult: state.price
 })
 
-export default connect(mapStateToProps, { buyStock, setAlert })(Buy1)
+const mapDispatchToProps = dispatch => ({
+    checkPrice: (stockName) => dispatch(checkPrice(stockName)),
+    setAlert: (info) => dispatch(setAlert(info)),
+    buyStock: (stockInfo) => dispatch(buyStock(stockInfo))
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Buy1)

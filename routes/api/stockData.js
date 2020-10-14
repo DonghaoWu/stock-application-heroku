@@ -19,17 +19,19 @@ router.get('/', auth, async (req, res) => {
         };
         for (let i = 0; i < user.shareholding.length; i++) {
             let apiIndivitual = await axios.get(`https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${user.shareholding[i].name}&apikey=5F53S1QWA484BWTH`);
-            if (apiIndivitual.data) {
+            if (apiIndivitual.data['Global Quote']) {
                 data.stock.push([user.shareholding[i].quantity, apiIndivitual.data['Global Quote']]);
                 data.value += Number(apiIndivitual.data['Global Quote']['05. price'] * user.shareholding[i].quantity);
             }
+            else {
+                throw new Error('API call frequency is 5 calls per minute and 500 calls per day.');
+            }
         }
-        // console.log(data);
         res.json(data);
         return;
     } catch (error) {
         console.error(error.message);
-        res.status(500).send('Server Error');
+        res.status(500).send('Thank you for using Alpha Vantage! Our standard API call frequency is 5 calls per minute and 500 calls per day. Please visit https://www.alphavantage.co/premium/ if you would like to target a higher API call frequency.');
     }
 });
 
