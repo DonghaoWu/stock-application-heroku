@@ -21,7 +21,7 @@ const Buy = ({ auth, checkPrice, setAlert, sellStock, checkPriceResult }) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const symbolTrim = symbol.trim();
+        const symbolTrim = symbol.trim().toUpperCase();
         const res = await axios.get(`/api/stock/${symbolTrim}`);
         const price = res.data.stockData.c;
         let hasOne = false;
@@ -76,7 +76,7 @@ const Buy = ({ auth, checkPrice, setAlert, sellStock, checkPriceResult }) => {
             </form>
             <div className='check-price-container'>
                 <div className='button-spinner-container'>
-                    <div id='check-price-button' className='operation-nav-tag check-tag' onClick={() => checkPrice(symbol.trim())}>Check price</div>
+                    <div id='check-price-button' className='operation-nav-tag check-tag' onClick={() => checkPrice(symbol.trim().toUpperCase())}>Check price</div>
                     <div id="checking-spinner" hidden></div>
                 </div>
                 {
