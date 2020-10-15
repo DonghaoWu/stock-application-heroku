@@ -22,7 +22,7 @@ const Buy = ({ auth, checkPrice, setAlert, buyStock, checkPriceResult }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         const stockData = await axios.get(`/api/stock/${symbol}`);
-        const price = stockData.data['05. price'];
+        const price = stockData.data.c;
 
         if (auth.user.balance < quantity * price) {
             setAlert({
@@ -65,11 +65,11 @@ const Buy = ({ auth, checkPrice, setAlert, buyStock, checkPriceResult }) => {
                     <div id="checking-spinner" hidden></div>
                 </div>
                 {
-                    checkPriceResult.data['05. price']
+                    checkPriceResult.data['c']
                         ?
                         <div className='price-data-container'>
-                            <div>Symbol: {checkPriceResult.data['01. symbol']}</div>
-                            <div>CurrentPrice: {checkPriceResult.data['05. price']}</div>
+                            <div>Symbol: {symbol}</div>
+                            <div>CurrentPrice: {checkPriceResult.data['c']}</div>
                             <div>Updated at: {checkPriceResult.updateTime.toLocaleTimeString()}</div>
                         </div>
                         :

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { LOAD_TRANSACTION_SUCCESS, LOAD_TRANSACTION_FAILURE } from './types';
 import { setAlert } from './alert';
-import { loadUserAfterOperations } from './auth';
+import { loadDataAfterOperation } from './auth';
 
 export const loadTransaction = () => async dispatch => {
     try {
@@ -10,7 +10,11 @@ export const loadTransaction = () => async dispatch => {
         dispatch({
             type: LOAD_TRANSACTION_SUCCESS,
             payload: res.data
-        })
+        });
+        dispatch(setAlert({
+            msg: 'Load transactions data success',
+            alertType: 'success'
+        }));
     } catch (error) {
         console.error(error)
         dispatch({
@@ -40,7 +44,7 @@ export const buyStock = ({ action, symbol, quantity, price }) => async dispatch 
 
         await axios.post('/api/transactions', body, config);
 
-        dispatch(loadUserAfterOperations());
+        dispatch(loadDataAfterOperation());
         dispatch(setAlert({
             msg: `Buy stock success: ${symbol} ${quantity} share(s)`,
             alertType: 'success'
@@ -71,7 +75,7 @@ export const sellStock = ({ action, symbol, quantity, price }) => async dispatch
 
         await axios.post('/api/transactions', body, config);
 
-        dispatch(loadUserAfterOperations());
+        dispatch(loadDataAfterOperation());
         dispatch(setAlert({
             msg: `Sell stock success: ${symbol} ${quantity} share(s)`,
             alertType: 'success'

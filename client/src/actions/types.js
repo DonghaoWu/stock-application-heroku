@@ -30,3 +30,6 @@ export const REFRESH_FAILURE = 'REFRESH_FAILURE';
 
 //Clear current user info when no token
 export const NO_TOKEN = 'NO_TOKEN';
+
+//Clear previous user data
+export const CLEAR_ALL_PREVIOUS_USER_DATA = 'CLEAR_ALL_PREVIOUS_USER_DATA';

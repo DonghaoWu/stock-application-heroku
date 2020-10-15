@@ -1,7 +1,9 @@
 //library
 const express = require('express');
 const connectDB = require('./config/db');
-const path = require('path')
+require('dotenv').config();
+const path = require('path');
+
 //apply
 const app = express();
 connectDB();

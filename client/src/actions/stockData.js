@@ -13,7 +13,13 @@ export const loadStockData = () => async dispatch => {
         dispatch({
             type: LOAD_STOCK_SUCCESS,
             payload: res.data
-        })
+        });
+
+        dispatch(setAlert({
+            msg: 'Load stock data success',
+            alertType: 'success'
+        }));
+
     } catch (error) {
         console.error(error);
         dispatch({
@@ -126,7 +132,7 @@ export const checkPrice = (symbol) => async dispatch => {
         document.getElementById("checking-spinner").removeAttribute('hidden');
         const res = await axios.get(`/api/stock/${symbol}`);
 
-        if (res.data['01. symbol']) {
+        if (res.data) {
             document.getElementById("checking-spinner").setAttribute('hidden', '');
             dispatch(setAlert({ msg: 'Check price sucess', alertType: 'success' }))
             dispatch({

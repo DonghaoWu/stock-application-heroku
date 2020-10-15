@@ -12,13 +12,38 @@ import {
     AUTH_ERROR,
     LOGIN_SUCCESS,
     LOGIN_FAIL,
-    LOGOUT,
-    CLEAR_TRANSACTIONS,
-    NO_TOKEN
+    NO_TOKEN,
+    CLEAR_ALL_PREVIOUS_USER_DATA
 } from './types';
 
 //Load user
 export const loadUser = () => async dispatch => {
+    try {
+        const res = await axios.get('/api/auth');
+
+        dispatch({
+            type: USER_LOADED,
+            payload: res.data,
+        });
+
+        dispatch(setAlert({
+            msg: 'Load user success',
+            alertType: 'success'
+        }));
+
+    } catch (error) {
+        dispatch({
+            type: AUTH_ERROR
+        })
+        dispatch(setAlert({
+            msg: 'Load user failure',
+            alertType: 'danger'
+        }))
+    }
+}
+
+//Load all data
+export const loadAllData = () => async dispatch => {
     if (!localStorage.token) {
         dispatch({
             type: NO_TOKEN
@@ -29,88 +54,14 @@ export const loadUser = () => async dispatch => {
     else {
         setAuthToken(localStorage.token);
         try {
-            const res = await axios.get('/api/auth');
-
-            dispatch({
-                type: USER_LOADED,
-                payload: res.data,
-            })
-
-            dispatch(setAlert({
-                msg: 'Sign in success',
-                alertType: 'success'
-            }))
-
+            dispatch(loadUser());
             dispatch(loadStockData());
             dispatch(loadTransaction());
         } catch (error) {
             dispatch({
                 type: AUTH_ERROR
             })
-            dispatch(setAlert({
-                msg: 'Sign in failure',
-                alertType: 'danger'
-            }))
         }
-    }
-}
-
-export const loadUserAfterSignUp = () => async dispatch => {
-    if (!localStorage.token) {
-        dispatch({
-            type: NO_TOKEN
-        });
-        return;
-    }
-
-    setAuthToken(localStorage.token);
-    try {
-        const res = await axios.get('/api/auth');
-
-        dispatch({
-            type: USER_LOADED,
-            payload: res.data,
-        })
-
-        dispatch(setAlert({
-            msg: 'Sign up success',
-            alertType: 'success'
-        }))
-
-        dispatch(loadStockData());
-        dispatch(loadTransaction());
-    } catch (error) {
-        dispatch({
-            type: AUTH_ERROR
-        })
-        dispatch(setAlert({
-            msg: 'Sign in failure',
-            alertType: 'danger'
-        }))
-    }
-}
-
-export const loadUserAfterOperations = () => async dispatch => {
-    if (!localStorage.token) {
-        dispatch({
-            type: NO_TOKEN
-        });
-        return;
-    }
-
-    setAuthToken(localStorage.token);
-    try {
-        const res = await axios.get('/api/auth');
-
-        dispatch({
-            type: USER_LOADED,
-            payload: res.data,
-        })
-
-        dispatch(loadStockData());
-        dispatch(loadTransaction());
-    } catch (error) {
-        console.error(error);
     }
 }
 
@@ -128,12 +79,21 @@ export const register = ({ name, email, password }) => async dispatch => {
     })
 
     try {
-        const res = await axios.post('/api/users', body, config);
+        const tokenData = await axios.post('/api/users', body, config);
+
         dispatch({
             type: REGISTER_SUCCESS,
-            payload: res.data,
+            payload: tokenData.data,
         })
-        dispatch(loadUserAfterSignUp());
+
+        setAuthToken(tokenData.data.token);
+
+        dispatch(loadUser());
+        dispatch(setAlert({
+            msg: 'Sign up success',
+            alertType: 'success'
+        }));
+
     } catch (error) {
         const errors = error.response.data.errors;
 
@@ -168,8 +128,19 @@ export const login = ({ email, password }) => async dispatch => {
         dispatch({
             type: LOGIN_SUCCESS,
             payload: res.data,
-        })
+        });
+
+        setAuthToken(res.data.token);
+
         dispatch(loadUser());
+        dispatch(loadStockData());
+        dispatch(loadTransaction());
+
+        dispatch(setAlert({
+            msg: 'Sign in success',
+            alertType: 'success'
+        }));
+
     } catch (error) {
         const errors = error.response.data.errors;
 
@@ -190,14 +161,21 @@ export const login = ({ email, password }) => async dispatch => {
 //Logout /clear profile
 export const logout = () => dispatch => {
     dispatch({
-        type: LOGOUT,
-    })
-    dispatch({
-        type: CLEAR_TRANSACTIONS
+        type: CLEAR_ALL_PREVIOUS_USER_DATA
     })
     dispatch(setAlert({
         msg: 'Sign out success',
         alertType: 'success'
     }))
+}
+
+export const loadDataAfterOperation = () => async dispatch => {
+    try {
+        dispatch(loadUser());
+        dispatch(loadStockData());
+        dispatch(loadTransaction());
+    } catch (error) {
+        console.error(error);
+    }
 }
 

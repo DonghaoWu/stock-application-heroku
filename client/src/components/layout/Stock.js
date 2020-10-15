@@ -22,7 +22,7 @@ const Stock = props => {
         let time = new Date().toLocaleTimeString();
         setCurrentTime(time);
     }
-    
+
     return (
         <div className='stocks-container'>
             <p className='record-header'>PORTFOLIO</p>
@@ -60,16 +60,16 @@ const Stock = props => {
                                 stockData.data.stock.map((el, index) => {
                                     return (
                                         <tr key={index}>
-                                            <td>{el[1]['01. symbol']}</td>
+                                            <td>{el[2]}</td>
                                             <td>{el[0]}</td>
-                                            <td className={setColor(el[1]['05. price'], el[1]['08. previous close'])} > {el[1]['05. price']}</td>
-                                            <td className={'grey'} > {el[1]['08. previous close']}</td>
-                                            <td className={el[1]['09. change'] > 0 ? `green` : `red`} > {el[1]['09. change']}</td>
-                                            <td className={el[1]['09. change'] > 0 ? `green` : `red`} > {el[1]['10. change percent']}</td>
-                                            <td className={setColor(el[1]['02. open'], el[1]['08. previous close'])} > {el[1]['02. open']}</td>
-                                            <td className={setColor(el[1]['03. high'], el[1]['08. previous close'])}> {el[1]['03. high']}</td>
-                                            <td className={setColor(el[1]['04. low'], el[1]['08. previous close'])}> {el[1]['04. low']}</td>
-                                            <td>{Math.floor(el[0] * el[1]['05. price'])}</td>
+                                            <td className={setColor(el[1]['c'], el[1]['pc'])} > {el[1]['c']}</td>
+                                            <td className={'grey'} > {el[1]['pc']}</td>
+                                            <td className={(el[1]['c'] - el[1]['o']) > 0 ? `green` : `red`} > {(el[1]['c'] - el[1]['pc']).toFixed(2)}</td>
+                                            <td className={(el[1]['c'] - el[1]['o']) > 0 ? `green` : `red`} > {((el[1]['c'] - el[1]['pc']) / el[1]['pc'] * 100).toFixed(2)}</td>
+                                            <td className={setColor(el[1]['o'], el[1]['pc'])} > {el[1]['o']}</td>
+                                            <td className={setColor(el[1]['h'], el[1]['pc'])}> {el[1]['h']}</td>
+                                            <td className={setColor(el[1]['l'], el[1]['pc'])}> {el[1]['l']}</td>
+                                            <td>{Math.floor(el[0] * el[1]['c'])}</td>
                                         </tr>
                                     )
                                 })

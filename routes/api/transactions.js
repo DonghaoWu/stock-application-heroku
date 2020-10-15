@@ -9,14 +9,16 @@ const User = require('../../models/User');
 // @route  POST api/transactions
 // @desc   Create a transaction
 // @access Private
-router.post('/', [auth,
-    [
-        check('action', 'Action is required').not().isEmpty(),
-        check('symbol', 'symbol is required').not().isEmpty(),
-        check('quantity', 'Quantity is required').not().isEmpty(),
-        check('price', 'Price is required').not().isEmpty(),
-    ]
-],
+router.post('/',
+    [auth,
+        [
+            check('action', 'Action is required').not().isEmpty(),
+            check('symbol', 'symbol is required').not().isEmpty(),
+            check('quantity', 'Quantity is required').not().isEmpty(),
+            check('price', 'Price is required').not().isEmpty(),
+        ]
+    ],
+
     async (req, res) => {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
@@ -45,7 +47,7 @@ router.post('/', [auth,
                 }
             }
             if (!hasOne) user.shareholding.push(newTransaction);
-            user.balance = newBalance;
+            user.balance = Math.floor(newBalance);
 
             await user.save();
 

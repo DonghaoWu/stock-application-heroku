@@ -13,7 +13,7 @@ import Transaction from './components/layout/Transaction';
 import Portfolio from './components/layout/Portfolio';
 
 //check the localStorage.token every time when refresh or open
-import { loadUser } from './actions/auth';
+import { loadAllData } from './actions/auth';
 // import setAuthToken from './utils/setAuthToken';
 
 import './App.css';
@@ -23,11 +23,11 @@ import './App.css';
 //   setAuthToken(localStorage.token);
 // }
 
-const App = ({ loadUser }) => {
+const App = ({ loadAllData }) => {
   //componentDidMount
   useEffect(() => {
-    loadUser();
-  }, [loadUser]);
+    loadAllData();
+  }, [loadAllData]);
 
   return (
     <Router>
@@ -51,11 +51,11 @@ const App = ({ loadUser }) => {
 };
 
 App.propTypes = {
-  loadUser: PropTypes.func.isRequired,
+  loadAllData: PropTypes.func.isRequired,
 }
 
 const mapDispatchToProps = dispatch => ({
-  loadUser: () => dispatch(loadUser())
+  loadAllData: () => dispatch(loadAllData())
 })
 
 export default connect(null, mapDispatchToProps)(App);
