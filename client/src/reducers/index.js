@@ -1,9 +1,9 @@
 import { combineReducers } from 'redux';
-import alert from './alert';
-import auth from './auth';
-import transactions from './transaction';
-import stockData from './stockData';
-import price from './checkPrice';
+import alert from './alert.reducer';
+import auth from './auth.reducer';
+import transactions from './transaction.reducer';
+import stockData from './stock-data.reducer';
+import price from './check-price.reducer';
 
 //components can access state from here.
 export default combineReducers({

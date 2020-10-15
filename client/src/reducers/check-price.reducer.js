@@ -1,4 +1,7 @@
-import { CHECK_PRICE_SUCCESS } from '../actions/types';
+import {
+    CHECK_PRICE_SUCCESS,
+    CHECK_PRICE_FAILURE,
+} from '../actions/types';
 
 const initialState = {
     data: {},
@@ -14,6 +17,7 @@ export default function (state = initialState, action) {
                 data: payload,
                 updateTime: new Date()
             };
+        case CHECK_PRICE_FAILURE:
         default:
             return state;
     }

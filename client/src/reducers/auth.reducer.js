@@ -1,14 +1,14 @@
 import {
+    USER_LOADED_SUCCESS,
+    USER_LOADED_FAILURE,
     REGISTER_SUCCESS,
-    REGISTER_FAIL,
-    USER_LOADED,
+    REGISTER_FAILURE,
     AUTH_ERROR,
-    LOGIN_FAIL,
+    LOGIN_FAILURE,
     LOGIN_SUCCESS,
     LOGOUT,
-    BUY_STOCK_SUCCESS,
     NO_TOKEN,
-    CLEAR_ALL_PREVIOUS_USER_DATA
+    CLEAR_ALL_PREVIOUS_USER_DATA,
 } from '../actions/types';
 
 const initialState = {
@@ -21,24 +21,24 @@ const initialState = {
 export default function (state = initialState, action) {
     const { type, payload } = action;
     switch (type) {
-        case REGISTER_SUCCESS:
-        case LOGIN_SUCCESS:
-            localStorage.setItem('token', payload.token)
-            return {
-                ...state,
-                token: payload.token,
-            }
-        case USER_LOADED:
-        case BUY_STOCK_SUCCESS:
+        case USER_LOADED_SUCCESS:
             return {
                 ...state,
                 isAuthenticated: true,
                 loading: false,
                 user: payload,
             }
-        case REGISTER_FAIL:
+        case REGISTER_SUCCESS:
+        case LOGIN_SUCCESS:
+            localStorage.setItem('token', payload)
+            return {
+                ...state,
+                token: payload,
+            }
+        case USER_LOADED_FAILURE:
+        case REGISTER_FAILURE:
         case AUTH_ERROR:
-        case LOGIN_FAIL:
+        case LOGIN_FAILURE:
         case LOGOUT:
         case CLEAR_ALL_PREVIOUS_USER_DATA:
             localStorage.removeItem('token');

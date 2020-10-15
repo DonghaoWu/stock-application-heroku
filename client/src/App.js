@@ -13,15 +13,9 @@ import Transaction from './components/layout/Transaction';
 import Portfolio from './components/layout/Portfolio';
 
 //check the localStorage.token every time when refresh or open
-import { loadAllData } from './actions/auth';
-// import setAuthToken from './utils/setAuthToken';
+import { loadAllData } from './actions/auth.action';
 
 import './App.css';
-
-// if (localStorage.token) {
-//   console.log('loacl token??')
-//   setAuthToken(localStorage.token);
-// }
 
 const App = ({ loadAllData }) => {
   //componentDidMount

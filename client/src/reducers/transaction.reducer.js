@@ -1,6 +1,6 @@
 import {
     LOAD_TRANSACTION_SUCCESS,
-    CLEAR_TRANSACTIONS,
+    LOAD_TRANSACTION_FAILURE,
     CLEAR_ALL_PREVIOUS_USER_DATA
 } from '../actions/types';
 
@@ -11,9 +11,9 @@ export default function (state = initialState, action) {
     switch (type) {
         case LOAD_TRANSACTION_SUCCESS:
             return [...payload];
-        case CLEAR_TRANSACTIONS:
         case CLEAR_ALL_PREVIOUS_USER_DATA:
             return [];
+        case LOAD_TRANSACTION_FAILURE:
         default:
             return state;
     }

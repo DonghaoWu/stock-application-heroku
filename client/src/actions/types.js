@@ -1,35 +1,31 @@
 //for alert reducer
+//for alter state
 export const SET_ALERT = 'SET_ALERT';
 export const REMOVE_ALERT = 'REMOVE_ALERT';
-//for auth reducer
+//for auth state
+export const USER_LOADED_SUCCESS = 'USER_LOADED_SUCCESS';
+export const USER_LOADED_FAILURE = 'USER_LOADED_FAILURE';
 export const REGISTER_SUCCESS = 'REGISTER_SUCCESS';
-export const REGISTER_FAIL = 'REGISTER_FAIL';
-//for user state
-export const USER_LOADED = 'USER_LOADED';
+export const REGISTER_FAILURE = 'REGISTER_FAILURE';
 export const AUTH_ERROR = 'AUTH_ERROR';
-//for login
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
-export const LOGIN_FAIL = 'LOGIN_FAIL';
-//for log out
+export const LOGIN_FAILURE = 'LOGIN_FAILURE';
 export const LOGOUT = 'LOGOUT';
+export const NO_TOKEN = 'NO_TOKEN';
+//for stock data state
+export const LOAD_STOCK_SUCCESS = 'LOAD_STOCK_SUCCESS';
+export const LOAD_STOCK_FAILURE = 'LOAD_STOCK_FAILURE';
+export const REFRESH_SUCCESS = 'REFRESH_SUCCESS';
+export const REFRESH_FAILURE = 'REFRESH_FAILURE';
+
 //for transactions
 export const LOAD_TRANSACTION_SUCCESS = 'LOAD_TRANSACTION_SUCCESS';
 export const LOAD_TRANSACTION_FAILURE = 'LOAD_TRANSACTION_FAILURE';
 export const CLEAR_TRANSACTIONS = 'CLEAR_TRANSACTIONS';
-//for buy stock
-export const BUY_STOCK_SUCCESS = 'BUY_STOCK_SUCCESS';
-//for get stock data
-export const LOAD_STOCK_SUCCESS = 'LOAD_STOCK_SUCCESS';
-export const LOAD_STOCK_FAILURE = 'LOAD_STOCK_FAILURE';
+
 //for check stock price
 export const CHECK_PRICE_SUCCESS = 'CHECK_PRICE_SUCCESS';
 export const CHECK_PRICE_FAILURE = 'CHECK_PRICE_FAILURE';
-//for refresh stock price
-export const REFRESH_SUCCESS = 'REFRESH_SUCCESS';
-export const REFRESH_FAILURE = 'REFRESH_FAILURE';
 
-//Clear current user info when no token
-export const NO_TOKEN = 'NO_TOKEN';
-
-//Clear previous user data
+//for stock data state, auth state, transaction state
 export const CLEAR_ALL_PREVIOUS_USER_DATA = 'CLEAR_ALL_PREVIOUS_USER_DATA';

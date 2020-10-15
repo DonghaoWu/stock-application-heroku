@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
 
-import { checkPrice } from '../../actions/stockData';
-import { sellStock } from '../../actions/transaction';
-import { setAlert } from '../../actions/alert';
+import { checkPrice } from '../../actions/stock-data.action';
+import { sellStock } from '../../actions/transaction.action';
+import { setAlert } from '../../actions/alert.action';
 
 const Buy = ({ auth, checkPrice, setAlert, sellStock, checkPriceResult }) => {
     const [formData, setFormData] = useState({

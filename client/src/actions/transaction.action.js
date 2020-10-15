@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { LOAD_TRANSACTION_SUCCESS, LOAD_TRANSACTION_FAILURE } from './types';
-import { setAlert } from './alert';
-import { loadDataAfterOperation } from './auth';
+import { setAlert } from './alert.action';
+import { loadDataAfterOperation } from './auth.action';
 
 export const loadTransaction = () => async dispatch => {
     try {

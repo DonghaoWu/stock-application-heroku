@@ -3,9 +3,11 @@ import {
     LOAD_STOCK_SUCCESS,
     LOAD_STOCK_FAILURE,
     CHECK_PRICE_SUCCESS,
+    CHECK_PRICE_FAILURE,
     REFRESH_SUCCESS,
+    REFRESH_FAILURE
 } from './types';
-import { setAlert } from './alert';
+import { setAlert } from './alert.action';
 
 export const loadStockData = () => async dispatch => {
     try {
@@ -44,7 +46,7 @@ export const refreshStockData = () => async dispatch => {
 
     let refreshAgain = createDivWhenCheckPrice({
         tagName: 'div',
-        innerHTML: 'Please try later, API call frequency is 5 calls per minute.',
+        innerHTML: 'Please try later.',
         id: 'refresh-again-text'
     })
 
@@ -80,6 +82,9 @@ export const refreshStockData = () => async dispatch => {
         }
 
     } catch (error) {
+        dispatch({
+            type: REFRESH_FAILURE,
+        })
         dispatch(setAlert({ msg: 'Refresh failure', alertType: 'danger' }));
         console.error(error);
         document.getElementById("refreshing-spinner").replaceWith(refreshAgain);
@@ -105,7 +110,7 @@ export const checkPrice = (symbol) => async dispatch => {
 
     let tryAgain = createDivWhenCheckPrice({
         tagName: 'div',
-        innerHTML: 'Please try later, API call frequency is 5 calls per minute.',
+        innerHTML: 'Please try later.',
         id: 'try-again-text'
     })
 
@@ -148,6 +153,9 @@ export const checkPrice = (symbol) => async dispatch => {
         document.getElementById("check-price-button").innerHTML = `Check price`;
 
     } catch (error) {
+        dispatch({
+            type: CHECK_PRICE_FAILURE,
+        })
         console.error(error);
         document.getElementById("check-price-button").innerHTML = `Check price`;
     }
