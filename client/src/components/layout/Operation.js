@@ -1,5 +1,4 @@
 import React from 'react';
-// import Buy from './Buy';
 import Buy from './Buy';
 import Sell from './Sell';
 import NavbarSub from './NavbarSub';

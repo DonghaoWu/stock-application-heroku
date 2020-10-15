@@ -14,8 +14,13 @@ import Portfolio from './components/layout/Portfolio';
 
 //check the localStorage.token every time when refresh or open
 import { loadAllData } from './actions/auth.action';
+import setAuthToken from './utils/setAuthToken';
 
 import './App.css';
+
+if (localStorage.token) {
+  setAuthToken(localStorage.token);
+}
 
 const App = ({ loadAllData }) => {
   //componentDidMount

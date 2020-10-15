@@ -5,6 +5,7 @@ import {
 
 const initialState = {
     data: {},
+    symbol: '',
     updateTime: null
 };
 
@@ -14,7 +15,8 @@ export default function (state = initialState, action) {
         case CHECK_PRICE_SUCCESS:
             return {
                 ...state,
-                data: payload,
+                data: payload.stockData,
+                symbol: payload.symbol,
                 updateTime: new Date()
             };
         case CHECK_PRICE_FAILURE:

@@ -19,7 +19,7 @@ const finnhubClient = new finnhub.DefaultApi()
 router.get('/', auth, async (req, res) => {
     try {
         const user = await User.findById(req.user.id).select('-password');
-        const allStockData = {
+        const allStocksData = {
             value: 0,
             stock: [],
         };
@@ -34,8 +34,8 @@ router.get('/', auth, async (req, res) => {
 
         const handleAllRequest = async (index) => {
             const res = await handleOneRequest(index);
-            allStockData.stock.push([user.shareholding[index].quantity, res, user.shareholding[index].symbol]);
-            allStockData.value += Number(res.c * user.shareholding[index].quantity);
+            allStocksData.stock.push([user.shareholding[index].quantity, res, user.shareholding[index].symbol]);
+            allStocksData.value += Number(res.c * user.shareholding[index].quantity);
             index++;
             if (index < user.shareholding.length) {
                 await handleAllRequest(index);
@@ -45,7 +45,7 @@ router.get('/', auth, async (req, res) => {
         if (user.shareholding.length > 0) {
             await handleAllRequest(0);
         }
-        res.json(allStockData);
+        res.json(allStocksData);
         return;
     } catch (error) {
         console.error(error.message);
@@ -61,7 +61,10 @@ router.get('/:symbol', async (req, res) => {
     try {
         const symbol = req.params.symbol;
         finnhubClient.quote(symbol, (error, data, response) => {
-            return res.json(data);
+            return res.json({
+                stockData: data,
+                symbol: symbol
+            });
         });
     } catch (error) {
         console.error(error.message);

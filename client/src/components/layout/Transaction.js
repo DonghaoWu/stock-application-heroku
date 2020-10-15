@@ -28,7 +28,7 @@ const Transaction = props => {
                             {
                                 transactions.map((el, index) => {
                                     return (
-                                        <tr key={index}>
+                                        <tr key={index} style={el.action === 'BUY' ? { backgroundColor: "#F0FFFF" } : { backgroundColor: "#FFEBCD" }}>
                                             <td>{el.action}</td>
                                             <td>{el.symbol}</td>
                                             <td>{el.quantity} shares</td>

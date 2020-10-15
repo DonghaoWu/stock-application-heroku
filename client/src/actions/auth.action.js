@@ -92,7 +92,7 @@ export const register = ({ name, email, password }) => async dispatch => {
 
         setAuthToken(userToken);
 
-        dispatch(loadUser());
+        dispatch(loadAllData());
         dispatch(setAlert({
             msg: 'Sign up success',
             alertType: 'success'

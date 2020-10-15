@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
 
-import { checkPrice } from '../../actions/stock-data.action';
+import { checkPrice } from '../../actions/check-price.action';
 import { sellStock } from '../../actions/transaction.action';
 import { setAlert } from '../../actions/alert.action';
 
@@ -21,30 +21,31 @@ const Buy = ({ auth, checkPrice, setAlert, sellStock, checkPriceResult }) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const stockData = await axios.get(`/api/stock/${symbol}`);
-        const price = stockData.data.c;
+        const res = await axios.get(`/api/stock/${symbol}`);
+        const price = res.data.stockData.c;
         let hasOne = false;
-        for(let i = 0; i < auth.user.shareholding.length; i++){
-            if(auth.user.shareholding[i].symbol === symbol){
+
+        for (let i = 0; i < auth.user.shareholding.length; i++) {
+            if (auth.user.shareholding[i].symbol === symbol) {
                 hasOne = true;
-                if(quantity > auth.user.shareholding[i].quantity){
+                if (quantity > auth.user.shareholding[i].quantity) {
                     setAlert({
                         msg: `Not enough shares:  ${symbol} ${quantity} share(s).`,
                         alertType: 'danger'
                     });
-                    return;
+                    break;
                 }
             }
         }
-        if(!hasOne){
+        if (!hasOne) {
             setAlert({
                 msg: `You don't have ${symbol}.`,
                 alertType: 'danger'
             });
             return;
         }
-
         sellStock({ action: 'SELL', symbol: symbol, quantity: quantity, price: price });
+        setFormData({ ...formData, symbol: '', quantity: '' })
     }
 
     return (
@@ -78,11 +79,11 @@ const Buy = ({ auth, checkPrice, setAlert, sellStock, checkPriceResult }) => {
                     <div id="checking-spinner" hidden></div>
                 </div>
                 {
-                    checkPriceResult.data['05. price']
+                    checkPriceResult.data['c']
                         ?
                         <div className='price-data-container'>
-                            <div>Symbol: {checkPriceResult.data['01. symbol']}</div>
-                            <div>CurrentPrice: {checkPriceResult.data['05. price']}</div>
+                            <div>Symbol: {checkPriceResult.symbol}</div>
+                            <div>CurrentPrice: {checkPriceResult.data['c']}</div>
                             <div>Updated at: {checkPriceResult.updateTime.toLocaleTimeString()}</div>
                         </div>
                         :

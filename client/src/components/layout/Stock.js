@@ -23,16 +23,18 @@ const Stock = props => {
         setCurrentTime(time);
     }
 
+    const handleRefresh = () => {
+        refreshStockData();
+        handleCurrentTime();
+    }
+
     return (
         <div className='stocks-container'>
             <p className='record-header'>PORTFOLIO</p>
             <div className='total-container'>
                 <p className='tran-sub-header'>Total: {stockData.data ? (`$ ${Math.floor(stockData.data.value + auth.user.balance)}`) : `null`} </p>
                 <p className='tran-sub-header'>Stock value: {stockData.data ? (`$ ${Math.floor(stockData.data.value)}`) : `null`}</p>
-                <Link to='#' id='refreshing-button' onClick={() => {
-                    refreshStockData();
-                    handleCurrentTime();
-                }}>Refresh</Link>
+                <Link to='#' id='refreshing-button' onClick={handleRefresh}>Refresh</Link>
                 <div hidden id="refreshing-spinner"></div>
             </div>
             <p className='tran-sub-header update-time'>Current time: {currentTime}</p>

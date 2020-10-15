@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
 
-import { checkPrice } from '../../actions/stock-data.action';
+import { checkPrice } from '../../actions/check-price.action';
 import { buyStock } from '../../actions/transaction.action';
 import { setAlert } from '../../actions/alert.action';
 
@@ -21,8 +21,8 @@ const Buy = ({ auth, checkPrice, setAlert, buyStock, checkPriceResult }) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const stockData = await axios.get(`/api/stock/${symbol}`);
-        const price = stockData.data.c;
+        const res = await axios.get(`/api/stock/${symbol}`);
+        const price = res.data.stockData.c;
 
         if (auth.user.balance < quantity * price) {
             setAlert({
@@ -32,6 +32,7 @@ const Buy = ({ auth, checkPrice, setAlert, buyStock, checkPriceResult }) => {
             return;
         }
         buyStock({ action: 'BUY', symbol: symbol, quantity: quantity, price: price });
+        setFormData({ ...formData, symbol: '', quantity: '' })
     }
 
     return (
@@ -68,7 +69,7 @@ const Buy = ({ auth, checkPrice, setAlert, buyStock, checkPriceResult }) => {
                     checkPriceResult.data['c']
                         ?
                         <div className='price-data-container'>
-                            <div>Symbol: {symbol}</div>
+                            <div>Symbol: {checkPriceResult.symbol}</div>
                             <div>CurrentPrice: {checkPriceResult.data['c']}</div>
                             <div>Updated at: {checkPriceResult.updateTime.toLocaleTimeString()}</div>
                         </div>

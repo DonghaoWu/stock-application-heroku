@@ -14,7 +14,7 @@ const User = require('../../models/User');
 router.get('/', auth, async (req, res) => {
     try {
         const user = await User.findById(req.user.id).select('-password');
-        res.json(user);
+        return res.json(user);
     } catch (error) {
         console.log(error.message);
         res.status(500).send('Server Error');
@@ -67,12 +67,12 @@ router.post('/', [
             },
             (err, token) => {
                 if (err) throw err;
-                res.json({ token })
+                return res.json({ token })
             }
         );
     } catch (error) {
         console.error(error.message);
-        res.status(500).send('Server error');
+        return res.status(500).send('Server error');
     }
 });
 

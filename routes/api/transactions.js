@@ -7,7 +7,7 @@ const Transaction = require('../../models/Transaction');
 const User = require('../../models/User');
 
 // @route  POST api/transactions
-// @desc   Create a transaction
+// @desc   Create a transaction, buy or sell stock shares
 // @access Private
 router.post('/',
     [auth,
@@ -33,7 +33,7 @@ router.post('/',
 
         try {
             let user = await User.findById(req.user.id).select('-password');
-            let newBalance = user.balance - Number(price) * quantity;
+            let newBalance = user.balance - Number(price).toFixed(2) * quantity;
             if (newBalance < 0) {
                 return res.status(400).json({ msg: "Not enough cash!" })
             }
@@ -47,7 +47,7 @@ router.post('/',
                 }
             }
             if (!hasOne) user.shareholding.push(newTransaction);
-            user.balance = Math.floor(newBalance);
+            user.balance = newBalance.toFixed(2);
 
             await user.save();
 
