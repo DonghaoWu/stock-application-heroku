@@ -47,6 +47,11 @@ router.post('/',
                 }
             }
             if (!hasOne) user.shareholding.push(newTransaction);
+
+            user.shareholding = user.shareholding.filter(el => {
+                return el.quantity !== 0;
+            });
+            
             user.balance = newBalance.toFixed(2);
 
             await user.save();

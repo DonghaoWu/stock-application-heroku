@@ -21,16 +21,17 @@ const Buy = ({ auth, checkPrice, setAlert, sellStock, checkPriceResult }) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const res = await axios.get(`/api/stock/${symbol}`);
+        const symbolTrim = symbol.trim();
+        const res = await axios.get(`/api/stock/${symbolTrim}`);
         const price = res.data.stockData.c;
         let hasOne = false;
 
         for (let i = 0; i < auth.user.shareholding.length; i++) {
-            if (auth.user.shareholding[i].symbol === symbol) {
+            if (auth.user.shareholding[i].symbol === symbolTrim) {
                 hasOne = true;
                 if (quantity > auth.user.shareholding[i].quantity) {
                     setAlert({
-                        msg: `Not enough shares:  ${symbol} ${quantity} share(s).`,
+                        msg: `Not enough shares:  ${symbolTrim} ${quantity} share(s).`,
                         alertType: 'danger'
                     });
                     break;
@@ -39,12 +40,12 @@ const Buy = ({ auth, checkPrice, setAlert, sellStock, checkPriceResult }) => {
         }
         if (!hasOne) {
             setAlert({
-                msg: `You don't have ${symbol}.`,
+                msg: `You don't have ${symbolTrim}.`,
                 alertType: 'danger'
             });
             return;
         }
-        sellStock({ action: 'SELL', symbol: symbol, quantity: quantity, price: price });
+        sellStock({ action: 'SELL', symbol: symbolTrim, quantity: quantity, price: price });
         setFormData({ ...formData, symbol: '', quantity: '' })
     }
 
@@ -75,7 +76,7 @@ const Buy = ({ auth, checkPrice, setAlert, sellStock, checkPriceResult }) => {
             </form>
             <div className='check-price-container'>
                 <div className='button-spinner-container'>
-                    <div id='check-price-button' className='operation-nav-tag check-tag' onClick={() => checkPrice(symbol)}>Check price</div>
+                    <div id='check-price-button' className='operation-nav-tag check-tag' onClick={() => checkPrice(symbol.trim())}>Check price</div>
                     <div id="checking-spinner" hidden></div>
                 </div>
                 {

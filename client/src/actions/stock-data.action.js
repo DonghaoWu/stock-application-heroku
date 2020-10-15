@@ -67,6 +67,7 @@ export const refreshStockData = () => async dispatch => {
         document.getElementById("refreshing-button").innerHTML = `Refresh`;
 
         if (res.data.stock) {
+            console.log(res.data)
             document.getElementById("refreshing-spinner").setAttribute('hidden', '');
             dispatch(setAlert({ msg: 'Refresh sucess', alertType: 'success' }))
             dispatch({

@@ -21,7 +21,8 @@ const Buy = ({ auth, checkPrice, setAlert, buyStock, checkPriceResult }) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const res = await axios.get(`/api/stock/${symbol}`);
+        const symbolTrim = symbol.trim();
+        const res = await axios.get(`/api/stock/${symbolTrim}`);
         const price = res.data.stockData.c;
 
         if (auth.user.balance < quantity * price) {
@@ -31,7 +32,7 @@ const Buy = ({ auth, checkPrice, setAlert, buyStock, checkPriceResult }) => {
             });
             return;
         }
-        buyStock({ action: 'BUY', symbol: symbol, quantity: quantity, price: price });
+        buyStock({ action: 'BUY', symbol: symbolTrim, quantity: quantity, price: price });
         setFormData({ ...formData, symbol: '', quantity: '' })
     }
 
@@ -62,7 +63,7 @@ const Buy = ({ auth, checkPrice, setAlert, buyStock, checkPriceResult }) => {
             </form>
             <div className='check-price-container'>
                 <div className='button-spinner-container'>
-                    <div id='check-price-button' className='operation-nav-tag check-tag' onClick={() => checkPrice(symbol)}>Check price</div>
+                    <div id='check-price-button' className='operation-nav-tag check-tag' onClick={() => checkPrice(symbol.trim())}>Check price</div>
                     <div id="checking-spinner" hidden></div>
                 </div>
                 {
