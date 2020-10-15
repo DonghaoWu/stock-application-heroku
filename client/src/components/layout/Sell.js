@@ -31,10 +31,10 @@ const Buy = ({ auth, checkPrice, setAlert, sellStock, checkPriceResult }) => {
                 hasOne = true;
                 if (quantity > auth.user.shareholding[i].quantity) {
                     setAlert({
-                        msg: `Not enough shares:  ${symbolTrim} ${quantity} share(s).`,
+                        msg: `Not enough shares:  You have ${symbolTrim} ${auth.user.shareholding[i].quantity} share(s).`,
                         alertType: 'danger'
                     });
-                    break;
+                    return;
                 }
             }
         }
