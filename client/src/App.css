@@ -571,8 +571,8 @@ button {
 /* <NEW>--------------------------------------------------------- */
 /* <NEW>--------------------------------------------------------- */
 /* <NEW>--------------------------------------------------------- */
-/* Mobile Styles < 900px > */
-@media (max-width: 900px) {
+/* Mobile Styles 450px > */
+@media (max-width450px) {
   .container {
     margin-top: 6.8rem;
   }
@@ -644,7 +644,7 @@ button {
     padding:3px;
   }
 
-  /* for Portfolio page component < 900px  >*/
+  /* for Portfolio page component 450px  >*/
   .tran-sub-header{
     font-size: 0.7rem;
     padding: 0.2rem;
@@ -675,14 +675,14 @@ button {
     font-size: 0.6rem;
   }
 
-  /* For NavSub component < 900px  > */
+  /* For NavSub component 450px  > */
   .operation-nav-tag{
     margin:0.1rem 0.4rem;
     font-size: 0.5rem;
     width: 55px;
   }
 
-  /* For operation component < 900px > */
+  /* For operation component 450px > */
   /* Buy and sell operation */
 
   .oper-form-container{
@@ -740,9 +740,9 @@ button {
 /* <NEW>--------------------------------------------------------- */
 /* <NEW>--------------------------------------------------------- */
 /* <NEW>--------------------------------------------------------- */
-/* Mobile Styles < 900px > */
+/* Mobile Styles < 450px > */
 
-@media (max-width: 400px) {
+@media (max-width: 450px) {
   .hide-for-mobile{
     display: none;
   }
@@ -845,7 +845,7 @@ button {
     padding:3px;
   }
 
-  /* for Portfolio page component < 900px  >*/
+  /* for Portfolio page component < 450px  >*/
   .tran-sub-header{
     font-size: 0.8rem;
     padding: 0.2rem;
