@@ -876,7 +876,7 @@ button {
     font-size: 0.5rem;
   }
 
-  /* For NavSub component < 400px  > */
+  /* For NavSub component < 450px  > */
   .operations-nav-buttons{
     display: flex;
     justify-content: space-between;
@@ -887,7 +887,7 @@ button {
     width:30%;
   }
 
-  /* For operation component < 400px > */
+  /* For operation component < 450px > */
   /* Buy and sell operation */
   .operations-content{
     margin-top:0.8rem;
@@ -901,7 +901,7 @@ button {
   .oper-form input[type='text'],
   .oper-form label
   .oper-form textarea {
-    font-size: 0.8rem;
+    font-size: 1.5rem;
     margin: 0.4rem 0.1rem;
   }
 
@@ -909,7 +909,7 @@ button {
     width:100%;
     margin:1rem 0;
     padding:0.1rem;
-    font-size: 0.8rem;
+    font-size: 1.5rem;
   }
 
   /* check-price button and spinner */
