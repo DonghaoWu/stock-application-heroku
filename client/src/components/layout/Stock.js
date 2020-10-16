@@ -49,9 +49,9 @@ const Stock = props => {
                         <th>Previous Close</th>
                         <th>Change</th>
                         <th>Change %</th>
-                        <th>Open price</th>
-                        <th>High</th>
-                        <th>Low</th>
+                        <th className='hide-for-mobile'>Open price</th>
+                        <th className='hide-for-mobile'>High</th>
+                        <th className='hide-for-mobile'>Low</th>
                         <th>Current Value</th>
                     </tr>
                 </thead>
@@ -68,9 +68,9 @@ const Stock = props => {
                                             <td className={'grey'} > {el[1]['pc']}</td>
                                             <td className={(el[1]['c'] - el[1]['o']) > 0 ? `green` : `red`} > {(el[1]['c'] - el[1]['pc']).toFixed(2)}</td>
                                             <td className={(el[1]['c'] - el[1]['o']) > 0 ? `green` : `red`} > {((el[1]['c'] - el[1]['pc']) / el[1]['pc'] * 100).toFixed(2)}</td>
-                                            <td className={setColor(el[1]['o'], el[1]['pc'])} > {el[1]['o']}</td>
-                                            <td className={setColor(el[1]['h'], el[1]['pc'])}> {el[1]['h']}</td>
-                                            <td className={setColor(el[1]['l'], el[1]['pc'])}> {el[1]['l']}</td>
+                                            <td className={`${setColor(el[1]['o'], el[1]['pc'])} hide-for-mobile`} > {el[1]['o']}</td>
+                                            <td className={`${setColor(el[1]['h'], el[1]['pc'])} hide-for-mobile`}> {el[1]['h']}</td>
+                                            <td className={`${setColor(el[1]['l'], el[1]['pc'])} hide-for-mobile`}> {el[1]['l']}</td>
                                             <td>{Math.floor(el[0] * el[1]['c'])}</td>
                                         </tr>
                                     )
@@ -84,9 +84,9 @@ const Stock = props => {
                                 <td>Null</td>
                                 <td>Null</td>
                                 <td>Null</td>
-                                <td>Null</td>
-                                <td>Null</td>
-                                <td>Null</td>
+                                <td className='hide-for-mobile'>Null</td>
+                                <td className='hide-for-mobile'>Null</td>
+                                <td className='hide-for-mobile'>Null</td>
                                 <td>Null</td>
                             </tr>
                     }

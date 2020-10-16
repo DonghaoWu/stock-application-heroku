@@ -38,13 +38,11 @@ export const checkPrice = (symbol) => async dispatch => {
 
         if (!symbol) {
             document.getElementById("check-price-button").innerHTML = `Check price`;
-            let target = document.getElementById("checking-spinner") || document.getElementById("try-again-text") || document.getElementById("empty-symbol-text");
-            return target.replaceWith(emptyWarning);
-        }
-
-        if (document.getElementById("try-again-text") || document.getElementById("empty-symbol-text")) {
-            let target = document.getElementById("try-again-text") || document.getElementById("empty-symbol-text");
-            target.replaceWith(checkingSpinner);
+            dispatch(setAlert({
+                msg: `Please input an symbol.`,
+                alertType: 'danger'
+            }));
+            return;
         }
 
         document.getElementById("checking-spinner").removeAttribute('hidden');
@@ -61,14 +59,13 @@ export const checkPrice = (symbol) => async dispatch => {
         }
         else if (stockData['c'] === 0) {
             dispatch(setAlert({ msg: 'Invalid input symbol.', alertType: 'danger' }));
-            document.getElementById("checking-spinner").replaceWith(tryAgain);
         }
         else {
             dispatch(setAlert({ msg: 'Check price failure', alertType: 'danger' }));
-            document.getElementById("checking-spinner").replaceWith(tryAgain);
         }
-
+        document.getElementById("checking-spinner").setAttribute('hidden', '');
         document.getElementById("check-price-button").innerHTML = `Check price`;
+        return;
 
     } catch (error) {
         dispatch({
