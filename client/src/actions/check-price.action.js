@@ -39,7 +39,7 @@ export const checkPrice = (symbol) => async dispatch => {
         if (!symbol) {
             document.getElementById("check-price-button").innerHTML = `Check price`;
             dispatch(setAlert({
-                msg: `Please input an symbol.`,
+                msg: `Please input a query symbol.`,
                 alertType: 'danger'
             }));
             return;
