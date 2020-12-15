@@ -21,6 +21,7 @@ const Transaction = props => {
                                 <th>Symbol</th>
                                 <th>Quantity</th>
                                 <th>Price</th>
+                                <th>Cost</th>
                                 <th>Time</th>
                             </tr>
                         </thead>
@@ -33,6 +34,7 @@ const Transaction = props => {
                                             <td>{el.symbol}</td>
                                             <td>{el.quantity} shares</td>
                                             <td>{el.price}</td>
+                                            <td>{Math.floor(el.cost)}</td>
                                             <td>{el.date.slice(0, -5)}</td>
                                         </tr>
                                     )

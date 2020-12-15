@@ -8,15 +8,14 @@ import { refreshStockData } from '../../actions/stock-data.action';
 const Stock = props => {
 
     const { auth, stockData, refreshStockData } = props;
+    let initialTime = new Date()
+    const [currentTime, setCurrentTime] = useState(initialTime.toLocaleTimeString())
+
     const setColor = (priceOne, priceTwo) => {
         if (priceOne > priceTwo) return 'green';
         else if (priceOne < priceTwo) return 'red';
         else return 'grey';
     }
-
-    let initialTime = new Date()
-
-    const [currentTime, setCurrentTime] = useState(initialTime.toLocaleTimeString())
 
     const handleCurrentTime = () => {
         let time = new Date().toLocaleTimeString();
@@ -32,8 +31,8 @@ const Stock = props => {
         <div className='stocks-container'>
             <p className='record-header'>PORTFOLIO</p>
             <div className='total-container'>
-                <p className='tran-sub-header'>Total: {stockData.data ? (`$ ${Math.floor(stockData.data.value + auth.user.balance)}`) : `null`} </p>
-                <p className='tran-sub-header'>Stock value: {stockData.data ? (`$ ${Math.floor(stockData.data.value)}`) : `null`}</p>
+                <p className='tran-sub-header'>Total: {stockData.data ? (`$ ${Math.floor(stockData.data.currentValue + auth.user.balance)}`) : `null`} </p>
+                <p className='tran-sub-header'>Stock value: {stockData.data ? (`$ ${Math.floor(stockData.data.currentValue)}`) : `null`}</p>
                 <Link to='#' id='refreshing-button' onClick={handleRefresh}>Refresh</Link>
                 <div hidden id="refreshing-spinner"></div>
             </div>
@@ -43,16 +42,15 @@ const Stock = props => {
             <table className='record-table'>
                 <thead>
                     <tr>
-                        <th>Symbol</th>
+                        <th>Stock</th>
                         <th>Own Shares</th>
                         <th>Current price</th>
                         <th>Previous Close</th>
                         <th>Change</th>
                         <th>Change %</th>
-                        <th className='hide-for-mobile'>Open price</th>
-                        <th className='hide-for-mobile'>High</th>
-                        <th className='hide-for-mobile'>Low</th>
                         <th>Current Value</th>
+                        <th>Total cost</th>
+                        <th>Profit</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -62,16 +60,15 @@ const Stock = props => {
                                 stockData.data.stock.map((el, index) => {
                                     return (
                                         <tr key={index}>
-                                            <td>{el[2]}</td>
                                             <td>{el[0]}</td>
-                                            <td className={setColor(el[1]['c'], el[1]['pc'])} > {el[1]['c']}</td>
-                                            <td className={'grey'} > {el[1]['pc']}</td>
-                                            <td className={(el[1]['c'] - el[1]['o']) > 0 ? `green` : `red`} > {(el[1]['c'] - el[1]['pc']).toFixed(2)}</td>
-                                            <td className={(el[1]['c'] - el[1]['o']) > 0 ? `green` : `red`} > {((el[1]['c'] - el[1]['pc']) / el[1]['pc'] * 100).toFixed(2)}</td>
-                                            <td className={`${setColor(el[1]['o'], el[1]['pc'])} hide-for-mobile`} > {el[1]['o']}</td>
-                                            <td className={`${setColor(el[1]['h'], el[1]['pc'])} hide-for-mobile`}> {el[1]['h']}</td>
-                                            <td className={`${setColor(el[1]['l'], el[1]['pc'])} hide-for-mobile`}> {el[1]['l']}</td>
-                                            <td>{Math.floor(el[0] * el[1]['c'])}</td>
+                                            <td>{el[1]}</td>
+                                            <td className={setColor(el[3]['c'], el[3]['pc'])} > {el[3]['c']}</td>
+                                            <td className={'grey'} > {el[3]['pc']}</td>
+                                            <td className={(el[3]['c'] - el[3]['o']) > 0 ? `green` : `red`} > {(el[3]['c'] - el[3]['pc']).toFixed(2)}</td>
+                                            <td className={(el[3]['c'] - el[3]['o']) > 0 ? `green` : `red`} > {((el[3]['c'] - el[3]['pc']) / el[3]['pc'] * 300).toFixed(2)}</td>
+                                            <td>{Math.floor(el[1] * el[3]['c'])}</td>
+                                            <td>{Math.floor(el[2])}</td>
+                                            <td className={Math.floor(el[1] * el[3]['c'] - el[2]) > 0 ? `green` : `red`}>{Math.floor(el[1] * el[3]['c'] - el[2])}</td>
                                         </tr>
                                     )
                                 })
@@ -84,9 +81,8 @@ const Stock = props => {
                                 <td>Null</td>
                                 <td>Null</td>
                                 <td>Null</td>
-                                <td className='hide-for-mobile'>Null</td>
-                                <td className='hide-for-mobile'>Null</td>
-                                <td className='hide-for-mobile'>Null</td>
+                                <td>Null</td>
+                                <td>Null</td>
                                 <td>Null</td>
                             </tr>
                     }

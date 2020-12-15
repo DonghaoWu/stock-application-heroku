@@ -25,6 +25,10 @@ const TransactionSchema = new Schema({
     date: {
         type: Date,
         default: Date.now,
+    },
+    cost: {
+        type: Number,
+        required: true,
     }
 })
 

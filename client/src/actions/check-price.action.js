@@ -6,33 +6,6 @@ import {
 } from './types';
 
 export const checkPrice = (symbol) => async dispatch => {
-
-    const createDivWhenCheckPrice = ({ tagName, innerHTML, id }) => {
-        let tag = document.createElement(tagName);
-        tag.innerHTML = innerHTML;
-        tag.setAttribute('id', id);
-
-        return tag;
-    }
-
-    let emptyWarning = createDivWhenCheckPrice({
-        tagName: 'div',
-        innerHTML: 'Please input query symbol.',
-        id: 'empty-symbol-text'
-    })
-
-    let tryAgain = createDivWhenCheckPrice({
-        tagName: 'div',
-        innerHTML: 'Please try later.',
-        id: 'try-again-text'
-    })
-
-    let checkingSpinner = createDivWhenCheckPrice({
-        tagName: 'div',
-        innerHTML: '',
-        id: 'checking-spinner'
-    })
-
     try {
         document.getElementById("check-price-button").innerHTML = `Loading......`;
 

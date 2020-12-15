@@ -61,13 +61,13 @@ export const refreshStockData = () => async dispatch => {
             document.getElementById("refresh-again-text").replaceWith(refreshingSpinner);
         }
         document.getElementById("refreshing-spinner").removeAttribute('hidden');
+        
         let res = await axios.get('/api/stock');
 
         document.getElementById("refreshing-spinner").setAttribute('hidden', '');
         document.getElementById("refreshing-button").innerHTML = `Refresh`;
 
         if (res.data.stock) {
-            console.log(res.data)
             document.getElementById("refreshing-spinner").setAttribute('hidden', '');
             dispatch(setAlert({ msg: 'Refresh sucess', alertType: 'success' }))
             dispatch({

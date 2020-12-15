@@ -13,7 +13,7 @@ router.post('/',
     [auth,
         [
             check('action', 'Action is required').not().isEmpty(),
-            check('symbol', 'symbol is required').not().isEmpty(),
+            check('symbol', 'Symbol is required').not().isEmpty(),
             check('quantity', 'Quantity is required').not().isEmpty(),
             check('price', 'Price is required').not().isEmpty(),
         ]
@@ -26,14 +26,17 @@ router.post('/',
         }
 
         const { action, symbol, quantity, price } = req.body;
+        const newCost = Number(price).toFixed(2) * quantity;
+
         const newTransaction = {
             symbol: symbol,
             quantity: Number(quantity),
+            cost: newCost
         }
 
         try {
             let user = await User.findById(req.user.id).select('-password');
-            let newBalance = user.balance - Number(price).toFixed(2) * quantity;
+            let newBalance = user.balance - newCost;
             if (newBalance < 0) {
                 return res.status(400).json({ msg: "Not enough cash!" })
             }
@@ -42,6 +45,7 @@ router.post('/',
             for (let i = 0; i < user.shareholding.length; i++) {
                 if (user.shareholding[i].symbol === newTransaction.symbol) {
                     user.shareholding[i].quantity += newTransaction.quantity;
+                    user.shareholding[i].cost += newTransaction.cost;
                     hasOne = true;
                     break;
                 }
@@ -51,7 +55,7 @@ router.post('/',
             user.shareholding = user.shareholding.filter(el => {
                 return el.quantity !== 0;
             });
-            
+
             user.balance = newBalance.toFixed(2);
 
             await user.save();
@@ -61,7 +65,8 @@ router.post('/',
                 action: action,
                 symbol: symbol,
                 quantity: quantity,
-                price: price
+                price: price,
+                cost: newCost
             })
 
             await transaction.save();

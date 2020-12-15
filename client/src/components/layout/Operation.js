@@ -1,7 +1,7 @@
 import React from 'react';
-import Buy from './Buy';
-import Sell from './Sell';
-import NavbarSub from './NavbarSub';
+import BuyStock from './BuyStock';
+import SellStock from './SellStock';
+import OperationNav from './OperationNav';
 import { Switch, Route } from "react-router-dom";
 
 
@@ -10,10 +10,10 @@ const Operation = props => {
 
     return (
         <div className='operations-container'>
-            <NavbarSub url={url} />
+            <OperationNav url={url} />
             <Switch>
-                <Route exact path={`${path}/sell`} component={Sell} />
-                <Route exact path={`${path}`} component={Buy} />
+                <Route exact path={`${path}/sell`} component={SellStock} />
+                <Route exact path={`${path}`} component={BuyStock} />
             </Switch>
         </div>
     )

@@ -20,7 +20,7 @@ router.get('/', auth, async (req, res) => {
     try {
         const user = await User.findById(req.user.id).select('-password');
         const allStocksData = {
-            value: 0,
+            currentValue: 0,
             stock: [],
         };
 
@@ -34,8 +34,8 @@ router.get('/', auth, async (req, res) => {
 
         const handleAllRequest = async (index) => {
             const res = await handleOneRequest(index);
-            allStocksData.stock.push([user.shareholding[index].quantity, res, user.shareholding[index].symbol]);
-            allStocksData.value += Number(res.c * user.shareholding[index].quantity);
+            allStocksData.stock.push([user.shareholding[index].symbol, user.shareholding[index].quantity, user.shareholding[index].cost, res]);
+            allStocksData.currentValue += Number(res.c * user.shareholding[index].quantity);
             index++;
             if (index < user.shareholding.length) {
                 await handleAllRequest(index);
