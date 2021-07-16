@@ -1,6 +1,6 @@
 node_modules/
-config/default.json
+config/dev.js
 
 ./.env
 .env
-dev.js
+
