@@ -1,5 +1,0 @@
-{
-    "mongoURI": "mongodb+srv://Donghao:I0pxzLf3HYQGAQKf@cluster0-0cgmm.mongodb.net/test?retryWrites=true&w=majority",
-    "jwtSecret": "mySecretToken",
-    "API": "5F53S1QWA484BWTH"
-}

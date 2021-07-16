@@ -3,3 +3,4 @@ config/default.json
 
 ./.env
 .env
+dev.js
