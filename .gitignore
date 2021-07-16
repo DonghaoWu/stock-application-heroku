@@ -1,5 +1,5 @@
 node_modules/
-config/deve.js
+config/dev-env.js
 
 ./.env
 .env
