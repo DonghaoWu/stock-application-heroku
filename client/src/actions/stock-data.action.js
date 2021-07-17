@@ -7,6 +7,8 @@ import {
 } from './types';
 import { setAlert } from './alert.action';
 
+// load stock data
+
 export const loadStockData = () => async (dispatch) => {
   try {
     const res = await axios.get('/api/stock');
@@ -26,14 +28,21 @@ export const loadStockData = () => async (dispatch) => {
     dispatch({
       type: LOAD_STOCK_FAILURE,
     });
-    dispatch(
-      setAlert({
-        msg: 'Load stock data failure',
-        alertType: 'danger',
-      })
-    );
+    const errors = error.response.data.message;
+    if (errors) {
+      errors.forEach((error) =>
+        dispatch(
+          setAlert({
+            msg: error.msg,
+            alertType: 'danger',
+          })
+        )
+      );
+    }
   }
 };
+
+// refresh data
 
 export const refreshStockData = () => async (dispatch) => {
   const createDivWhenCheckPrice = ({ tagName, innerHTML, id }) => {

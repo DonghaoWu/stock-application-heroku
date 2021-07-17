@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import { Redirect, useRouteMatch } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -6,7 +6,13 @@ import { connect } from 'react-redux';
 import Stock from './Stock';
 import Operation from './Operation';
 
-const Portfolio = ({ isAuthenticated, loading }) => {
+import { loadStockData } from '../../actions/stock-data.action';
+
+const Portfolio = ({ isAuthenticated, loading, loadStockData }) => {
+  useEffect(() => {
+    loadStockData();
+  }, [loadStockData]);
+
   let { path, url } = useRouteMatch();
 
   if (!isAuthenticated) {
@@ -37,4 +43,10 @@ const mapStateToProps = (state) => ({
   loading: state.auth.loading,
 });
 
-export default connect(mapStateToProps)(Portfolio);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    loadStockData: () => dispatch(loadStockData()),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Portfolio);

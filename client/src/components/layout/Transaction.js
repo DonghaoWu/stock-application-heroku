@@ -1,9 +1,15 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 
-const Transaction = ({ transactions, isAuthenticated }) => {
+import { loadTransaction } from '../../actions/transaction.action';
+
+const Transaction = ({ transactions, isAuthenticated, loadTransaction }) => {
+  useEffect(() => {
+    loadTransaction();
+  }, [loadTransaction]);
+
   if (!isAuthenticated) {
     return <Redirect to="/" />;
   }
@@ -38,7 +44,7 @@ const Transaction = ({ transactions, isAuthenticated }) => {
                   <td>{el.symbol}</td>
                   <td>{el.quantity} shares</td>
                   <td>{el.price}</td>
-                  <td>{(el.cost).toFixed(2)}</td>
+                  <td>{el.cost.toFixed(2)}</td>
                   <td>{el.date.slice(0, -5)}</td>
                 </tr>
               );
@@ -61,4 +67,10 @@ const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated,
 });
 
-export default connect(mapStateToProps)(Transaction);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    loadTransaction: () => dispatch(loadTransaction()),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Transaction);

@@ -18,7 +18,7 @@ import {
 } from './types';
 
 //Load all data
-export const loadAllData = () => async (dispatch) => {
+export const checkTokenAndLoadUser = () => async (dispatch) => {
   if (!localStorage.token) {
     dispatch({
       type: NO_TOKEN,
@@ -28,12 +28,21 @@ export const loadAllData = () => async (dispatch) => {
     setAuthToken(localStorage.token);
     try {
       dispatch(loadUser());
-      dispatch(loadStockData());
-      dispatch(loadTransaction());
     } catch (error) {
       dispatch({
         type: LOAD_ALL_DATA_ERROR,
       });
+      const errors = error.response.data.message;
+      if (errors) {
+        errors.forEach((error) =>
+          dispatch(
+            setAlert({
+              msg: error.msg,
+              alertType: 'danger',
+            })
+          )
+        );
+      }
     }
   }
 };
@@ -60,12 +69,17 @@ export const loadUser = () => async (dispatch) => {
     dispatch({
       type: USER_LOADED_FAILURE,
     });
-    dispatch(
-      setAlert({
-        msg: 'Load user failure',
-        alertType: 'danger',
-      })
-    );
+    const errors = error.response.data.message;
+    if (errors) {
+      errors.forEach((error) =>
+        dispatch(
+          setAlert({
+            msg: error.msg,
+            alertType: 'danger',
+          })
+        )
+      );
+    }
   }
 };
 
@@ -95,7 +109,7 @@ export const register =
 
       setAuthToken(userToken);
 
-      dispatch(loadAllData());
+      dispatch(loadUser());
       dispatch(
         setAlert({
           msg: 'Sign up success',
@@ -103,8 +117,10 @@ export const register =
         })
       );
     } catch (error) {
-      const errors = error.response.data.errors;
-
+      dispatch({
+        type: REGISTER_FAILURE,
+      });
+      const errors = error.response.data.message;
       if (errors) {
         errors.forEach((error) =>
           dispatch(
@@ -115,9 +131,6 @@ export const register =
           )
         );
       }
-      dispatch({
-        type: REGISTER_FAILURE,
-      });
     }
   };
 
@@ -146,7 +159,7 @@ export const login =
 
       setAuthToken(userToken);
 
-      dispatch(loadAllData());
+      dispatch(loadUser());
 
       dispatch(
         setAlert({
@@ -155,8 +168,10 @@ export const login =
         })
       );
     } catch (error) {
-      const errors = error.response.data.errors;
-
+      dispatch({
+        type: LOGIN_FAILURE,
+      });
+      const errors = error.response.data.message;
       if (errors) {
         errors.forEach((error) =>
           dispatch(
@@ -167,9 +182,6 @@ export const login =
           )
         );
       }
-      dispatch({
-        type: LOGIN_FAILURE,
-      });
     }
   };
 
@@ -188,7 +200,9 @@ export const logout = () => (dispatch) => {
 
 export const loadDataAfterOperation = () => async (dispatch) => {
   try {
-    dispatch(loadAllData());
+    dispatch(checkTokenAndLoadUser());
+    dispatch(loadStockData());
+    dispatch(loadTransaction());
   } catch (error) {
     console.error(error);
   }

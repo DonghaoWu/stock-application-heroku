@@ -11,12 +11,6 @@ const Stock = ({ user, data, updateTime, refreshStockData }) => {
     initialTime.toLocaleTimeString()
   );
 
-  const setColor = (priceOne, priceTwo) => {
-    if (priceOne > priceTwo) return 'green';
-    else if (priceOne < priceTwo) return 'red';
-    else return 'grey';
-  };
-
   const handleCurrentTime = () => {
     let time = new Date().toLocaleTimeString();
     setCurrentTime(time);

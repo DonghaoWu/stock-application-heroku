@@ -7,10 +7,9 @@ import price from './check-price.reducer';
 
 //components can access state from here.
 export default combineReducers({
-    alert: alert,
-    auth: auth,
-    transactions: transactions,
-    stockData: stockData,
-    price: price,
+  alert: alert,
+  auth: auth,
+  transactions: transactions,
+  stockData: stockData,
+  price: price,
 });
-
