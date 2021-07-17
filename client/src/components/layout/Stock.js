@@ -21,8 +21,6 @@ const Stock = ({ user, data, updateTime, refreshStockData }) => {
     handleCurrentTime();
   };
 
-  console.log(data);
-
   return (
     <div className="stocks-container">
       <p className="record-header">PORTFOLIO</p>
