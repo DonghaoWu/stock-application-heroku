@@ -18,26 +18,30 @@ router.post(
     check('email', 'Please includes a valid email').isEmail(),
     check(
       'password',
-      'Please enter a password with 6 or more characters'
+      'Please enter a password with 6 or more characters.'
     ).isLength({ min: 6 }),
   ],
-  async (req, res) => {
+  async (req, res, next) => {
     const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(400).json({
-        errors: errors.array(),
-      });
-    }
-
-    const { name, email, password } = req.body;
-
     try {
+      if (!errors.isEmpty()) {
+        let err = {
+          statusCode: 400,
+          errors: errors.array(),
+        };
+        throw err;
+      }
+
+      const { name, email, password } = req.body;
+
       //See if a user exists
       let user = await User.findOne({ email: email });
       if (user) {
-        return res
-          .status(400)
-          .json({ errors: [{ msg: 'User already exists' }] });
+        let err = {
+          statusCode: 400,
+          errors: [{ msg: 'User already exists.' }],
+        };
+        throw err;
       }
       //Get users gravatar
       const avatar = gravatar.url(email, {
@@ -68,12 +72,24 @@ router.post(
       };
 
       jwt.sign(payload, keys.jwtSecret, { expiresIn: 360000 }, (err, token) => {
-        if (err) throw err;
-        res.json({ token: token });
+        if (err) {
+          res.status(401).json({
+            type: 'error',
+            message: [{ msg: 'Generated web token failed.' }],
+          });
+          return;
+        }
+        res.json({ token });
       });
     } catch (error) {
-      console.error(error.message);
-      res.status(500).send('Server error');
+      console.log(error);
+      if (!error.errors) {
+        let defaultError = {
+          statusCode: 500,
+          errors: [{ msg: 'User register failed.' }],
+        };
+        next(defaultError);
+      } else next(error);
     }
   }
 );

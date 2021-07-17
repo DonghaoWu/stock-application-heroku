@@ -1,84 +1,90 @@
 const express = require('express');
-const router = express.Router();
-const { check, validationResult } = require('express-validator');
-const auth = require('../../middleware/auth');
-const keys = require('../../config/keys');
 
-const Transaction = require('../../models/Transaction');
+const authMiddleware = require('../../middleware/auth');
+const finnhubClient = require('../../config/finhub');
+
 const User = require('../../models/User');
-const axios = require('axios');
 
-const finnhub = require('finnhub');
-
-const api_key = finnhub.ApiClient.instance.authentications['api_key'];
-api_key.apiKey = keys.finhubApi;
-const finnhubClient = new finnhub.DefaultApi();
+const router = express.Router();
 
 // @route  GET api/stock
-// @desc   Get all stock data
+// @desc   Get all stock portfolio data
 // @access Private
-router.get('/', auth, async (req, res) => {
+router.get('/', authMiddleware, async (req, res, next) => {
   try {
     const user = await User.findById(req.user.id).select('-password');
-    const allStocksData = {
+    let allStocksData = {
       currentValue: 0,
       stock: [],
     };
 
-    const handleOneRequest = (index) => {
-      return new Promise((resolve) => {
-        finnhubClient.quote(
-          user.shareholding[index].symbol,
-          (error, data, response) => {
-            resolve(data);
+    const handleOneRequest = (stock) => {
+      return new Promise((resolve, reject) => {
+        finnhubClient.quote(stock.symbol, (error, data, response) => {
+          if (error) {
+            reject(error);
+            return;
           }
-        );
+          resolve({
+            symbol: stock.symbol,
+            quantity: stock.quantity,
+            cost: stock.cost,
+            currentPrice: data.c,
+            previousClose: data.pc,
+            openPrice: data.o,
+          });
+        });
       });
     };
 
-    const handleAllRequest = async (index) => {
-      const res = await handleOneRequest(index);
-      allStocksData.stock.push([
-        user.shareholding[index].symbol,
-        user.shareholding[index].quantity,
-        user.shareholding[index].cost,
-        res,
-      ]);
-      allStocksData.currentValue += Number(
-        res.c * user.shareholding[index].quantity
-      );
-      index++;
-      if (index < user.shareholding.length) {
-        await handleAllRequest(index);
-      }
-    };
-
     if (user.shareholding.length > 0) {
-      await handleAllRequest(0);
+      const requestsPromiseArray = user.shareholding.map((el) => {
+        return handleOneRequest(el);
+      });
+
+      const resArray = await Promise.all(requestsPromiseArray);
+      resArray.forEach((el) => {
+        allStocksData.stock.push(el);
+        allStocksData.currentValue += Math.floor(
+          Number(el.currentPrice * el.quantity)
+        );
+      });
     }
+
     res.json(allStocksData);
-    return;
   } catch (error) {
-    console.error(error.message);
-    res.status(500).send('Error occurs in fetching all stock data.');
+    console.log(error);
+    if (!error.errors) {
+      let defaultError = {
+        statusCode: 500,
+        errors: [{ msg: 'Fetch user porfolio failed.' }],
+      };
+      next(defaultError);
+    } else next(error);
   }
 });
 
 // @route  GET api/stock/:symbol
-// @desc   Get single stock data
+// @desc   Check price before operations.
 // @access Private
-router.get('/:symbol', async (req, res) => {
+router.get('/:symbol', authMiddleware, async (req, res, next) => {
+  const symbol = req.params.symbol;
   try {
-    const symbol = req.params.symbol;
     finnhubClient.quote(symbol, (error, data, response) => {
-      return res.json({
+      res.json({
         stockData: data,
         symbol: symbol,
       });
     });
   } catch (error) {
-    console.error(error.message);
-    res.status(500).send('Server Error.');
+    console.log(error);
+    if (!error.errors) {
+      let defaultError = {
+        statusCode: 500,
+        errors: [{ msg: `Check ${symbol} price failed.` }],
+      };
+      next(defaultError);
+    } else next(error);
   }
 });
 

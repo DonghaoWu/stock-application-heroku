@@ -1,94 +1,188 @@
 const express = require('express');
-const router = express.Router();
+
 const { check, validationResult } = require('express-validator');
-const auth = require('../../middleware/auth');
+
+const authMiddleware = require('../../middleware/auth');
+const finnhubClient = require('../../config/finhub');
 
 const Transaction = require('../../models/Transaction');
 const User = require('../../models/User');
 
+const router = express.Router();
+
+const fetchPricePromise = (symbol) => {
+  return new Promise((resolve, reject) => {
+    finnhubClient.quote(symbol, (error, data, response) => {
+      if (error) {
+        reject(error);
+        return;
+      }
+      resolve(data);
+    });
+  });
+};
+
 // @route  POST api/transactions
 // @desc   Create a transaction, buy or sell stock shares
 // @access Private
-router.post('/',
-    [auth,
-        [
-            check('action', 'Action is required').not().isEmpty(),
-            check('symbol', 'Symbol is required').not().isEmpty(),
-            check('quantity', 'Quantity is required').not().isEmpty(),
-            check('price', 'Price is required').not().isEmpty(),
-        ]
+router.post(
+  '/',
+  [
+    authMiddleware,
+    [
+      check('action', 'Action is required').not().isEmpty(),
+      check('symbol', 'Symbol is required').not().isEmpty(),
+      check('quantity', 'Quantity is required').not().isEmpty(),
+      check('price', 'Price is required').not().isEmpty(),
     ],
+  ],
 
-    async (req, res) => {
-        const errors = validationResult(req);
-        if (!errors.isEmpty()) {
-            return res.status(400).json({ errors: errors.array() })
+  async (req, res, next) => {
+    const errors = validationResult(req);
+    try {
+      // invalite input
+      if (!errors.isEmpty()) {
+        let err = {
+          statusCode: 400,
+          errors: errors.array(),
+        };
+        throw err;
+      }
+
+      let { action, symbol, quantity, price } = req.body;
+
+      // check current price
+      const data = await fetchPricePromise(symbol);
+      // buying case
+      if (action === 'BUY') {
+        if (price < data.c) {
+          let err = {
+            statusCode: 400,
+            errors: [
+              {
+                msg: `Buy failed: Your price is lower than ${symbol} current price.`,
+              },
+            ],
+          };
+          throw err;
         }
+        if (price >= data.c) price = data.c;
+      }
 
-        const { action, symbol, quantity, price } = req.body;
-        const newCost = Number(price).toFixed(2) * quantity;
+      // selling case
+      if (action === 'SELL') {
+        if (price <= data.c) price = data.c;
+        quantity = 0 - quantity;
 
-        const newTransaction = {
-            symbol: symbol,
-            quantity: Number(quantity),
-            cost: newCost
+        if (price > data.c) {
+          let err = {
+            statusCode: 400,
+            errors: [
+              {
+                msg: `Sell failed: Your price is higher than ${symbol} current price.`,
+              },
+            ],
+          };
+          throw err;
         }
+      }
 
-        try {
-            let user = await User.findById(req.user.id).select('-password');
-            let newBalance = user.balance - newCost;
-            if (newBalance < 0) {
-                return res.status(400).json({ msg: "Not enough cash!" })
-            }
+      const fixedCost = Number(price).toFixed(2) * quantity;
+      const newTransaction = {
+        symbol: symbol,
+        quantity: Number(quantity),
+        cost: fixedCost,
+      };
 
-            let hasOne = false;
-            for (let i = 0; i < user.shareholding.length; i++) {
-                if (user.shareholding[i].symbol === newTransaction.symbol) {
-                    user.shareholding[i].quantity += newTransaction.quantity;
-                    user.shareholding[i].cost += newTransaction.cost;
-                    hasOne = true;
-                    break;
-                }
-            }
-            if (!hasOne) user.shareholding.push(newTransaction);
+      let user = await User.findById(req.user.id).select('-password');
 
-            user.shareholding = user.shareholding.filter(el => {
-                return el.quantity !== 0;
-            });
+      // check current balance if enough for buying
+      let newBalance = user.balance - fixedCost;
+      if (newBalance < 0) {
+        let err = {
+          statusCode: 400,
+          errors: [{ msg: 'Not enough cash.' }],
+        };
+        throw err;
+      }
 
-            user.balance = newBalance.toFixed(2);
+      let hasOne = false;
 
-            await user.save();
-
-            let transaction = new Transaction({
-                user: req.user.id,
-                action: action,
-                symbol: symbol,
-                quantity: quantity,
-                price: price,
-                cost: newCost
-            })
-
-            await transaction.save();
-            res.json(user);
-        } catch (error) {
-            console.error(error);
-            res.status(500).send('Server Error');
+      for (let i = 0; i < user.shareholding.length; i++) {
+        if (user.shareholding[i].symbol === newTransaction.symbol) {
+          user.shareholding[i].quantity += newTransaction.quantity;
+          // check current quantity if enough for selling
+          if (user.shareholding[i].quantity < 0) {
+            let err = {
+              statusCode: 400,
+              errors: [{ msg: `Not enough quantity to sell ${symbol}.` }],
+            };
+            throw err;
+          }
+          user.shareholding[i].cost += newTransaction.cost;
+          hasOne = true;
+          break;
         }
+      }
+
+      if (!hasOne) {
+        // Did not have the stock before, buying
+        if (fixedCost > 0) user.shareholding.push(newTransaction);
+        // Did not have the stock before, selling
+        else if (fixedCost < 0) {
+          let err = {
+            statusCode: 400,
+            errors: [{ msg: `You don't have ${symbol}.` }],
+          };
+          throw err;
+        }
+      }
+
+      // only the shareholding & balance changed in this operation.
+      user.shareholding = user.shareholding.filter((el) => {
+        return el.quantity !== 0;
+      });
+      user.balance = newBalance.toFixed(2);
+
+      await user.save();
+
+      // add a new transaction
+      let transaction = new Transaction({
+        user: req.user.id,
+        action: action,
+        symbol: symbol,
+        quantity: Math.abs(quantity),
+        price: price,
+        cost: 0 - fixedCost,
+      });
+      await transaction.save();
+
+      res.json(user);
+    } catch (error) {
+      console.error(error);
+      next(error);
     }
+  }
 );
 
 // @route  GET api/transactions
 // @desc   Get all posts
 // @access Private
-router.get('/', auth, async (req, res) => {
-    try {
-        const transactions = await Transaction.find({ user: req.user.id }).sort({ date: -1 });
-        res.json(transactions);
-    } catch (error) {
-        console.error(error.message);
-        res.status(500).send('Server Error');
-    }
-})
+router.get('/', authMiddleware, async (req, res, next) => {
+  try {
+    throw new Error('hello');
+    const transactions = await Transaction.find({ user: req.user.id }).sort({
+      date: -1,
+    });
+    res.json(transactions);
+  } catch (error) {
+    console.error(error);
+    let err = {
+      statusCode: 500,
+      errors: [{ msg: 'Fetching transaction list failed.' }],
+    };
+    next(err);
+  }
+});
 
 module.exports = router;

@@ -6,6 +6,7 @@ const path = require('path');
 //apply
 const app = express();
 connectDB();
+
 //middleware
 app.use(express.json({ extended: false }));
 //port
@@ -16,6 +17,16 @@ app.use('/api/users', require('./routes/api/users'));
 app.use('/api/auth', require('./routes/api/auth'));
 app.use('/api/transactions', require('./routes/api/transactions'));
 app.use('/api/stock', require('./routes/api/stockData'));
+
+// error handler
+app.use(async (err, req, res, next) => {
+  const statusCode = err.statusCode || 500;
+
+  res.status(statusCode).json({
+    type: 'error',
+    message: err.errors,
+  });
+});
 
 //Serve static  assets in production
 if (process.env.NODE_ENV === 'production') {
