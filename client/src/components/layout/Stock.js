@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 import { refreshStockData } from '../../actions/stock-data.action';
 
-const Stock = ({ user, stockData, refreshStockData }) => {
+const Stock = ({ user, data, updateTime, refreshStockData }) => {
   let initialTime = new Date();
   const [currentTime, setCurrentTime] = useState(
     initialTime.toLocaleTimeString()
@@ -27,21 +27,18 @@ const Stock = ({ user, stockData, refreshStockData }) => {
     handleCurrentTime();
   };
 
+  console.log(data);
+
   return (
     <div className="stocks-container">
       <p className="record-header">PORTFOLIO</p>
       <div className="total-container">
         <p className="tran-sub-header">
           Total:{' '}
-          {stockData.data
-            ? `$ ${Math.floor(stockData.data.currentValue + user.balance)}`
-            : `null`}{' '}
+          {data ? `$ ${Math.floor(data.stockValue + user.balance)}` : `null`}{' '}
         </p>
         <p className="tran-sub-header">
-          Stock value:{' '}
-          {stockData.data
-            ? `$ ${Math.floor(stockData.data.currentValue)}`
-            : `null`}
+          Stock value: {data ? `$ ${Math.floor(data.stockValue)}` : `null`}
         </p>
         <Link to="#" id="refreshing-button" onClick={handleRefresh}>
           Refresh
@@ -51,9 +48,7 @@ const Stock = ({ user, stockData, refreshStockData }) => {
       <p className="tran-sub-header update-time">Current time: {currentTime}</p>
       <p className="tran-sub-header update-time">
         Updated at:{' '}
-        {stockData.updateTime
-          ? stockData.updateTime.toLocaleTimeString()
-          : `Not available yet`}
+        {updateTime ? updateTime.toLocaleTimeString() : `Not available yet`}
       </p>
 
       <table className="record-table">
@@ -71,41 +66,49 @@ const Stock = ({ user, stockData, refreshStockData }) => {
           </tr>
         </thead>
         <tbody>
-          {stockData.data && Object.keys(stockData.data).length ? (
-            stockData.data.stock.map((el, index) => {
-              return (
-                <tr key={index}>
-                  <td>{el[0]}</td>
-                  <td>{el[1]}</td>
-                  <td className={setColor(el[3]['c'], el[3]['pc'])}>
-                    {' '}
-                    {el[3]['c']}
-                  </td>
-                  <td className={'grey'}> {el[3]['pc']}</td>
-                  <td className={el[3]['c'] - el[3]['o'] > 0 ? `green` : `red`}>
-                    {' '}
-                    {(el[3]['c'] - el[3]['pc']).toFixed(2)}
-                  </td>
-                  <td className={el[3]['c'] - el[3]['o'] > 0 ? `green` : `red`}>
-                    {' '}
-                    {(((el[3]['c'] - el[3]['pc']) / el[3]['pc']) * 300).toFixed(
-                      2
-                    )}
-                  </td>
-                  <td>{Math.floor(el[1] * el[3]['c'])}</td>
-                  <td>{Math.floor(el[2])}</td>
-                  <td
-                    className={
-                      Math.floor(el[1] * el[3]['c'] - el[2]) > 0
-                        ? `green`
-                        : `red`
-                    }
-                  >
-                    {Math.floor(el[1] * el[3]['c'] - el[2])}
-                  </td>
-                </tr>
-              );
-            })
+          {data && Object.keys(data).length ? (
+            data.stock.map(
+              (
+                {
+                  symbol,
+                  quantity,
+                  spentCost,
+                  currentPrice,
+                  previousClose,
+                  openPrice,
+                },
+                index
+              ) => {
+                const change = (currentPrice - openPrice).toFixed(2);
+                const persent = ((change / previousClose) * 100).toFixed(2);
+                const currentValue = (quantity * currentPrice).toFixed(2);
+                const profit = (quantity * currentPrice - spentCost).toFixed(2);
+                return (
+                  <tr key={index}>
+                    {/* symbol */}
+                    <td>{symbol}</td>
+                    {/* quantity */}
+                    <td>{quantity}</td>
+                    {/* current price */}
+                    <td className={change > 0 ? `green` : `red`}>
+                      {currentPrice}
+                    </td>
+                    {/* previous price */}
+                    <td className={'grey'}>{previousClose}</td>
+                    {/* change */}
+                    <td className={change > 0 ? `green` : `red`}>{change}</td>
+                    {/* change persent */}
+                    <td className={change > 0 ? `green` : `red`}>{persent}</td>
+                    {/* current value */}
+                    <td>{currentValue}</td>
+                    {/* spent cost */}
+                    <td>{spentCost}</td>
+                    {/* profit */}
+                    <td className={profit > 0 ? `green` : `red`}>{profit}</td>
+                  </tr>
+                );
+              }
+            )
           ) : (
             <tr>
               <td>Null</td>
@@ -128,12 +131,13 @@ const Stock = ({ user, stockData, refreshStockData }) => {
 
 Stock.propTypes = {
   user: PropTypes.object.isRequired,
-  stockData: PropTypes.object.isRequired,
+  data: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   user: state.auth.user,
-  stockData: state.stockData,
+  data: state.stockData.data,
+  updateTime: state.stockData.updateTime,
 });
 
 const mapDispatchToProps = (dispatch) => ({

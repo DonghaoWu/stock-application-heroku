@@ -28,7 +28,7 @@ router.get('/', authMiddleware, async (req, res, next) => {
           resolve({
             symbol: stock.symbol,
             quantity: stock.quantity,
-            currentValue: stock.value,
+            spentCost: stock.cost,
             currentPrice: data.c,
             previousClose: data.pc,
             openPrice: data.o,

@@ -38,7 +38,7 @@ const Transaction = ({ transactions, isAuthenticated }) => {
                   <td>{el.symbol}</td>
                   <td>{el.quantity} shares</td>
                   <td>{el.price}</td>
-                  <td>{Math.floor(el.cost)}</td>
+                  <td>{(el.cost).toFixed(2)}</td>
                   <td>{el.date.slice(0, -5)}</td>
                 </tr>
               );

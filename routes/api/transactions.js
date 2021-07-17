@@ -91,7 +91,7 @@ router.post(
       const newTransaction = {
         symbol: symbol,
         quantity: Number(quantity),
-        value: cost,
+        cost: cost,
       };
 
       let user = req.user;
@@ -119,7 +119,7 @@ router.post(
             };
             throw err;
           }
-          user.shareholding[i].value += newTransaction.value;
+          user.shareholding[i].cost += newTransaction.cost;
           hasOne = true;
           break;
         }
