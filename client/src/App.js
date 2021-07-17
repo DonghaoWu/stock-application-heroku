@@ -32,29 +32,29 @@ const App = ({ loadAllData }) => {
     <Router>
       <Fragment>
         <Navbar />
-        <Route exact path='/' component={Landing} />
-        <div className='alert-container'>
+        <Route exact path="/" component={Landing} />
+        <div className="alert-container">
           <Alert />
         </div>
-        <section className='container'>
+        <section className="container">
           <Switch>
-            <Route path='/portfolio' component={Portfolio} />
-            <Route exact path='/login' component={Login} />
-            <Route exact path='/register' component={Register} />
-            <Route exact path='/transaction' component={Transaction} />
+            <Route path="/portfolio" component={Portfolio} />
+            <Route path="/login" component={Login} />
+            <Route path="/register" component={Register} />
+            <Route path="/transaction" component={Transaction} />
           </Switch>
         </section>
       </Fragment>
     </Router>
-  )
+  );
 };
 
 App.propTypes = {
   loadAllData: PropTypes.func.isRequired,
-}
+};
 
-const mapDispatchToProps = dispatch => ({
-  loadAllData: () => dispatch(loadAllData())
-})
+const mapDispatchToProps = (dispatch) => ({
+  loadAllData: () => dispatch(loadAllData()),
+});
 
 export default connect(null, mapDispatchToProps)(App);

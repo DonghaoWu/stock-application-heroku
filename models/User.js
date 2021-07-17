@@ -37,7 +37,7 @@ const UserSchema = new mongoose.Schema({
         type: Number,
         required: true,
       },
-      cost: {
+      value: {
         type: Number,
         required: true,
       },

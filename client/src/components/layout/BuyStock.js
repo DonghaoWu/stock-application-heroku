@@ -6,7 +6,7 @@ import { checkPrice } from '../../actions/check-price.action';
 import { buyStock } from '../../actions/transaction.action';
 import { setAlert } from '../../actions/alert.action';
 
-const BuyStock = ({ auth, checkPrice, setAlert, buyStock, checkPriceResult }) => {
+const BuyStock = ({ user, checkPrice, setAlert, buyStock, checkPriceResult }) => {
     const [formData, setFormData] = useState({
         symbol: '',
         quantity: '',
@@ -25,7 +25,7 @@ const BuyStock = ({ auth, checkPrice, setAlert, buyStock, checkPriceResult }) =>
         const res = await axios.get(`/api/stock/${symbolTrim}`);
         const price = res.data.stockData.c;
 
-        if (auth.user.balance < quantity * price) {
+        if (user.balance < quantity * price) {
             setAlert({
                 msg: 'Not enough cash!',
                 alertType: 'danger'
@@ -83,7 +83,7 @@ const BuyStock = ({ auth, checkPrice, setAlert, buyStock, checkPriceResult }) =>
 }
 
 const mapStateToProps = state => ({
-    auth: state.auth,
+    user: state.auth.user,
     checkPriceResult: state.price
 })
 

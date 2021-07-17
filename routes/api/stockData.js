@@ -14,7 +14,7 @@ router.get('/', authMiddleware, async (req, res, next) => {
   try {
     const user = req.user;
     let allStocksData = {
-      currentValue: 0,
+      stockValue: 0,
       stock: [],
     };
 
@@ -28,7 +28,7 @@ router.get('/', authMiddleware, async (req, res, next) => {
           resolve({
             symbol: stock.symbol,
             quantity: stock.quantity,
-            cost: stock.cost,
+            currentValue: stock.value,
             currentPrice: data.c,
             previousClose: data.pc,
             openPrice: data.o,
@@ -45,7 +45,7 @@ router.get('/', authMiddleware, async (req, res, next) => {
       const resArray = await Promise.all(requestsPromiseArray);
       resArray.forEach((el) => {
         allStocksData.stock.push(el);
-        allStocksData.currentValue += Number(el.currentPrice * el.quantity);
+        allStocksData.stockValue += Number(el.currentPrice * el.quantity);
       });
     }
 

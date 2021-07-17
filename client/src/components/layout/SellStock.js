@@ -6,7 +6,7 @@ import { checkPrice } from '../../actions/check-price.action';
 import { sellStock } from '../../actions/transaction.action';
 import { setAlert } from '../../actions/alert.action';
 
-const SellStock = ({ auth, checkPrice, setAlert, sellStock, checkPriceResult }) => {
+const SellStock = ({ user, checkPrice, setAlert, sellStock, checkPriceResult }) => {
     const [formData, setFormData] = useState({
         symbol: '',
         quantity: '',
@@ -26,12 +26,12 @@ const SellStock = ({ auth, checkPrice, setAlert, sellStock, checkPriceResult }) 
         const price = res.data.stockData.c;
         let hasOne = false;
 
-        for (let i = 0; i < auth.user.shareholding.length; i++) {
-            if (auth.user.shareholding[i].symbol === symbolTrim) {
+        for (let i = 0; i < user.shareholding.length; i++) {
+            if (user.shareholding[i].symbol === symbolTrim) {
                 hasOne = true;
-                if (quantity > auth.user.shareholding[i].quantity) {
+                if (quantity > user.shareholding[i].quantity) {
                     setAlert({
-                        msg: `Not enough shares:  You have ${symbolTrim} ${auth.user.shareholding[i].quantity} share(s).`,
+                        msg: `Not enough shares:  You have ${symbolTrim} ${user.shareholding[i].quantity} share(s).`,
                         alertType: 'danger'
                     });
                     return;
@@ -96,7 +96,7 @@ const SellStock = ({ auth, checkPrice, setAlert, sellStock, checkPriceResult }) 
 }
 
 const mapStateToProps = state => ({
-    auth: state.auth,
+    user: state.auth.user,
     checkPriceResult: state.price
 })
 

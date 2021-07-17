@@ -1,41 +1,40 @@
 import React, { Fragment } from 'react';
-import { Redirect } from 'react-router-dom';
+import { Redirect, useRouteMatch } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { useRouteMatch } from "react-router-dom";
+
 import Stock from './Stock';
 import Operation from './Operation';
 
-const Portfolio = (props, { match }) => {
-    const { auth } = props;
-    let { path, url } = useRouteMatch();
+const Portfolio = ({ isAuthenticated, loading }) => {
+  let { path, url } = useRouteMatch();
 
-    if (!auth.isAuthenticated) {
-        return <Redirect to='/' />
-    }
+  if (!isAuthenticated) {
+    return <Redirect to="/" />;
+  }
 
-    return (
-        <Fragment>
-            {
-                (auth.user) ?
-                    <div className='record-container'>
-                        <Stock />
-                        <Operation url={url} path={path} />
-                    </div>
-                    :
-                    <p>Loading...</p>
-            }
-        </Fragment>
-    )
-}
+  return (
+    <Fragment>
+      {!loading ? (
+        <div className="record-container">
+          <Stock />
+          <Operation url={url} path={path} />
+        </div>
+      ) : (
+        <p>Loading...</p>
+      )}
+    </Fragment>
+  );
+};
 
 Portfolio.propTypes = {
-    auth: PropTypes.object.isRequired,
-}
+  isAuthenticated: PropTypes.bool.isRequired,
+  loading: PropTypes.bool.isRequired,
+};
 
-const mapStateToProps = state => ({
-    auth: state.auth
-})
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.auth.isAuthenticated,
+  loading: state.auth.loading,
+});
 
-export default connect(mapStateToProps)(Portfolio)
-
+export default connect(mapStateToProps)(Portfolio);
