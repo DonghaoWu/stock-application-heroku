@@ -1,6 +1,6 @@
 const express = require('express');
 
-const authMiddleware = require('../../middleware/auth');
+const authMiddleware = require('../../middleware/authMiddleware');
 const finnhubClient = require('../../config/finhub');
 
 const User = require('../../models/User');
@@ -12,7 +12,7 @@ const router = express.Router();
 // @access Private
 router.get('/', authMiddleware, async (req, res, next) => {
   try {
-    const user = await User.findById(req.user.id).select('-password');
+    const user = req.user;
     let allStocksData = {
       currentValue: 0,
       stock: [],
@@ -45,9 +45,7 @@ router.get('/', authMiddleware, async (req, res, next) => {
       const resArray = await Promise.all(requestsPromiseArray);
       resArray.forEach((el) => {
         allStocksData.stock.push(el);
-        allStocksData.currentValue += Math.floor(
-          Number(el.currentPrice * el.quantity)
-        );
+        allStocksData.currentValue += Number(el.currentPrice * el.quantity);
       });
     }
 

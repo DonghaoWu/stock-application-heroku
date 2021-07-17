@@ -5,7 +5,7 @@ const bcrypt = require('bcryptjs');
 const { check, validationResult } = require('express-validator');
 
 const router = express.Router();
-const authMiddleware = require('../../middleware/auth');
+const authMiddleware = require('../../middleware/authMiddleware');
 const User = require('../../models/User');
 
 // @route  GET api/auth
@@ -13,7 +13,7 @@ const User = require('../../models/User');
 // @access public
 router.get('/', authMiddleware, async (req, res, next) => {
   try {
-    const user = await User.findById(req.user.id).select('-password');
+    const user = req.user;
     return res.json(user);
   } catch (error) {
     console.log(error);

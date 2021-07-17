@@ -2,7 +2,7 @@ const express = require('express');
 
 const { check, validationResult } = require('express-validator');
 
-const authMiddleware = require('../../middleware/auth');
+const authMiddleware = require('../../middleware/authMiddleware');
 const finnhubClient = require('../../config/finhub');
 
 const Transaction = require('../../models/Transaction');
@@ -87,17 +87,17 @@ router.post(
         }
       }
 
-      const fixedCost = Number(price).toFixed(2) * quantity;
+      const cost = Number(price) * quantity;
       const newTransaction = {
         symbol: symbol,
         quantity: Number(quantity),
-        cost: fixedCost,
+        cost: cost,
       };
 
-      let user = await User.findById(req.user.id).select('-password');
+      let user = req.user;
 
       // check current balance if enough for buying
-      let newBalance = user.balance - fixedCost;
+      let newBalance = user.balance - cost;
       if (newBalance < 0) {
         let err = {
           statusCode: 400,
@@ -127,9 +127,9 @@ router.post(
 
       if (!hasOne) {
         // Did not have the stock before, buying
-        if (fixedCost > 0) user.shareholding.push(newTransaction);
+        if (action === 'BUY') user.shareholding.push(newTransaction);
         // Did not have the stock before, selling
-        else if (fixedCost < 0) {
+        else if (action === 'SELL') {
           let err = {
             statusCode: 400,
             errors: [{ msg: `You don't have ${symbol}.` }],
@@ -138,13 +138,11 @@ router.post(
         }
       }
 
-      // only the shareholding & balance changed in this operation.
+      // only change the shareholding & balance fields in this operation.
       user.shareholding = user.shareholding.filter((el) => {
         return el.quantity !== 0;
       });
-      user.balance = newBalance.toFixed(2);
-
-      await user.save();
+      user.balance = newBalance;
 
       // add a new transaction
       let transaction = new Transaction({
@@ -153,9 +151,12 @@ router.post(
         symbol: symbol,
         quantity: Math.abs(quantity),
         price: price,
-        cost: 0 - fixedCost,
+        cost: 0 - cost,
       });
+
+      // save transaction before save user
       await transaction.save();
+      await user.save();
 
       res.json(user);
     } catch (error) {
@@ -170,7 +171,6 @@ router.post(
 // @access Private
 router.get('/', authMiddleware, async (req, res, next) => {
   try {
-    throw new Error('hello');
     const transactions = await Transaction.find({ user: req.user.id }).sort({
       date: -1,
     });
