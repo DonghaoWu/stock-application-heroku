@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 
 import { logout } from '../../actions/auth.action';
 
-const Landing = ({ logout, isAuthenticated, loading }) => {
+const Landing = ({ logout, isAuthenticated }) => {
   const authLinks = (
     <div className="landing-buttons">
       <Link to="/portfolio" className="btn btn-primary">
@@ -33,9 +33,7 @@ const Landing = ({ logout, isAuthenticated, loading }) => {
         <div className="landing-inner">
           <h1 className="x-large">Fullstack Stock App</h1>
           <p className="lead">This is a web-based stock portfolio app.</p>
-          {!loading && (
-            <Fragment>{isAuthenticated ? authLinks : guestLinks}</Fragment>
-          )}
+          <Fragment>{isAuthenticated ? authLinks : guestLinks}</Fragment>
         </div>
       </div>
     </section>

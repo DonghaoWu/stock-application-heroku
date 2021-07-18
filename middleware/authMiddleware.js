@@ -8,7 +8,7 @@ module.exports = async function (req, res, next) {
   if (!token) {
     next({
       statusCode: 401,
-      errors: [{ msg: `Please register / login.` }],
+      errors: [{ msg: `Invalid token.` }],
     });
   }
   //verify token
@@ -20,7 +20,7 @@ module.exports = async function (req, res, next) {
   } catch (error) {
     next({
       statusCode: 401,
-      errors: [{ msg: `Please register / login.` }],
+      errors: [{ msg: `Invalid token.` }],
     });
   }
 };

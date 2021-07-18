@@ -26,7 +26,9 @@ if (localStorage.token) {
 const App = ({ loadUser }) => {
   //componentDidMount
   useEffect(() => {
-    loadUser();
+    if (localStorage.token) {
+      loadUser();
+    }
   }, [loadUser]);
 
   return (
@@ -39,7 +41,7 @@ const App = ({ loadUser }) => {
         </div>
         <section className="container">
           <Switch>
-            <Route exact path="/portfolio" component={Portfolio} />
+            <Route path="/portfolio" component={Portfolio} />
             <Route exact path="/login" component={Login} />
             <Route exact path="/register" component={Register} />
             <Route exact path="/transaction" component={Transaction} />

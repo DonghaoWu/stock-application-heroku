@@ -66,7 +66,7 @@ router.get('/', authMiddleware, async (req, res, next) => {
 // @desc   Check price before operations.
 // @access Private
 
-const handlePromise = (symbol) => {
+const handleCheckPricePromise = (symbol) => {
   return new Promise((resolve, reject) => {
     finnhubClient.quote(symbol, (error, data, response) => {
       if (data.c === 0) {
@@ -87,7 +87,7 @@ router.get('/:symbol', authMiddleware, async (req, res, next) => {
   let symbol = req.params.symbol.trim().toUpperCase();
 
   try {
-    const data = await handlePromise(symbol);
+    const data = await handleCheckPricePromise(symbol);
     res.json(data);
   } catch (error) {
     if (!error.errors) {

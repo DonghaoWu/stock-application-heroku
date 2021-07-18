@@ -62,7 +62,7 @@ export const handleBuy = async (
 
     if (user.balance < quantity * price) {
       setAlert({
-        msg: 'Not enough cash!',
+        msg: `Buy ${symbolTrim} failed: No enough cash!`,
         alertType: 'danger',
       });
       document.getElementById('operation-spinner').setAttribute('hidden', '');
@@ -75,10 +75,15 @@ export const handleBuy = async (
       price: price,
     });
   } catch (error) {
-    setAlert({
-      msg: `Buy ${symbol} failed!`,
-      alertType: 'danger',
-    });
+    const errors = error.response.data.message;
+    if (errors) {
+      errors.forEach((error) =>
+        setAlert({
+          msg: `Buy ${symbol} failed: ${error.msg}`,
+          alertType: 'danger',
+        })
+      );
+    }
   }
 
   document.getElementById('operation-spinner').setAttribute('hidden', '');
@@ -107,7 +112,7 @@ export const handleSell = async (
         hasOne = true;
         if (quantity > user.shareholding[i].quantity) {
           setAlert({
-            msg: `Not enough shares:  You have ${symbolTrim} ${user.shareholding[i].quantity} share(s).`,
+            msg: `Sell ${symbolTrim} failed: No enough quantity!`,
             alertType: 'danger',
           });
           document
@@ -121,7 +126,7 @@ export const handleSell = async (
 
     if (!hasOne) {
       setAlert({
-        msg: `You don't have ${symbolTrim}.`,
+        msg: `Sell ${symbolTrim} failed: You don't own this stock.`,
         alertType: 'danger',
       });
       document.getElementById('operation-spinner').setAttribute('hidden', '');
@@ -134,10 +139,15 @@ export const handleSell = async (
       price: price,
     });
   } catch (error) {
-    setAlert({
-      msg: `Sell ${symbol} failed!`,
-      alertType: 'danger',
-    });
+    const errors = error.response.data.message;
+    if (errors) {
+      errors.forEach((error) =>
+        setAlert({
+          msg: `Sell ${symbol} failed: ${error.msg}`,
+          alertType: 'danger',
+        })
+      );
+    }
   }
 
   document.getElementById('operation-spinner').setAttribute('hidden', '');
