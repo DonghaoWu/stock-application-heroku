@@ -8,7 +8,7 @@ import {
   LOGIN_SUCCESS,
   LOGOUT,
   NO_TOKEN,
-  CLEAR_ALL_PREVIOUS_USER_DATA,
+  CLEAR_ALL_USER_DATA,
 } from '../actions/types';
 
 const initialState = {
@@ -40,7 +40,7 @@ export default function (state = initialState, action) {
     case LOAD_ALL_DATA_ERROR:
     case LOGIN_FAILURE:
     case LOGOUT:
-    case CLEAR_ALL_PREVIOUS_USER_DATA:
+    case CLEAR_ALL_USER_DATA:
       localStorage.removeItem('token');
       return {
         ...state,

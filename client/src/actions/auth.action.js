@@ -7,45 +7,41 @@ import { loadStockData } from './stock-data.action';
 
 import {
   USER_LOADED_SUCCESS,
-  USER_LOADED_FAILURE,
   REGISTER_SUCCESS,
   REGISTER_FAILURE,
-  LOAD_ALL_DATA_ERROR,
   LOGIN_SUCCESS,
   LOGIN_FAILURE,
-  NO_TOKEN,
-  CLEAR_ALL_PREVIOUS_USER_DATA,
+  CLEAR_ALL_USER_DATA,
 } from './types';
 
-//Load all data
-export const checkTokenAndLoadUser = () => async (dispatch) => {
-  if (!localStorage.token) {
-    dispatch({
-      type: NO_TOKEN,
-    });
-    return;
-  } else {
-    setAuthToken(localStorage.token);
-    try {
-      dispatch(loadUser());
-    } catch (error) {
-      dispatch({
-        type: LOAD_ALL_DATA_ERROR,
-      });
-      const errors = error.response.data.message;
-      if (errors) {
-        errors.forEach((error) =>
-          dispatch(
-            setAlert({
-              msg: error.msg,
-              alertType: 'danger',
-            })
-          )
-        );
-      }
-    }
-  }
-};
+// export const checkTokenAndLoadUser = () => async (dispatch) => {
+//   if (!localStorage.token) {
+//     dispatch({
+//       type: NO_TOKEN,
+//     });
+//     return;
+//   } else {
+//     setAuthToken(localStorage.token);
+//     try {
+//       dispatch(loadUser());
+//     } catch (error) {
+//       dispatch({
+//         type: LOAD_ALL_DATA_ERROR,
+//       });
+//       const errors = error.response.data.message;
+//       if (errors) {
+//         errors.forEach((error) =>
+//           dispatch(
+//             setAlert({
+//               msg: error.msg,
+//               alertType: 'danger',
+//             })
+//           )
+//         );
+//       }
+//     }
+//   }
+// };
 
 //Load user
 export const loadUser = () => async (dispatch) => {
@@ -67,7 +63,7 @@ export const loadUser = () => async (dispatch) => {
     );
   } catch (error) {
     dispatch({
-      type: USER_LOADED_FAILURE,
+      type: CLEAR_ALL_USER_DATA,
     });
     const errors = error.response.data.message;
     if (errors) {
@@ -75,7 +71,7 @@ export const loadUser = () => async (dispatch) => {
         dispatch(
           setAlert({
             msg: error.msg,
-            alertType: 'danger',
+            alertType: 'success',
           })
         )
       );
@@ -188,7 +184,7 @@ export const login =
 //Logout /clear profile
 export const logout = () => (dispatch) => {
   dispatch({
-    type: CLEAR_ALL_PREVIOUS_USER_DATA,
+    type: CLEAR_ALL_USER_DATA,
   });
   dispatch(
     setAlert({
@@ -200,7 +196,7 @@ export const logout = () => (dispatch) => {
 
 export const loadDataAfterOperation = () => async (dispatch) => {
   try {
-    dispatch(checkTokenAndLoadUser());
+    dispatch(loadUser());
     dispatch(loadStockData());
     // dispatch(loadTransaction());
   } catch (error) {

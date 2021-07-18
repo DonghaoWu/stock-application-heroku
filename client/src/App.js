@@ -11,9 +11,10 @@ import Register from './components/auth/Register';
 import Alert from './components/layout/Alert';
 import Transaction from './components/layout/Transaction';
 import Portfolio from './components/layout/Portfolio/Portfolio';
+import ErrorBoundary from './components/layout/Error-bountry/Error-bountry';
 
 //check the localStorage.token every time when refresh or open
-import { checkTokenAndLoadUser } from './actions/auth.action';
+import { loadUser } from './actions/auth.action';
 import setAuthToken from './utils/setAuthToken';
 
 import './App.css';
@@ -22,11 +23,11 @@ if (localStorage.token) {
   setAuthToken(localStorage.token);
 }
 
-const App = ({ checkTokenAndLoadUser }) => {
+const App = ({ loadUser }) => {
   //componentDidMount
   useEffect(() => {
-    checkTokenAndLoadUser();
-  }, [checkTokenAndLoadUser]);
+    loadUser();
+  }, [loadUser]);
 
   return (
     <Router>
@@ -38,10 +39,11 @@ const App = ({ checkTokenAndLoadUser }) => {
         </div>
         <section className="container">
           <Switch>
-            <Route path="/portfolio" component={Portfolio} />
-            <Route path="/login" component={Login} />
-            <Route path="/register" component={Register} />
-            <Route path="/transaction" component={Transaction} />
+            <Route exact path="/portfolio" component={Portfolio} />
+            <Route exact path="/login" component={Login} />
+            <Route exact path="/register" component={Register} />
+            <Route exact path="/transaction" component={Transaction} />
+            <Route path="/" component={ErrorBoundary} />
           </Switch>
         </section>
       </Fragment>
@@ -50,11 +52,11 @@ const App = ({ checkTokenAndLoadUser }) => {
 };
 
 App.propTypes = {
-  checkTokenAndLoadUser: PropTypes.func.isRequired,
+  loadUser: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  checkTokenAndLoadUser: () => dispatch(checkTokenAndLoadUser()),
+  loadUser: () => dispatch(loadUser()),
 });
 
 export default connect(null, mapDispatchToProps)(App);

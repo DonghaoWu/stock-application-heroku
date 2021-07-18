@@ -28,4 +28,4 @@ export const CHECK_PRICE_SUCCESS = 'CHECK_PRICE_SUCCESS';
 export const CHECK_PRICE_FAILURE = 'CHECK_PRICE_FAILURE';
 
 //for stock data state, auth state, transaction state
-export const CLEAR_ALL_PREVIOUS_USER_DATA = 'CLEAR_ALL_PREVIOUS_USER_DATA';
+export const CLEAR_ALL_USER_DATA = 'CLEAR_ALL_USER_DATA';

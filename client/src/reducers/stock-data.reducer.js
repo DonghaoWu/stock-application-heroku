@@ -3,7 +3,7 @@ import {
   LOAD_STOCK_FAILURE,
   REFRESH_SUCCESS,
   REFRESH_FAILURE,
-  CLEAR_ALL_PREVIOUS_USER_DATA,
+  CLEAR_ALL_USER_DATA,
 } from '../actions/types';
 
 const initialState = {
@@ -21,7 +21,7 @@ export default function (state = initialState, action) {
         data: payload,
         updateTime: new Date(),
       };
-    case CLEAR_ALL_PREVIOUS_USER_DATA:
+    case CLEAR_ALL_USER_DATA:
       return {
         ...state,
         data: {},
