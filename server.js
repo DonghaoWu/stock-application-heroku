@@ -1,4 +1,3 @@
-//library
 const express = require('express');
 const connectDB = require('./config/db');
 const path = require('path');
@@ -19,7 +18,7 @@ app.use('/api/transactions', require('./routes/api/transactions'));
 app.use('/api/stock', require('./routes/api/stockData'));
 
 // error handler
-app.use(async (err, req, res, next) => {
+app.use((err, req, res, next) => {
   const statusCode = err.statusCode || 500;
 
   res.status(statusCode).json({

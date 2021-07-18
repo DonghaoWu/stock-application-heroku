@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import { connect } from 'react-redux';
 
 import { setAlert } from '../../actions/alert.action';
-import { buyStock } from '../../actions/transaction.action';
+import { operation } from '../../actions/trade.action';
 
 import CheckPrice from './CheckPrice';
 
-const BuyStock = ({ user, setAlert, buyStock }) => {
+const TradeAction = ({ user, setAlert, operation, handleSubmit, act }) => {
   const [formData, setFormData] = useState({
     symbol: '',
     quantity: '',
@@ -21,31 +20,14 @@ const BuyStock = ({ user, setAlert, buyStock }) => {
     });
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const symbolTrim = symbol.trim().toUpperCase();
-    const res = await axios.get(`/api/stock/${symbolTrim}`);
-    const price = res.data.stockData.c;
-
-    if (user.balance < quantity * price) {
-      setAlert({
-        msg: 'Not enough cash!',
-        alertType: 'danger',
-      });
-      return;
-    }
-    buyStock({
-      action: 'BUY',
-      symbol: symbolTrim,
-      quantity: quantity,
-      price: price,
-    });
-    setFormData({ ...formData, symbol: '', quantity: '' });
-  };
-
   return (
     <div className="operations-content">
-      <form className="oper-form-container" onSubmit={(e) => handleSubmit(e)}>
+      <form
+        className="oper-form-container"
+        onSubmit={(e) =>
+          handleSubmit(e, user, setAlert, operation, symbol, quantity)
+        }
+      >
         <div className="oper-form">
           <input
             type="text"
@@ -66,11 +48,14 @@ const BuyStock = ({ user, setAlert, buyStock }) => {
             required
           />
         </div>
-        <input
-          type="submit"
-          className="operate-nav-tag place-btn"
-          value="BUY"
-        />
+        <div className="operation-button-spinner">
+          <input
+            type="submit"
+            className="operate-nav-tag place-btn"
+            value={act}
+          />
+          <div hidden id="operation-spinner"></div>
+        </div>
       </form>
       <CheckPrice symbol={symbol} />
     </div>
@@ -83,7 +68,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   setAlert: (info) => dispatch(setAlert(info)),
-  buyStock: (stockInfo) => dispatch(buyStock(stockInfo)),
+  operation: (stockInfo) => dispatch(operation(stockInfo)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(BuyStock);
+export default connect(mapStateToProps, mapDispatchToProps)(TradeAction);

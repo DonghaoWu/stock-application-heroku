@@ -52,5 +52,6 @@ export const checkPrice = (symbol) => async (dispatch) => {
       );
     }
     document.getElementById('check-price-button').innerHTML = `Check price`;
+    document.getElementById('checking-spinner').setAttribute('hidden', '');
   }
 };

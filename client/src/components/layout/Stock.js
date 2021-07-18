@@ -43,23 +43,23 @@ const Stock = ({ user, data, updateTime, refreshStockData }) => {
         {updateTime ? updateTime.toLocaleTimeString() : `Not available yet`}
       </p>
 
-      <table className="record-table">
-        <thead>
-          <tr>
-            <th>Stock</th>
-            <th>Own Shares</th>
-            <th>Current price</th>
-            <th>Previous Close</th>
-            <th>Change</th>
-            <th>Change %</th>
-            <th>Current Value</th>
-            <th>Total cost</th>
-            <th>Profit</th>
-          </tr>
-        </thead>
-        <tbody>
-          {data && Object.keys(data).length ? (
-            data.stock.map(
+      {data && data.stock && data.stock.length ? (
+        <table className="record-table">
+          <thead>
+            <tr>
+              <th>Stock</th>
+              <th>Own Shares</th>
+              <th>Current price</th>
+              <th>Previous Close</th>
+              <th>Change</th>
+              <th>Change %</th>
+              <th>Current Value</th>
+              <th>Total cost</th>
+              <th>Profit</th>
+            </tr>
+          </thead>
+          <tbody>
+            {data.stock.map(
               (
                 {
                   symbol,
@@ -94,28 +94,16 @@ const Stock = ({ user, data, updateTime, refreshStockData }) => {
                     {/* current value */}
                     <td>{currentValue}</td>
                     {/* spent cost */}
-                    <td>{spentCost}</td>
+                    <td>{spentCost.toFixed(2)}</td>
                     {/* profit */}
                     <td className={profit > 0 ? `green` : `red`}>{profit}</td>
                   </tr>
                 );
               }
-            )
-          ) : (
-            <tr>
-              <td>Null</td>
-              <td>Null</td>
-              <td>Null</td>
-              <td>Null</td>
-              <td>Null</td>
-              <td>Null</td>
-              <td>Null</td>
-              <td>Null</td>
-              <td>Null</td>
-            </tr>
-          )}
-        </tbody>
-      </table>
+            )}
+          </tbody>
+        </table>
+      ) : null}
       <p className="tran-sub-header">CASH ($ {Math.floor(user.balance)} )</p>
     </div>
   );

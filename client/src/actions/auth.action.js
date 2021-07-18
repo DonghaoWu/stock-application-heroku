@@ -2,7 +2,7 @@ import axios from 'axios';
 
 import { setAlert } from './alert.action';
 import setAuthToken from '../utils/setAuthToken';
-import { loadTransaction } from './transaction.action';
+// import { loadTransaction } from './transaction.action';
 import { loadStockData } from './stock-data.action';
 
 import {
@@ -202,7 +202,7 @@ export const loadDataAfterOperation = () => async (dispatch) => {
   try {
     dispatch(checkTokenAndLoadUser());
     dispatch(loadStockData());
-    dispatch(loadTransaction());
+    // dispatch(loadTransaction());
   } catch (error) {
     console.error(error);
   }

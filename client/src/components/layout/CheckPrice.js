@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { checkPrice } from '../../actions/check-price.action';
 
 const CheckPrice = ({ checkPrice, checkPriceResult, symbol }) => {
-  console.log(checkPriceResult);
   return (
     <div className="check-price-container">
       <div className="button-spinner-container">

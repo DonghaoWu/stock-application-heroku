@@ -82,7 +82,6 @@ router.post(
         res.json({ token });
       });
     } catch (error) {
-      console.log(error);
       if (!error.errors) {
         let defaultError = {
           statusCode: 500,

@@ -65,17 +65,31 @@ router.get('/', authMiddleware, async (req, res, next) => {
 // @route  GET api/stock/:symbol
 // @desc   Check price before operations.
 // @access Private
-router.get('/:symbol', authMiddleware, async (req, res, next) => {
-  const symbol = req.params.symbol;
-  try {
+
+const handlePromise = (symbol) => {
+  return new Promise((resolve, reject) => {
     finnhubClient.quote(symbol, (error, data, response) => {
-      res.json({
-        stockData: data,
-        symbol: symbol,
-      });
+      if (data.c === 0) {
+        reject({
+          statusCode: 400,
+          errors: [{ msg: 'Invalid Symbol.' }],
+        });
+      } else
+        resolve({
+          stockData: data,
+          symbol: symbol,
+        });
     });
+  });
+};
+
+router.get('/:symbol', authMiddleware, async (req, res, next) => {
+  let symbol = req.params.symbol.trim().toUpperCase();
+
+  try {
+    const data = await handlePromise(symbol);
+    res.json(data);
   } catch (error) {
-    console.log(error);
     if (!error.errors) {
       let defaultError = {
         statusCode: 500,

@@ -49,12 +49,14 @@ router.post(
         throw err;
       }
 
+      let user = req.user;
       let { action, symbol, quantity, price } = req.body;
 
       // check current price
       const data = await fetchPricePromise(symbol);
       // buying case
       if (action === 'BUY') {
+        quantity = Number(quantity);
         if (price < data.c) {
           let err = {
             statusCode: 400,
@@ -71,8 +73,8 @@ router.post(
 
       // selling case
       if (action === 'SELL') {
+        quantity = Number(0 - quantity);
         if (price <= data.c) price = data.c;
-        quantity = 0 - quantity;
 
         if (price > data.c) {
           let err = {
@@ -86,15 +88,9 @@ router.post(
           throw err;
         }
       }
-
+      
+      symbol = symbol.trim().toUpperCase();
       const cost = Number(price) * quantity;
-      const newTransaction = {
-        symbol: symbol,
-        quantity: Number(quantity),
-        cost: cost,
-      };
-
-      let user = req.user;
 
       // check current balance if enough for buying
       let newBalance = user.balance - cost;
@@ -109,8 +105,8 @@ router.post(
       let hasOne = false;
 
       for (let i = 0; i < user.shareholding.length; i++) {
-        if (user.shareholding[i].symbol === newTransaction.symbol) {
-          user.shareholding[i].quantity += newTransaction.quantity;
+        if (user.shareholding[i].symbol === symbol) {
+          user.shareholding[i].quantity += quantity;
           // check current quantity if enough for selling
           if (user.shareholding[i].quantity < 0) {
             let err = {
@@ -119,7 +115,7 @@ router.post(
             };
             throw err;
           }
-          user.shareholding[i].cost += newTransaction.cost;
+          user.shareholding[i].cost += cost;
           hasOne = true;
           break;
         }
@@ -127,7 +123,9 @@ router.post(
 
       if (!hasOne) {
         // Did not have the stock before, buying
-        if (action === 'BUY') user.shareholding.push(newTransaction);
+        if (action === 'BUY') {
+          user.shareholding.push({ symbol, quantity, cost });
+        }
         // Did not have the stock before, selling
         else if (action === 'SELL') {
           let err = {
