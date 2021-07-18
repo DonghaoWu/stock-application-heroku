@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-import { refreshStockData } from '../../actions/stock-data.action';
+import { refreshStockData } from '../../../actions/stock-data.action';
 
 const Stock = ({ user, data, updateTime, refreshStockData }) => {
   let initialTime = new Date();

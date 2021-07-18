@@ -10,7 +10,7 @@ import Login from './components/auth/Login';
 import Register from './components/auth/Register';
 import Alert from './components/layout/Alert';
 import Transaction from './components/layout/Transaction';
-import Portfolio from './components/layout/Portfolio';
+import Portfolio from './components/layout/Portfolio/Portfolio';
 
 //check the localStorage.token every time when refresh or open
 import { checkTokenAndLoadUser } from './actions/auth.action';

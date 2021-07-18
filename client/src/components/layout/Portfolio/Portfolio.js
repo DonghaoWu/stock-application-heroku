@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import Stock from './Stock';
 import Operation from './Operation';
 
-import { loadStockData } from '../../actions/stock-data.action';
+import { loadStockData } from '../../../actions/stock-data.action';
 
 const Portfolio = ({ isAuthenticated, loading, loadStockData }) => {
   useEffect(() => {

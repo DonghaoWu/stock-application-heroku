@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { checkPrice } from '../../actions/check-price.action';
+import { checkPrice } from '../../../actions/check-price.action';
 
 const CheckPrice = ({ checkPrice, checkPriceResult, symbol }) => {
   return (

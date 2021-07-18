@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 
-import { setAlert } from '../../actions/alert.action';
-import { operation } from '../../actions/trade.action';
+import { setAlert } from '../../../actions/alert.action';
+import { operation } from '../../../actions/trade.action';
 
 import CheckPrice from './CheckPrice';
 

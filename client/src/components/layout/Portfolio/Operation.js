@@ -4,7 +4,7 @@ import { Switch, Route } from 'react-router-dom';
 import OperationNav from './OperationNav';
 import TradeAction from './TradeAction';
 
-import {handleSell, handleBuy} from '../../actions/trade.action'
+import {handleSell, handleBuy} from '../../../actions/trade.action'
 
 const Operation = (props) => {
   const { url, path } = props;
