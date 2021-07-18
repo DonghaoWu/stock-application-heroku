@@ -11,7 +11,7 @@ import Register from './components/auth/Register';
 import Alert from './components/layout/Alert';
 import Transaction from './components/layout/Transaction';
 import Portfolio from './components/layout/Portfolio/Portfolio';
-import ErrorBoundary from './components/layout/Error-bountry/Error-bountry';
+import ErrorBoundary from './components/layout/ErrorBoundary/ErrorBoundary';
 
 //check the localStorage.token every time when refresh or open
 import { loadUser } from './actions/auth.action';
