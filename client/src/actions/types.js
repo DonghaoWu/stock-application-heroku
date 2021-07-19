@@ -29,3 +29,7 @@ export const CHECK_PRICE_FAILURE = 'CHECK_PRICE_FAILURE';
 
 //for stock data state, auth state, transaction state
 export const CLEAR_ALL_USER_DATA = 'CLEAR_ALL_USER_DATA';
+
+// for admin action
+export const FETCH_USERS_SUCCESS = 'FETCH_USERS_SUCCESS';
+export const FETCH_USERS_FAILURE = 'FETCH_USERS_SUCCESS';
