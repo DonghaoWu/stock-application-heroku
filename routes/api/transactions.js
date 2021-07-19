@@ -1,12 +1,11 @@
 const express = require('express');
 
 const { check, validationResult } = require('express-validator');
-
 const authMiddleware = require('../../middleware/authMiddleware');
-const finnhubClient = require('../../config/finhub');
 
 const Transaction = require('../../models/Transaction');
-const User = require('../../models/User');
+
+const finnhubClient = require('../../config/finhub');
 
 const router = express.Router();
 
@@ -88,7 +87,7 @@ router.post(
           throw err;
         }
       }
-      
+
       symbol = symbol.trim().toUpperCase();
       const cost = Number(price) * quantity;
 

@@ -16,6 +16,7 @@ app.use('/api/users', require('./routes/api/users'));
 app.use('/api/auth', require('./routes/api/auth'));
 app.use('/api/transactions', require('./routes/api/transactions'));
 app.use('/api/stock', require('./routes/api/stockData'));
+app.use('/api/admin', require('./routes/api/admin'));
 
 // error handler
 app.use((err, req, res, next) => {
