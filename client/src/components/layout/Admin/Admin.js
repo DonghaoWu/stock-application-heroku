@@ -72,8 +72,8 @@ const Admin = ({
   }
 
   return (
-    <div className="subPage-container">
-      <div className="sub-header">
+    <div className="subpage-container">
+      <div className="subpage-header">
         <p>ADMIN</p>
         {createForm ? (
           <button

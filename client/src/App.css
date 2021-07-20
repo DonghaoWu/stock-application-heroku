@@ -4,8 +4,10 @@
   --dark-color: #343a40;
   --light-color: #f4f4f4;
   --danger-color: #dc3545;
+  --grey-color: lightgray;
   --success-color: #28a745;
   --succes-color: #71d388;
+  --check-color: rgba(231, 12, 103, 0.719);
 }
 
 * {
@@ -14,14 +16,14 @@
   padding: 0;
 }
 
-/* Additional Text Styles */
+/* General Styles */
 body {
   width: 100%;
   font-family: 'Raleway', sans-serif;
   font-size: 1rem;
   line-height: 1.6;
-  background-color: #fff;
-  color: #333;
+  background-color: var(--light-color);
+  color: var(--dark-color);
 }
 
 a {
@@ -33,7 +35,7 @@ ul {
   list-style: none;
 }
 
-/* Additional Text Styles */
+/* Additional Font Styles */
 .x-large {
   font-size: 4rem;
   line-height: 1.2;
@@ -52,140 +54,132 @@ ul {
   padding: 0.2rem;
 }
 
-.text-primary {
-  color: var(--primary-color);
+/* For all text color */
+.green {
+  color: #28a745;
 }
 
-/* Padding */
-.p {
-  padding: 0.5rem;
+.red {
+  color: #dc3545;
 }
 
-/* Margin */
-.m {
-  margin: 0.5rem;
-}
-.my {
-  margin: 0.5rem 0;
-}
-.my-1 {
-  margin: 1rem 0;
+.grey {
+  color: grey;
 }
 
 /* --------------------------------------------------------- */
-/* For buttons */
+/* For all buttons & background-color*/
 .btn {
-  background: var(--light-color);
-  color: #333;
-  text-align: center;
-
   outline: none;
   cursor: pointer;
   transition: opacity 0.2s ease-in;
 
-  width: 7.5rem;
-  margin: 0.6rem;
-  border: 1px solid black;
-  padding: 0.6rem;
+  width: 8rem;
+  margin: 0.8rem;
+  padding: 0.8rem;
+  border: none;
+
+  background-color: var(--light-color);
+  color: var(--dark-color);
+
   font-size: 1rem;
+  text-align: center;
 }
 
 .btn-primary,
 .bg-primary,
 .alert-primary {
-  background: var(--primary-color);
-  color: #fff;
+  background-color: var(--primary-color);
+  color: var(--light-color);
 }
 
 .btn-light,
 .bg-light,
 .alert-light {
-  background: var(--light-color);
-  color: #333;
+  background-color: var(--light-color);
+  color: var(--dark-color);
 }
 
 .btn-dark,
 .bg-dark,
 .alert-dark {
-  background: var(--dark-color);
-  color: #fff;
+  background-color: var(--dark-color);
+  color: var(--light-color);
 }
 
 .btn-danger,
 .bg-danger,
 .alert-danger {
-  background: var(--danger-color);
-  color: #fff;
+  background-color: var(--danger-color);
+  color: var(--light-color);
 }
 
 .btn-success,
 .bg-success,
 .alert-success {
-  background: var(--success-color);
-  color: #fff;
+  background-color: var(--success-color);
+  color: var(--light-color);
 }
 
-.btn-white,
-.bg-white,
-.alert-white {
-  background: #fff;
-  color: #333;
-  border: #ccc solid 1px;
+.btn-disable,
+.bg-disable,
+.alert-disable {
+  background-color: var(--grey-color);
+  color: var(--dark-color);
+}
+
+.btn-check,
+.bg-check,
+.alert-check {
+  background-color: var(--check-color);
+  color: var(--light-color);
 }
 
 .btn:hover {
   opacity: 0.8;
 }
 
-.bg-light {
-  border: #ccc solid 1px;
-}
-
-.round-img {
-  border-radius: 50%;
-}
-
 /* --------------------------------------------------------- */
 /* For Navbar component <A class>  */
 .navbar {
+  position: fixed;
+  z-index: 1;
+  top: 0;
+
+  width: 100%;
+  padding: 0.7rem 2rem;
+  border-bottom: solid 1px var(--primary-color);
+
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0.7rem 2rem;
-  position: fixed;
-  z-index: 1;
-  width: 100%;
-  top: 0;
-  border-bottom: solid 1px var(--primary-color);
-  opacity: 0.9;
 }
 
 .navbar ul {
   display: flex;
+  align-items: center;
 }
 
 .navbar a {
-  color: #fff;
-  padding: 0.45rem;
-  margin: 0 0.25rem;
+  color: var(--light-color);
+
+  padding: 0.5rem;
+  margin: 0.5rem 0.5rem;
 }
 
 .navbar a:hover {
   color: var(--primary-color);
 }
 
-.navbar .welcome span {
-  margin-right: 0.6rem;
-}
-
 .navbar-logout-button {
   color: var(--light-color);
   background-color: var(--dark-color);
-  font-size: 1rem;
-  padding: 0 0.45rem;
+
   border: none;
   cursor: pointer;
-  margin: 0, 0.25rem;
+
+  padding: 0.5rem;
+  margin: 0.5rem 0.5rem;
 }
 
 .navbar-logout-button:hover {
@@ -195,28 +189,32 @@ ul {
 /* --------------------------------------------------------- */
 /* For Landing component <A class>  */
 .landing {
-  background: url('./img/stock.jpg') no-repeat center center/cover;
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
+
+  background: url('./img/stock.jpg') no-repeat center center/cover;
 }
 
 .dark-landing-overlay {
-  background-color: rgba(0, 0, 0, 0.7);
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
+
+  background-color: rgba(0, 0, 0, 0.6);
 }
 
 .landing-inner {
-  color: #fff;
-  height: 100%;
+  color: var(--light-color);
+
   width: 80%;
+  height: 100%;
   margin: auto;
+
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -226,87 +224,79 @@ ul {
 .landing-buttons {
   margin: 1rem;
   display: flex;
+  align-items: center;
 }
 
 /* --------------------------------------------------------- */
 /* For alert component <A class>  */
 .alert-container {
-  margin: 4rem 1rem 1rem 1rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
   position: fixed;
   z-index: 1;
   top: 0.5rem;
   right: 0.5rem;
+  margin: 4.5rem 1rem 1rem 1rem;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
 }
 
 .alert {
   min-width: 10rem;
-  text-align: center;
   padding: 0.5rem 4rem;
   margin: 0.5rem 0.5rem;
+
   opacity: 0.9;
+
+  text-align: center;
 }
 
 /* --------------------------------------------------------- */
 /* For all pages container <A class>  */
 .container {
   width: 100%;
-  display: flex;
-  justify-content: center;
   padding: 1rem 1rem;
   margin: 5rem 0;
+
+  display: flex;
+  justify-content: center;
 }
 
 /* --------------------------------------------------------- */
 /* For auth pages <B container class>  */
-.auth-container {
-  width: 90%;
+.authpage-container {
+  width: 80%;
   margin: 1rem;
   padding: 1rem;
+
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
 .auth-header {
-  width: 60%;
+  color: var(--primary-color);
   text-align: center;
 }
 
 .auth-form {
   width: 60%;
-  padding: 5px;
-  margin: 5px;
   min-width: 400px;
   max-width: 550px;
+
+  padding: 0.5rem;
+  margin: 0.5rem;
 }
 
 .auth-form-group {
   margin: 1.2rem 0;
 }
 
-.auth-form-group .form-text {
-  display: block;
-  margin-top: 0.3rem;
-  color: #888;
-}
-
-.auth-form-group input[type='text'],
-.auth-form-group input[type='email'],
-.auth-form-group input[type='password'],
-.auth-form-group textarea {
-  display: block;
+.auth-form-group input {
   width: 100%;
   padding: 0.4rem;
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   border: 1px solid #ccc;
-}
-
-.auth-form-group input[type='submit'],
-button {
-  font: inherit;
 }
 
 .auth-button {
@@ -319,8 +309,8 @@ button {
 
 /* <NEW> --------------------------------------------------------- */
 /* <B container class>  */
-/* <Share> for Portfolio & Transaction pages component */
-.subPage-container {
+/* <Share> for Portfolio & Transaction & Admin pages component */
+.subpage-container {
   width: 90%;
 
   display: flex;
@@ -328,7 +318,7 @@ button {
   justify-content: flex-start;
 }
 
-.sub-header {
+.subpage-header {
   font-size: 2rem;
   color: #0077b5;
 
@@ -341,71 +331,61 @@ button {
 }
 
 .main-table-container {
-  width: 100%;
+  /* width: 100%; */
+  padding: 0.5rem 1rem;
 
   display: flex;
   justify-content: center;
 }
 
 .main-table {
-  width: 98%;
-
-  margin: 0.5rem;
   border-collapse: collapse;
+  width: 100%;
 
   font-size: 1.2rem;
 }
 
-.main-table th {
-  border: 1px solid black;
-  text-align: center;
-  padding: 5px;
-}
-
+.main-table th,
 .main-table td {
   border: 1px solid black;
   text-align: center;
   padding: 5px;
 }
 
-/* table font color */
-.green {
-  color: #28a745;
-}
-
-.red {
-  color: #dc3545;
-}
-.grey {
-  color: grey;
-}
-
 /* <NEW>--------------------------------------------------------- */
 /* for Portfolio page component <B container class>*/
-.stocks-container {
-  margin: 2px;
-  padding: 2px;
+.portfolio-sub-contianer {
+  margin: 0.5rem;
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+
   display: flex;
   flex-direction: column;
 }
 
-.total-container {
+.data-summary {
+  padding: 0.5rem 1rem;
+
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  padding: 0.1rem;
 }
 
-.tran-sub-header {
-  font-size: 1.3rem;
+.data-sub-header {
+  font-size: 1.5rem;
   color: #0077b5;
-  padding: 0.6rem;
+  margin-right: 2rem;
 }
 
-.update-time {
+.data-update-time {
   font-size: 1rem;
-  padding: 0.2rem 1rem;
+  padding: 0.5rem 1rem;
   color: black;
+}
+
+.cash-header {
+  margin: 0;
+  padding: 0.5rem 1rem;
 }
 
 /* refresh button */
@@ -413,8 +393,8 @@ button {
   font-family: 'Source Sans Pro', 'Arial', sans-serif;
   text-decoration: none;
   text-align: center;
-  background-color: #2e2d2d;
-  color: white;
+  background-color: var(--dark-color);
+  color: var(--light-color);
 
   width: 100px;
   border-radius: 20px;
@@ -425,7 +405,7 @@ button {
 }
 
 #refreshing-button:hover {
-  color: white;
+  color: var(--light-color);
   background-color: #008cba;
 }
 
@@ -438,7 +418,7 @@ button {
   content: '';
   width: 20px;
   height: 20px;
-  border: 8px solid #f3f3f3;
+  border: 8px solid var(--light-color);
   border-top: 8px solid #f25a41;
   border-radius: 100%;
   will-change: transform;
@@ -461,8 +441,10 @@ button {
 }
 
 /* <NEW>--------------------------------------------------------- */
-/* For NavSub component */
+/* For operation nav component */
 .operations-nav-buttons {
+  padding: 0.5rem 1rem;
+
   display: flex;
   justify-content: flex-start;
 }
@@ -471,63 +453,50 @@ button {
   font-family: 'Source Sans Pro', 'Arial', sans-serif;
   text-decoration: none;
   text-align: center;
+  font-size: 1rem;
+
   opacity: 0.8;
-  background-color: #cac9c9;
-  color: white;
   border-radius: 20px;
 
-  margin: 0.2rem 0.5rem;
-  padding: 0.1rem;
-  font-size: 1rem;
   width: 120px;
+  padding: 0.3rem;
+  margin-right: 1rem;
 }
 
 .operation-nav-tag:hover {
-  color: white;
+  color: var(--light-color);
   background-color: #008cba;
-}
-
-.buy-tag {
-  background-color: #4caf50;
-}
-
-.sell-tag {
-  background-color: #f44336;
-}
-
-.check-tag {
-  margin: 0.1rem;
-  background-color: rgba(231, 12, 103, 0.719);
 }
 
 /* <NEW>--------------------------------------------------------- */
 /* For operation component */
 /* Buy and sell operation */
-.operations-content {
-  margin-top: 0.4rem;
-  padding: 2px;
+.opeation-container {
+  padding: 0.5rem 1rem;
+
   display: flex;
   justify-content: flex-start;
   flex-wrap: nowrap;
 }
 
 .oper-form-container {
-  width: 30%;
+  width: 430px;
+
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-
-  margin: 0.5rem 0.5rem;
 }
 
 .oper-form {
   width: 100%;
+
+  margin-top: 0.5rem;
 }
 
 .oper-form input[type='text'],
 .oper-form label .oper-form textarea {
   display: block;
-  width: 100%;
+  width: 400px;
   padding: 0.1rem;
   border: 1px solid #ccc;
 
@@ -536,18 +505,18 @@ button {
 }
 
 .place-btn {
-  width: 35%;
+  width: 100px;
   margin: 1rem 0;
   padding: 0.3rem;
   font-size: 1rem;
 }
 
+/* operation button & spinner */
 .operation-button-spinner {
   display: flex;
   align-items: center;
 }
 
-/* operation spinner */
 #operation-spinner:not([hidden]) {
   display: flex;
 }
@@ -564,9 +533,9 @@ button {
   margin-left: 1rem;
 }
 
-/* check-price button and spinner */
+/* check-price button & spinner */
 .check-price-container {
-  margin: 0.6rem 0.7rem;
+  margin: 0.6rem;
   display: flex;
   flex-direction: column;
 }
@@ -577,16 +546,6 @@ button {
 
   margin: 0.2rem 0.5rem;
   font-size: 0.8rem;
-}
-
-#try-again-text {
-  margin: 0.2rem 0.5rem;
-  padding: 2px;
-}
-
-#empty-symbol-text {
-  margin: 0.2rem 0.5rem;
-  padding: 2px;
 }
 
 /* check price spinner */
@@ -608,7 +567,7 @@ button {
 
 /* check price data */
 .price-data-container {
-  margin: 0.5rem 0.8rem;
+  margin: 0.8rem;
 }
 
 /* <NEW>--------------------------------------------------------- */
@@ -639,7 +598,7 @@ button {
     font-size: 0.8rem;
   }
 
-  /* Text Styles */
+  /* Font size Styles */
   .x-large {
     font-size: 2.5rem;
   }
@@ -672,7 +631,7 @@ button {
   }
 
   /* <Share> for Portfolio & Transaction pages component */
-  .sub-header {
+  .subpage-header {
     font-size: 1.5rem;
     margin: 0.2rem;
   }
@@ -689,12 +648,12 @@ button {
   }
 
   /* for Portfolio page component 450px  >*/
-  .tran-sub-header {
+  .data-sub-header {
     font-size: 0.7rem;
     padding: 0.2rem;
   }
 
-  .update-time {
+  .data-update-time {
     font-size: 0.5rem;
     padding: 0.1rem 0.4rem;
     color: black;
@@ -754,16 +713,6 @@ button {
   .button-spinner-container {
     margin: 0.1rem 0.2rem;
     font-size: 0.2rem;
-  }
-
-  #try-again-text {
-    margin: 0.1rem 0.5rem;
-    padding: 1px;
-  }
-
-  #empty-symbol-text {
-    margin: 0.1rem 0.5rem;
-    padding: 1px;
   }
 
   #checking-spinner::after {
@@ -873,7 +822,7 @@ button {
     font-size: 1.2rem;
   }
   /* <Share> for Portfolio & Transaction pages component */
-  .sub-header {
+  .subpage-header {
     font-size: 1.2rem;
     margin: 0.2rem;
   }
@@ -890,12 +839,12 @@ button {
   }
 
   /* for Portfolio page component < 450px  >*/
-  .tran-sub-header {
+  .data-sub-header {
     font-size: 0.8rem;
     padding: 0.2rem;
   }
 
-  .update-time {
+  .data-update-time {
     font-size: 0.7rem;
     padding: 0.1rem 0.4rem;
     color: black;
@@ -933,7 +882,7 @@ button {
 
   /* For operation component < 450px > */
   /* Buy and sell operation */
-  .operations-content {
+  .opeation-container {
     margin-top: 0.8rem;
   }
 
@@ -967,16 +916,6 @@ button {
 
   #check-price-button {
     width: 100px;
-  }
-
-  #try-again-text {
-    margin: 0.1rem 0.5rem;
-    padding: 1px;
-  }
-
-  #empty-symbol-text {
-    margin: 0.1rem 0.5rem;
-    padding: 1px;
   }
 
   #checking-spinner::after {

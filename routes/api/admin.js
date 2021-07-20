@@ -93,7 +93,7 @@ router.post(
 );
 
 // @route  GET api/admin
-// @desc   Fetch all user
+// @desc   Fetch all users
 // @access Private & Admin
 router.get('/', authMiddleware, adminMiddleware, async (req, res, next) => {
   try {

@@ -8,7 +8,7 @@ const CheckPrice = ({ checkPrice, checkPriceResult, symbol }) => {
       <div className="button-spinner-container">
         <div
           id="check-price-button"
-          className="operation-nav-tag check-tag"
+          className="operation-nav-tag bg-check"
           onClick={() => checkPrice(symbol.trim().toUpperCase())}
         >
           Check price

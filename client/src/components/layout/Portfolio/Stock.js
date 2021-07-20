@@ -22,14 +22,13 @@ const Stock = ({ user, data, updateTime, refreshStockData }) => {
   };
 
   return (
-    <div className="stocks-container">
-      <p className="sub-header">PORTFOLIO</p>
-      <div className="total-container">
-        <p className="tran-sub-header">
+    <div className="portfolio-sub-contianer">
+      <div className="data-summary">
+        <p className="data-sub-header">
           Total:{' '}
           {data ? `$ ${Math.floor(data.stockValue + user.balance)}` : `null`}{' '}
         </p>
-        <p className="tran-sub-header">
+        <p className="data-sub-header">
           Stock value: {data ? `$ ${Math.floor(data.stockValue)}` : `null`}
         </p>
         <Link to="#" id="refreshing-button" onClick={handleRefresh}>
@@ -37,12 +36,12 @@ const Stock = ({ user, data, updateTime, refreshStockData }) => {
         </Link>
         <div hidden id="refreshing-spinner"></div>
       </div>
-      <p className="tran-sub-header update-time">Current time: {currentTime}</p>
-      <p className="tran-sub-header update-time">
+      <p className="data-update-time">Current time: {currentTime}</p>
+      <p className="data-update-time">
         Updated at:{' '}
         {updateTime ? updateTime.toLocaleTimeString() : `Not available yet`}
       </p>
-      
+
       <div className="main-table-container">
         {data && data.stock && data.stock.length ? (
           <table className="main-table">
@@ -110,7 +109,6 @@ const Stock = ({ user, data, updateTime, refreshStockData }) => {
           </table>
         ) : null}
       </div>
-      <p className="tran-sub-header">CASH ($ {Math.floor(user.balance)} )</p>
     </div>
   );
 };

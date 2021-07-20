@@ -15,8 +15,8 @@ const Transaction = ({ transactions, isAuthenticated, loadTransaction }) => {
   }
 
   return (
-    <div className="subPage-container">
-      <p className="sub-header">TRANSACTIONS</p>
+    <div className="subpage-container">
+      <p className="subpage-header">TRANSACTIONS</p>
       <div className="main-table-container">
         {transactions.length ? (
           <table className="main-table">

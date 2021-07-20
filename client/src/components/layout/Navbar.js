@@ -7,7 +7,11 @@ import { logout } from '../../actions/auth.action';
 const Navbar = ({ email, isAuthenticated, logout, admin }) => {
   const authLinks = (
     <ul>
-      {email ? <li>Welcome, {email}</li> : null}
+      {email ? (
+        <li>
+          <Link to="/">Welcome, {email}</Link>
+        </li>
+      ) : null}
       {admin ? (
         <li>
           <Link to="/admin">Admin</Link>

@@ -38,8 +38,8 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
   }
 
   return (
-    <div className="auth-container">
-      <h1 className="auth-header large text-primary">Sign Up</h1>
+    <div className="authpage-container">
+      <h1 className="auth-header large">Sign Up</h1>
       <p className="lead">
         <i className="fas fa-user"></i> Create Your Account
       </p>

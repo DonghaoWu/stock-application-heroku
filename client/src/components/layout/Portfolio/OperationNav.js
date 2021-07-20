@@ -1,61 +1,54 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
-const OperationNav = props => {
-    const { url } = props;
+const OperationNav = (props) => {
+  const { url } = props;
 
-    const [clickData, setClickData] = useState({
-        buy: true,
-        sell: false,
-        collapse: false
-    });
+  const [tab, setTab] = useState(1);
 
-    const handleBuy = () => {
-        setClickData({
-            ...clickData, buy: true, sell: false, collapse: false
-        })
-    }
+  const handleTabChange = (num) => {
+    setTab(num);
+  };
 
-    const handleSell = () => {
-        setClickData({
-            ...clickData, buy: false, sell: true, collapse: false
-        })
-    }
+  return (
+    <div className="operations-nav-buttons">
+      <Link
+        to={`${url}`}
+        className={
+          tab === 1
+            ? `operation-nav-tag bg-success`
+            : `operation-nav-tag bg-disable`
+        }
+        onClick={() => handleTabChange(1)}
+      >
+        Buy
+      </Link>
 
-    const handleCollapse = () => {
-        setClickData({
-            ...clickData, buy: false, sell: false, collapse: true
-        })
-    }
+      <Link
+        to={`${url}/sell`}
+        className={
+          tab === 2
+            ? `operation-nav-tag bg-danger`
+            : `operation-nav-tag bg-disable`
+        }
+        onClick={() => handleTabChange(2)}
+      >
+        Sell
+      </Link>
 
-    const { buy, sell, collapse } = clickData;
-    if (buy) {
-        return (
-            <div className='operations-nav-buttons'>
-                <Link to={`${url}`} className={`operation-nav-tag buy-tag`} onClick={handleBuy}>Buy</Link>
-                <Link to={`${url}/sell`} className={`operation-nav-tag`} onClick={handleSell}>Sell</Link>
-                <Link to={`${url}/collapse`} className={`operation-nav-tag`} onClick={handleCollapse}>Collapse</Link>
-            </div>
-        )
-    }
-    else if (sell) {
-        return (
-            <div className='operations-nav-buttons'>
-                <Link to={`${url}`} className={"operation-nav-tag"} onClick={handleBuy}>Buy</Link>
-                <Link to={`${url}/sell`} className={`operation-nav-tag sell-tag`} onClick={handleSell}>Sell</Link>
-                <Link to={`${url}/collapse`} className={`operation-nav-tag`} onClick={handleCollapse}>Collapse</Link>
-            </div>
-        )
-    }
-    else if (collapse) {
-        return (
-            <div className='operations-nav-buttons'>
-                <Link to={`${url}`} className={"operation-nav-tag"} onClick={handleBuy}>Buy</Link>
-                <Link to={`${url}/sell`} className={"operation-nav-tag"} onClick={handleSell}>Sell</Link>
-                <Link to={`${url}/collapse`} className={`operation-nav-tag buy-tag`} onClick={handleCollapse}>Collapse</Link>
-            </div>
-        )
-    }
-}
+      <Link
+        to={`${url}/collapse`}
+        className={
+          tab === 3
+            ? `operation-nav-tag bg-check`
+            : `operation-nav-tag bg-disable`
+        }
+        onClick={() => handleTabChange(3)}
+      >
+        Collapse
+      </Link>
+    </div>
+  );
+};
 
 export default OperationNav;

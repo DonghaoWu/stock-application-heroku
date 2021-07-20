@@ -21,7 +21,7 @@ const TradeAction = ({ user, setAlert, operation, handleSubmit, act }) => {
   };
 
   return (
-    <div className="operations-content">
+    <div className="opeation-container">
       <form
         className="oper-form-container"
         onSubmit={(e) =>
