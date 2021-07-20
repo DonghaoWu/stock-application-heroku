@@ -335,6 +335,9 @@ button {
   margin: 0.5rem 0.5rem 1rem 0.5rem;
   padding-left: 1rem;
   border-bottom: 1px solid;
+
+  display: flex;
+  align-items: center;
 }
 
 .main-table-container {

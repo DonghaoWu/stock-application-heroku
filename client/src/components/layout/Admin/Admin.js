@@ -1,8 +1,10 @@
 import React, { useEffect, useState, Fragment } from 'react';
+import moment from 'moment';
+import 'moment-timezone';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 
-import { CreateUserForm } from './CreateUserForm';
+import CreateUserForm from './CreateUserForm';
 
 import './styles.css';
 
@@ -25,6 +27,7 @@ const Admin = ({
   }, [fetchUsers]);
 
   const [editIndex, setEditIndex] = useState(-1);
+  const [createForm, setCreateForm] = useState(false);
 
   const [formData, setFormData] = useState({
     email: '',
@@ -42,6 +45,10 @@ const Admin = ({
     setFormData({ ...formData, admin: !formData.admin });
   };
 
+  const handleShowForm = () => {
+    setCreateForm(!createForm);
+  };
+
   const handleEdit = (index) => {
     setEditIndex(index);
     setFormData({
@@ -54,7 +61,6 @@ const Admin = ({
   const handleSave = () => {
     setEditIndex(-1);
     updateUser({ email, balance, admin });
-    console.log(formData);
   };
 
   const handleDelete = (id) => {
@@ -65,12 +71,28 @@ const Admin = ({
     return <Redirect to="/" />;
   }
 
-  console.log(users);
   return (
     <div className="subPage-container">
-      <p className="sub-header">ADMIN</p>
+      <div className="sub-header">
+        <p>ADMIN</p>
+        {createForm ? (
+          <button
+            className={`btn-create-user btn-danger`}
+            onClick={() => handleShowForm()}
+          >
+            - Collapse
+          </button>
+        ) : (
+          <button
+            className={`buy-tag btn-create-user`}
+            onClick={() => handleShowForm()}
+          >
+            + Create User
+          </button>
+        )}
+      </div>
       <div className="admin-form-table">
-        <CreateUserForm />
+        {createForm ? <CreateUserForm /> : null}
         {users.length ? (
           <div className="main-table-container">
             <table className="main-table">
@@ -81,6 +103,7 @@ const Admin = ({
                   <th>Name</th>
                   <th>Balance</th>
                   <th>admin</th>
+                  <th>Create date</th>
                   <th>Edit</th>
                   <th>Delete</th>
                 </tr>
@@ -96,6 +119,12 @@ const Admin = ({
                           <td>{el.name}</td>
                           <td>{el.balance.toFixed(2)}</td>
                           <td>{el.admin ? 'Yes' : 'No'}</td>
+                          <td>
+                            {moment(el.date)
+                              .tz('America/New_York')
+                              .format('MMMM Do YYYY, h:mm:ss a')}{' '}
+                            EST
+                          </td>
                           <td>
                             <button
                               className={
@@ -146,6 +175,7 @@ const Admin = ({
                               onChange={handleCheck}
                             />
                           </td>
+                          <td>{el.date}</td>
                           <td>
                             <button
                               className="table-btn btn-success"

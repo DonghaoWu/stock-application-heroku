@@ -54,8 +54,14 @@ export const createUser =
     });
 
     try {
-      await axios.post('/api/admin', body, config);
+      const response = await axios.post('/api/admin', body, config);
       dispatch(fetchUsers());
+      dispatch(
+        setAlert({
+          msg: response.data,
+          alertType: 'success',
+        })
+      );
     } catch (error) {
       const errors = error.response.data.message;
       if (errors) {

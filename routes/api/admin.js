@@ -79,7 +79,7 @@ router.post(
         admin: admin,
       });
       await user.save();
-      res.json({ message: 'User created success.' });
+      res.send('Create user success.');
     } catch (error) {
       if (!error.errors) {
         let defaultError = {
@@ -99,7 +99,7 @@ router.get('/', authMiddleware, adminMiddleware, async (req, res, next) => {
   try {
     const users = await User.find(
       {},
-      { email: 1, balance: 1, admin: 1, _id: 1, name: 1 }
+      { email: 1, balance: 1, admin: 1, _id: 1, name: 1, date: 1 }
     );
     res.json(users);
   } catch (error) {
