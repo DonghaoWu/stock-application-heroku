@@ -6,7 +6,6 @@
   --danger-color: #dc3545;
   --grey-color: lightgray;
   --success-color: #28a745;
-  --succes-color: #71d388;
   --check-color: rgba(231, 12, 103, 0.719);
 }
 
@@ -76,8 +75,9 @@ ul {
 
   width: 8rem;
   margin: 0.8rem;
-  padding: 0.8rem;
+  padding: 0.5rem;
   border: none;
+  border-radius: 20px;
 
   background-color: var(--light-color);
   color: var(--dark-color);

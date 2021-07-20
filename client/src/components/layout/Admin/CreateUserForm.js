@@ -38,9 +38,9 @@ const CreateUserForm = ({ createUser }) => {
   };
 
   return (
-    <div className="admin-form">
-      {' '}
-      <form className=" admin-form-container" onSubmit={(e) => handleSubmit(e)}>
+    <div className="opeation-container">
+      <form className=" oper-form-container" onSubmit={(e) => handleSubmit(e)}>
+        <h4>Please input the new user info</h4>
         <div className="oper-form">
           <input
             type="text"
@@ -96,7 +96,6 @@ const CreateUserForm = ({ createUser }) => {
             className="operate-nav-tag place-btn"
             value="Submit"
           />
-          <div hidden id="operation-spinner"></div>
         </div>
       </form>
     </div>

@@ -6,10 +6,10 @@ import { connect } from 'react-redux';
 const ErrorBoundary = ({ isAuthenticated }) => {
   const authLinks = (
     <div className="landing-buttons">
-      <Link to="/portfolio" className="btn btn-primary">
+      <Link to="/portfolio" className="btn btn-success">
         Portfolio
       </Link>
-      <Link to="/transaction" className="btn btn-primary">
+      <Link to="/transaction" className="btn btn-success">
         Transactions
       </Link>
     </div>
@@ -20,7 +20,7 @@ const ErrorBoundary = ({ isAuthenticated }) => {
       <Link to="/register" className="btn btn-primary">
         Sign Up
       </Link>
-      <Link to="/login" className="btn btn-light">
+      <Link to="/login" className="btn btn-primary">
         Login
       </Link>
     </div>

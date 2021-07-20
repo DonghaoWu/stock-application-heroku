@@ -76,15 +76,12 @@ const Admin = ({
       <div className="subpage-header">
         <p>ADMIN</p>
         {createForm ? (
-          <button
-            className={`btn-create-user btn-danger`}
-            onClick={() => handleShowForm()}
-          >
+          <button className={`btn btn-danger`} onClick={() => handleShowForm()}>
             - Collapse
           </button>
         ) : (
           <button
-            className={`buy-tag btn-create-user`}
+            className={`btn btn-success`}
             onClick={() => handleShowForm()}
           >
             + Create User
@@ -117,7 +114,7 @@ const Admin = ({
                           <td>{index + 1}</td>
                           <td>{el.email}</td>
                           <td>{el.name}</td>
-                          <td>{el.balance.toFixed(2)}</td>
+                          <td>{el.balance.toFixed(0)}</td>
                           <td>{el.admin ? 'Yes' : 'No'}</td>
                           <td>
                             {moment(el.date)
@@ -129,8 +126,8 @@ const Admin = ({
                             <button
                               className={
                                 editIndex === -1
-                                  ? 'table-btn btn-normal'
-                                  : 'table-btn btn-disable'
+                                  ? 'btn btn-primary'
+                                  : 'btn btn-disable'
                               }
                               onClick={() => handleEdit(index)}
                               disabled={editIndex !== -1}
@@ -142,8 +139,8 @@ const Admin = ({
                             <button
                               className={
                                 editIndex === -1
-                                  ? 'table-btn btn-danger'
-                                  : 'table-btn btn-disable'
+                                  ? 'btn btn-danger'
+                                  : 'btn btn-disable'
                               }
                               onClick={() => handleDelete(el._id)}
                               disabled={editIndex !== -1}
@@ -178,7 +175,7 @@ const Admin = ({
                           <td>{el.date}</td>
                           <td>
                             <button
-                              className="table-btn btn-success"
+                              className="btn btn-success"
                               onClick={() => handleSave()}
                             >
                               Save
@@ -186,7 +183,7 @@ const Admin = ({
                           </td>
                           <td>
                             <button
-                              className="table-btn btn-danger"
+                              className="btn btn-danger"
                               onClick={() => handleDelete(el._id)}
                             >
                               Delete
