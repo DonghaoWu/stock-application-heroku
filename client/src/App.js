@@ -11,6 +11,7 @@ import Register from './components/auth/Register';
 import Alert from './components/layout/Alert';
 import Transaction from './components/layout/Transaction';
 import Portfolio from './components/layout/Portfolio/Portfolio';
+import Admin from './components/layout/Admin/Admin';
 import ErrorBoundary from './components/layout/ErrorBoundary/ErrorBoundary';
 
 //check the localStorage.token every time when refresh or open
@@ -42,6 +43,7 @@ const App = ({ loadUser }) => {
         <section className="container">
           <Switch>
             <Route path="/portfolio" component={Portfolio} />
+            <Route exact path="/admin" component={Admin} />
             <Route exact path="/login" component={Login} />
             <Route exact path="/register" component={Register} />
             <Route exact path="/transaction" component={Transaction} />

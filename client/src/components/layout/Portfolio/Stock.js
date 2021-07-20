@@ -23,7 +23,7 @@ const Stock = ({ user, data, updateTime, refreshStockData }) => {
 
   return (
     <div className="stocks-container">
-      <p className="record-header">PORTFOLIO</p>
+      <p className="sub-header">PORTFOLIO</p>
       <div className="total-container">
         <p className="tran-sub-header">
           Total:{' '}
@@ -42,68 +42,74 @@ const Stock = ({ user, data, updateTime, refreshStockData }) => {
         Updated at:{' '}
         {updateTime ? updateTime.toLocaleTimeString() : `Not available yet`}
       </p>
-
-      {data && data.stock && data.stock.length ? (
-        <table className="record-table">
-          <thead>
-            <tr>
-              <th>Stock</th>
-              <th>Own Shares</th>
-              <th>Current price</th>
-              <th>Previous Close</th>
-              <th>Change</th>
-              <th>Change %</th>
-              <th>Current Value</th>
-              <th>Total cost</th>
-              <th>Profit</th>
-            </tr>
-          </thead>
-          <tbody>
-            {data.stock.map(
-              (
-                {
-                  symbol,
-                  quantity,
-                  spentCost,
-                  currentPrice,
-                  previousClose,
-                  openPrice,
-                },
-                index
-              ) => {
-                const change = (currentPrice - openPrice).toFixed(2);
-                const persent = ((change / previousClose) * 100).toFixed(2);
-                const currentValue = (quantity * currentPrice).toFixed(2);
-                const profit = (quantity * currentPrice - spentCost).toFixed(2);
-                return (
-                  <tr key={index}>
-                    {/* symbol */}
-                    <td>{symbol}</td>
-                    {/* quantity */}
-                    <td>{quantity}</td>
-                    {/* current price */}
-                    <td className={change > 0 ? `green` : `red`}>
-                      {currentPrice}
-                    </td>
-                    {/* previous price */}
-                    <td className={'grey'}>{previousClose}</td>
-                    {/* change */}
-                    <td className={change > 0 ? `green` : `red`}>{change}</td>
-                    {/* change persent */}
-                    <td className={change > 0 ? `green` : `red`}>{persent}</td>
-                    {/* current value */}
-                    <td>{currentValue}</td>
-                    {/* spent cost */}
-                    <td>{spentCost.toFixed(2)}</td>
-                    {/* profit */}
-                    <td className={profit > 0 ? `green` : `red`}>{profit}</td>
-                  </tr>
-                );
-              }
-            )}
-          </tbody>
-        </table>
-      ) : null}
+      
+      <div className="main-table-container">
+        {data && data.stock && data.stock.length ? (
+          <table className="main-table">
+            <thead>
+              <tr>
+                <th>Stock</th>
+                <th>Own Shares</th>
+                <th>Current price</th>
+                <th>Previous Close</th>
+                <th>Change</th>
+                <th>Change %</th>
+                <th>Current Value</th>
+                <th>Total cost</th>
+                <th>Profit</th>
+              </tr>
+            </thead>
+            <tbody>
+              {data.stock.map(
+                (
+                  {
+                    symbol,
+                    quantity,
+                    spentCost,
+                    currentPrice,
+                    previousClose,
+                    openPrice,
+                  },
+                  index
+                ) => {
+                  const change = (currentPrice - openPrice).toFixed(2);
+                  const persent = ((change / previousClose) * 100).toFixed(2);
+                  const currentValue = (quantity * currentPrice).toFixed(2);
+                  const profit = (quantity * currentPrice - spentCost).toFixed(
+                    2
+                  );
+                  return (
+                    <tr key={index}>
+                      {/* symbol */}
+                      <td>{symbol}</td>
+                      {/* quantity */}
+                      <td>{quantity}</td>
+                      {/* current price */}
+                      <td className={change > 0 ? `green` : `red`}>
+                        {currentPrice}
+                      </td>
+                      {/* previous price */}
+                      <td className={'grey'}>{previousClose}</td>
+                      {/* change */}
+                      <td className={change > 0 ? `green` : `red`}>{change}</td>
+                      {/* change persent */}
+                      <td className={change > 0 ? `green` : `red`}>
+                        {persent}
+                      </td>
+                      {/* current value */}
+                      <td>{currentValue}</td>
+                      {/* spent cost */}
+                      <td>{spentCost.toFixed(2)}</td>
+                      {/* profit */}
+                      <td className={profit > 0 ? `green` : `red`}>{profit}</td>
+                    </tr>
+                  );
+                }
+              )}
+            </tbody>
+          </table>
+        ) : null}
+      </div>
       <p className="tran-sub-header">CASH ($ {Math.floor(user.balance)} )</p>
     </div>
   );

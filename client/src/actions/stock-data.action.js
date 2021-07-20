@@ -6,12 +6,14 @@ import {
   REFRESH_FAILURE,
 } from './types';
 import { setAlert } from './alert.action';
+import { loadUser } from './auth.action';
 
 // load stock data
 
 export const loadStockData = () => async (dispatch) => {
   try {
     const res = await axios.get('/api/stock');
+    dispatch(loadUser());
     dispatch({
       type: LOAD_STOCK_SUCCESS,
       payload: res.data,

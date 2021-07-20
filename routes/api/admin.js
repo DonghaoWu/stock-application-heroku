@@ -99,7 +99,7 @@ router.get('/', authMiddleware, adminMiddleware, async (req, res, next) => {
   try {
     const users = await User.find(
       {},
-      { email: 1, balance: 1, admin: 1, _id: 1 }
+      { email: 1, balance: 1, admin: 1, _id: 1, name: 1 }
     );
     res.json(users);
   } catch (error) {
@@ -122,6 +122,13 @@ router.delete(
   async (req, res, next) => {
     let id = req.params.id;
     try {
+      if (id === req.user.id) {
+        let err = {
+          statusCode: 403,
+          errors: [{ msg: `You can not delete your own account.` }],
+        };
+        throw err;
+      }
       const response = await User.deleteOne({ _id: id });
       if (response.deletedCount === 0) {
         let err = {
@@ -149,6 +156,13 @@ router.delete(
 router.put('/', authMiddleware, adminMiddleware, async (req, res, next) => {
   const { admin, balance, email } = req.body;
   try {
+    if (email === req.user.email && admin === false) {
+      let err = {
+        statusCode: 403,
+        errors: [{ msg: `You can not change your privilege.` }],
+      };
+      throw err;
+    }
     if (typeof admin !== 'boolean') {
       let err = {
         statusCode: 400,

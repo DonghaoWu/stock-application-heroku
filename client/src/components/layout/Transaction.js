@@ -15,45 +15,47 @@ const Transaction = ({ transactions, isAuthenticated, loadTransaction }) => {
   }
 
   return (
-    <div className="record-container">
-      <p className="record-header">TRANSACTIONS</p>
-      {transactions.length ? (
-        <table className="record-table">
-          <thead>
-            <tr>
-              <th>Action</th>
-              <th>Symbol</th>
-              <th>Quantity</th>
-              <th>Price</th>
-              <th>Cost</th>
-              <th>Time</th>
-            </tr>
-          </thead>
-          <tbody>
-            {transactions.map((el, index) => {
-              return (
-                <tr
-                  key={index}
-                  style={
-                    el.action === 'BUY'
-                      ? { backgroundColor: '#F0FFFF' }
-                      : { backgroundColor: '#FFEBCD' }
-                  }
-                >
-                  <td>{el.action}</td>
-                  <td>{el.symbol}</td>
-                  <td>{el.quantity} shares</td>
-                  <td>{el.price}</td>
-                  <td>{el.cost.toFixed(2)}</td>
-                  <td>{el.date.slice(0, -5)}</td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      ) : (
-        <h3>No transaction yet.</h3>
-      )}
+    <div className="subPage-container">
+      <p className="sub-header">TRANSACTIONS</p>
+      <div className="main-table-container">
+        {transactions.length ? (
+          <table className="main-table">
+            <thead>
+              <tr>
+                <th>Action</th>
+                <th>Symbol</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Cost</th>
+                <th>Time</th>
+              </tr>
+            </thead>
+            <tbody>
+              {transactions.map((el, index) => {
+                return (
+                  <tr
+                    key={index}
+                    style={
+                      el.action === 'BUY'
+                        ? { backgroundColor: '#F0FFFF' }
+                        : { backgroundColor: '#FFEBCD' }
+                    }
+                  >
+                    <td>{el.action}</td>
+                    <td>{el.symbol}</td>
+                    <td>{el.quantity} shares</td>
+                    <td>{el.price}</td>
+                    <td>{el.cost.toFixed(2)}</td>
+                    <td>{el.date.slice(0, -5)}</td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        ) : (
+          <h3>No transaction yet.</h3>
+        )}
+      </div>
     </div>
   );
 };

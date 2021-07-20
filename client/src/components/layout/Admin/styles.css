@@ -1,0 +1,74 @@
+/* .admin-container {
+  width: 90%;
+
+  display: flex;
+  flex-direction: column;
+} */
+
+/* .admin-form-table {
+  margin-top: 1.5rem;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.admin-table {
+  padding: 1rem;
+  border-collapse: collapse;
+
+  font-size: 1rem;
+}
+
+.admin-table th {
+  padding: 0.5rem 1rem;
+  border: 1px solid black;
+
+  width: 10rem;
+  font-size: 1.2rem;
+  text-align: center;
+}
+
+.admin-table tr {
+  border: none;
+}
+
+.admin-table td {
+  padding: 0.5rem 1rem;
+  border: 1px solid black;
+
+  width: 10rem;
+  font-size: 1.2rem;
+  text-align: center;
+} */
+
+.table-btn {
+  width: 5rem;
+  color: white;
+  border: none;
+}
+
+.btn-normal {
+  background-color: #17a2b8;
+}
+
+.btn-danger {
+  background-color: #dc3545;
+}
+
+.btn-success {
+  background-color: #71d388;
+}
+
+.btn-disable {
+  background-color: lightgray;
+}
+
+.admin-table-input {
+  font-size: 1.2rem;
+  width: 7rem;
+}
+
+.admin-form {
+  width: 30%;
+}

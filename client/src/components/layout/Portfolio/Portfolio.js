@@ -22,7 +22,7 @@ const Portfolio = ({ isAuthenticated, loading, loadStockData }) => {
   return (
     <Fragment>
       {!loading ? (
-        <div className="record-container">
+        <div className="subPage-container">
           <Stock />
           <Operation url={url} path={path} />
         </div>

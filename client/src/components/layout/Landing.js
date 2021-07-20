@@ -11,9 +11,9 @@ const Landing = ({ logout, isAuthenticated }) => {
       <Link to="/portfolio" className="btn btn-primary">
         My Portfolio
       </Link>
-      <button onClick={logout} className="btn btn-danger" href="/">
-        Logout
-      </button>
+      <Link to="/transaction" className="btn btn-primary">
+        Transaction
+      </Link>
     </div>
   );
 

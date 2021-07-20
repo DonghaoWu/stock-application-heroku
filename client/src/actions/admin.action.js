@@ -13,7 +13,7 @@ export const fetchUsers = () => async (dispatch) => {
     });
     dispatch(
       setAlert({
-        msg: 'Load Users data success',
+        msg: 'Fetch Users data success',
         alertType: 'success',
       })
     );
@@ -87,8 +87,14 @@ export const updateUser =
     });
 
     try {
-      await axios.put('/api/admin', body, config);
+      const response = await axios.put('/api/admin', body, config);
       dispatch(fetchUsers());
+      dispatch(
+        setAlert({
+          msg: response.data,
+          alertType: 'success',
+        })
+      );
     } catch (error) {
       const errors = error.response.data.message;
       if (errors) {
@@ -107,8 +113,14 @@ export const updateUser =
 //Delete a user
 export const deleteUser = (id) => async (dispatch) => {
   try {
-    await axios.put(`/api/admin/${id}`);
+    const response = await axios.delete(`/api/admin/${id}`);
     dispatch(fetchUsers());
+    dispatch(
+      setAlert({
+        msg: response.data,
+        alertType: 'success',
+      })
+    );
   } catch (error) {
     const errors = error.response.data.message;
     if (errors) {

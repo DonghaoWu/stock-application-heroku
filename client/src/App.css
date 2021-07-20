@@ -16,6 +16,7 @@
 
 /* Additional Text Styles */
 body {
+  width: 100%;
   font-family: 'Raleway', sans-serif;
   font-size: 1rem;
   line-height: 1.6;
@@ -251,10 +252,11 @@ ul {
 /* --------------------------------------------------------- */
 /* For all pages container <A class>  */
 .container {
+  width: 100%;
   display: flex;
   justify-content: center;
   padding: 1rem 1rem;
-  margin: 4.5rem 1rem 1rem 1rem;
+  margin: 5rem 0;
 }
 
 /* --------------------------------------------------------- */
@@ -318,39 +320,46 @@ button {
 /* <NEW> --------------------------------------------------------- */
 /* <B container class>  */
 /* <Share> for Portfolio & Transaction pages component */
-.record-container {
+.subPage-container {
   width: 90%;
+
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
 }
 
-.record-header {
+.sub-header {
   font-size: 2rem;
   color: #0077b5;
+
   margin: 0.5rem 0.5rem 1rem 0.5rem;
+  padding-left: 1rem;
   border-bottom: 1px solid;
 }
 
-.record-table {
-  margin: 0.4rem;
-  border-collapse: collapse;
-  width: 98%;
-  font-size: 1rem;
+.main-table-container {
+  width: 100%;
+
+  display: flex;
+  justify-content: center;
 }
 
-.record-table th {
+.main-table {
+  width: 98%;
+
+  margin: 0.5rem;
+  border-collapse: collapse;
+
+  font-size: 1.2rem;
+}
+
+.main-table th {
   border: 1px solid black;
   text-align: center;
   padding: 5px;
-  border-bottom: none;
 }
 
-.record-table tr {
-  border: none;
-}
-
-.record-table td {
+.main-table td {
   border: 1px solid black;
   text-align: center;
   padding: 5px;
@@ -660,18 +669,18 @@ button {
   }
 
   /* <Share> for Portfolio & Transaction pages component */
-  .record-header {
+  .sub-header {
     font-size: 1.5rem;
     margin: 0.2rem;
   }
 
-  .record-table {
+  .main-table {
     margin: 0.2rem 0.2rem 0.5rem 0.2rem;
     width: 98%;
     font-size: 0.6rem;
   }
 
-  .record-table th,
+  .main-table th,
   td {
     padding: 3px;
   }
@@ -861,18 +870,18 @@ button {
     font-size: 1.2rem;
   }
   /* <Share> for Portfolio & Transaction pages component */
-  .record-header {
+  .sub-header {
     font-size: 1.2rem;
     margin: 0.2rem;
   }
 
-  .record-table {
+  .main-table {
     margin: 0.2rem 0.2rem 0.5rem 0.2rem;
     width: 98%;
     font-size: 0.6rem;
   }
 
-  .record-table th,
+  .main-table th,
   td {
     padding: 3px;
   }
